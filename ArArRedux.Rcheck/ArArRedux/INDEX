@@ -1,0 +1,36 @@
+Melbourne               An example dataset
+PHdata                  The 'PHdata' class
+average                 Calculate the arithmetic mean
+averagebyday            Average all the data collected on the same day.
+blankcorr               Apply a blank correction
+blankcorrected          The 'blankcorrected' class
+calibration             Detector calibration
+clcorrection            Cl-interference correction
+concat                  Merge a list of logratio data
+decaycorrection         Correct for radioactive decay occurred since
+                        irradiation
+fitlogratios            Extrapolation to 'time zero'
+fractionation           Compute the mass fractionation correction
+get4039                 Calculate the 40Ar*/39ArK-ratios
+getJfactors             Calculate the irradiation parameter ('J
+                        factor')
+getages                 Calculate 40Ar/39Ar ages
+getmasses               Select a subset of isotopes from a dataset
+interference            define the interference corrections
+loaddata                Load mass spectrometer data
+loadirradiations        Load the irradiation schedule
+logratios               The 'logratios' class
+massfractionation       Apply the mass fractionation correction
+newredux                Create a new 'redux' object
+param                   Set or get Ar-Ar_Redux parameters
+plot.timeresolved       Plot a time resolved mass spectrometry signal
+plotcorr                Plot a matrix with correlation coefficients
+process                 Process logratio data and calculate 40Ar/39Ar
+                        ages
+read                    Read mass spectrometer data
+redux                   The 'redux' class
+results                 The 'results' class
+subset.timeresolved     Select a subset of some data
+summary.results         Summary table
+timeresolved            The 'timeresolved' class
+weightedmean            Calculate the weighted mean age

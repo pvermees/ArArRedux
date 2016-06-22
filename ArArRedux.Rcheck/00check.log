@@ -1,0 +1,129 @@
+* using log directory ‘/home/pvermees/Dropbox/Programming/R/ArArRedux/ArArRedux.Rcheck’
+* using R Under development (unstable) (2016-06-10 r70760)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--as-cran’
+* checking for file ‘ArArRedux/DESCRIPTION’ ... OK
+* this is package ‘ArArRedux’ version ‘0.3’
+* checking CRAN incoming feasibility ... Note_to_CRAN_maintainers
+Maintainer: ‘Pieter Vermeesch <p.vermeesch@ucl.ac.uk>’
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... WARNING
+Found the following executable files:
+  .git/objects/05/ef30eef74bac40a7b2cc152f138d721dcbb5d3
+  .git/objects/08/c135dca6d897de8556b58d934b53023bd9580a
+  .git/objects/10/7624cd5da5948fb1f1495f056144251645063a
+  .git/objects/13/010b133e2f7a48a80affd7becc2bee6974821d
+  .git/objects/19/ef16b73ca972a8e61b17b78cdfb5b3349fc19a
+  .git/objects/1f/fe0b9c69d123695f333fa5b1b2e121673986b7
+  .git/objects/20/c0aba82f53f4c1681b923a80e504594f00f45a
+  .git/objects/23/268b84a88fbd540142dd2fa536438d2d665523
+  .git/objects/2f/07fd69abe719d991c3a51bde0d602847e798b1
+  .git/objects/31/b16935c7eb0f67f4634cf055dcb863029bb6f2
+  .git/objects/31/c64fa39b0cc8320c49531f8e0d4b2f03ae3199
+  .git/objects/34/105ba166d22b1245905fa94b72114b1f5ab95b
+  .git/objects/36/924424f47c80a30307db84c6264020ceda19d3
+  .git/objects/38/cccf944f8eb84793d60139a75c6d8cea88fc8d
+  .git/objects/38/f5e83b4c18a4e3bd9b0185a9ce683e2fbb169c
+  .git/objects/3c/110427ba79157bb2e6d6093b1199a935206f6f
+  .git/objects/40/a430372aa5538ee6182ab8c1adb84280817145
+  .git/objects/41/88c40eadfe83b18e70eed85cdedbbf1dcc9b33
+  .git/objects/4d/66fbce51d40e8fdf3af23beedc12a23f297383
+  .git/objects/51/ead7615886d7a395cc84861849668dfacbce79
+  .git/objects/59/7692aaf721fc435f3cedce2f2115a08aa6c5b0
+  .git/objects/5a/165835890ec9a165ad0e06509fdbaf959c3646
+  .git/objects/5c/96e8362e6810934cf5bbcb6725919f3461a0aa
+  .git/objects/5d/0d45976122c1e714f68f9ae42940083c90cb66
+  .git/objects/5f/733a7246d6984d865febf993452f07cd77029f
+  .git/objects/6b/58c7ed31a7a7129cb73369b25dd202e2078f71
+  .git/objects/6c/25400211538c6a7499d0f34948d4f7c607352b
+  .git/objects/71/6a4614b16bc6fb7f9f580677615945c732f088
+  .git/objects/74/0705afff18d62acb09feef96a2c68f0165d127
+  .git/objects/74/1fa6e025577d9b971860164d02746a94b1601d
+  .git/objects/77/2062535b7f71b7d799354d62cd26c2774975b1
+  .git/objects/78/70c83e3b3566f7ea57ffbd11a1123e6f1c9049
+  .git/objects/8a/e999b376028ec4c952b9d583a6bd0cf79b29cf
+  .git/objects/8b/042ea57df51807d49ffb4270882dafe41ca0fc
+  .git/objects/8c/40a44596601508ca0c7208734f1743ca1a1571
+  .git/objects/91/aa17789ba08ae1abc0de5f30dd790381bc1c9d
+  .git/objects/91/f25bbf2c07fae2230b749624a387814dee8389
+  .git/objects/98/ac7819de1973837c6322b25e2f9d3222573821
+  .git/objects/9e/17e39f9955248779559ee612d7c54b838cd37d
+  .git/objects/a8/471a40e01d6a6fff1ecd8988498d8f0fc05f00
+  .git/objects/ac/8fc34ce8a48fe54b5430b7cc40b4b3b4dbeb20
+  .git/objects/ad/ea5ba243cf8919d629c4086f79726ae0a4192c
+  .git/objects/b4/2dcca86ba59653b94b511cf091184e76c37481
+  .git/objects/b5/0e750567bbe3d2e5f53a723c7d92a6a3134d48
+  .git/objects/b9/68767569ef9213cdcc53b1ce8dee827ba154e6
+  .git/objects/bb/0985e4fd6a34d7f0c40ae67ee242ef1ccd6eab
+  .git/objects/bf/5d69c9edc5de2824756cc39dbe85bed5396c63
+  .git/objects/c0/26f270f8759e7dd95122b221da2dfe4670a82d
+  .git/objects/c7/f2e3115322ae6f16f576a8c61af9b927b97212
+  .git/objects/cb/7b4a437f3d8b23a7fda09a6ade47845646c48d
+  .git/objects/cf/e0d01ff41cc38493a7554298af683e61eee25a
+  .git/objects/de/e01963783dee0a7b8d910dfdbbd6b2cf60ba41
+  .git/objects/f2/5f9226b81b7dbf851708887263759645e54004
+  .git/objects/f6/8acd2a389289e79d92cf06371acc622359dfd3
+  .git/objects/f6/c42bdfcb2194466232d2d17a4b44df09d72418
+Source packages should not contain undeclared executable files.
+See section ‘Package structure’ in the ‘Writing R Extensions’ manual.
+* checking for hidden files and directories ... NOTE
+Found the following hidden files and directories:
+  .git
+These were most likely included in error. See section ‘Package
+structure’ in the ‘Writing R Extensions’ manual.
+
+CRAN-pack does not know about
+  .git
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘ArArRedux’ can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... NOTE
+Checking should be performed on sources prepared by ‘R CMD build’.
+* checking top-level files ... NOTE
+Non-standard file/directory found at top level:
+  ‘ArArRedux.Rcheck’
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... WARNING
+Found the following directory with the name of a check directory:
+  ./ArArRedux.Rcheck
+Most likely, these were included erroneously.
+Found the following directory with the name of a version control directory:
+  ./.git
+These should not be in a package tarball.
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking use of S3 registration ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking examples ... OK
+* checking PDF version of manual ... OK
+* DONE
+Status: 2 WARNINGs, 3 NOTEs

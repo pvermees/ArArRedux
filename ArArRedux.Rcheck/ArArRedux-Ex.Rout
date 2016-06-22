@@ -1,0 +1,1018 @@
+
+R Under development (unstable) (2016-06-10 r70760) -- "Unsuffered Consequences"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "ArArRedux"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> base::assign(".ExTimings", "ArArRedux-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('ArArRedux')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("Melbourne")
+> ### * Melbourne
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: Melbourne
+> ### Title: An example dataset
+> ### Aliases: Melbourne
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> plotcorr(Melbourne$X)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("Melbourne", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("average")
+> ### * average
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: average
+> ### Title: Calculate the arithmetic mean
+> ### Aliases: average
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> K <- average(Melbourne$X,grep("K:",Melbourne$X$labels),newlabel="K-glass")
+> plotcorr(K)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("average", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("averagebyday")
+> ### * averagebyday
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: averagebyday
+> ### Title: Average all the data collected on the same day.
+> ### Aliases: averagebyday
+> 
+> ### ** Examples
+> 
+> dfile <- system.file("Calibration.csv",package="ArArRedux")
+> dlabels <- c("H1","AX","L1","L2")
+> md <- loaddata(dfile,dlabels,PH=TRUE)
+> ld <- fitlogratios(blankcorr(md))
+> d <- averagebyday(ld,"DCAL")
+> plotcorr(d)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("averagebyday", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("blankcorr")
+> ### * blankcorr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: blankcorr
+> ### Title: Apply a blank correction
+> ### Aliases: blankcorr blankcorr.PHdata blankcorr.default
+> ###   blankcorr.timeresolved
+> 
+> ### ** Examples
+> 
+> samplefile <- system.file("Samples.csv",package="ArArRedux")
+> masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
+> m <- loaddata(samplefile,masses) # samples and J-standards
+> blanklabel <- "EXB#"
+> l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
+> plotcorr(l)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("blankcorr", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("calibration")
+> ### * calibration
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: calibration
+> ### Title: Detector calibration
+> ### Aliases: calibration
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> C <- calibration(Melbourne$X,"DCAL")
+> plotcorr(C)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("calibration", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("clcorrection")
+> ### * clcorrection
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: clcorrection
+> ### Title: Cl-interference correction
+> ### Aliases: clcorrection
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> Cl <- clcorrection(Melbourne$X,Melbourne$irr)
+> plotcorr(Cl)
+Warning in stats::cov2cor(X$covmat) :
+  diag(.) had 0 or NA entries; non-finite result is doubtful
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("clcorrection", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("concat")
+> ### * concat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: concat
+> ### Title: Merge a list of logratio data
+> ### Aliases: concat
+> 
+> ### ** Examples
+> 
+> samplefile <-  system.file("Samples.csv",package="ArArRedux")
+> kfile <- system.file("K-glass.csv",package="ArArRedux")
+> cafile <- system.file("Ca-salt.csv",package="ArArRedux")
+> dfile <- system.file("Calibration.csv",package="ArArRedux")
+> masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
+> blanklabel <- "EXB#"
+> Jpos <- c(3,15)
+> dlabels <- c("H1","AX","L1","L2")
+>  
+> m <- loaddata(samplefile,masses) # samples and J-standards
+> mk <- loaddata(kfile,masses) # K-interference data
+> mca <- loaddata(cafile,masses) # Ca interference data
+> md <- loaddata(dfile,dlabels,PH=TRUE) # detector intercalibrations
+>  
+> # form and fit logratios
+> l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
+> lk <- fitlogratios(blankcorr(mk,blanklabel,"K:"),"Ar40")
+> k <- getmasses(lk,"Ar39","Ar40") # subset on the relevant isotopes
+> lca <- fitlogratios(blankcorr(mca,blanklabel,"Ca:"),"Ar37")
+> ca <- getmasses(lca,c("Ar36","Ar39"),c("Ar37","Ar37")) # subset
+> ld <- fitlogratios(blankcorr(md))
+> d <- averagebyday(ld,"DCAL")
+> 
+> # merge all data (except air shots) into one big logratio structure
+> X <- newredux(concat(list(l,k,ca,d)),Jpos)
+> data(Melbourne)
+> if (isTRUE(all.equal(Melbourne$X,X))) {
++    print("We just reconstructed the built-in dataset Melbourne$X")}
+[1] "We just reconstructed the built-in dataset Melbourne$X"
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("concat", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("decaycorrection")
+> ### * decaycorrection
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: decaycorrection
+> ### Title: Correct for radioactive decay occurred since irradiation
+> ### Aliases: decaycorrection
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> C <- calibration(Melbourne$X,"DCAL")
+> A <- massfractionation(C,Melbourne$fract)
+> D9 <- decaycorrection(A,Melbourne$irr,"Ar39")
+> plotcorr(D9)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("decaycorrection", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("fitlogratios")
+> ### * fitlogratios
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: fitlogratios
+> ### Title: Extrapolation to 'time zero'
+> ### Aliases: fitlogratios fitlogratios.PHdata fitlogratios.default
+> ###   fitlogratios.timeresolved
+> 
+> ### ** Examples
+> 
+> samplefile <- system.file("Samples.csv",package="ArArRedux")
+> masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
+> m <- loaddata(samplefile,masses) # samples and J-standards
+> blanklabel <- "EXB#"
+> l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
+> plotcorr(l)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("fitlogratios", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("fractionation")
+> ### * fractionation
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: fractionation
+> ### Title: Compute the mass fractionation correction
+> ### Aliases: fractionation
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> fd37file <- system.file("AirL2.csv",package="ArArRedux")
+> fd40file <- system.file("AirH1.csv",package="ArArRedux")
+> fract <- list(fractionation(fd37file,"L2",PH=TRUE),
++               fractionation(fd40file,"H1",PH=FALSE))
+> if (isTRUE(all.equal(Melbourne$fract,fract))){
++   print("We just re-created the fractionation correction for the Melbourne dataset")
++ }
+[1] "We just re-created the fractionation correction for the Melbourne dataset"
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("fractionation", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("get4039")
+> ### * get4039
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: get4039
+> ### Title: Calculate the 40Ar*/39ArK-ratios
+> ### Aliases: get4039
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> R <- get4039(Melbourne$X,Melbourne$irr)
+> plotcorr(R)
+Warning in stats::cov2cor(X$covmat) :
+  diag(.) had 0 or NA entries; non-finite result is doubtful
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("get4039", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("getJfactors")
+> ### * getJfactors
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: getJfactors
+> ### Title: Calculate the irradiation parameter ('J factor')
+> ### Aliases: getJfactors
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> R <- get4039(Melbourne$X,Melbourne$irr)
+> J <- getJfactors(R)
+> plotcorr(J)
+Warning in stats::cov2cor(X$covmat) :
+  diag(.) had 0 or NA entries; non-finite result is doubtful
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getJfactors", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("getages")
+> ### * getages
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: getages
+> ### Title: Calculate 40Ar/39Ar ages
+> ### Aliases: getages
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> R <- get4039(Melbourne$X,Melbourne$irr)
+> J <- getJfactors(R)
+> ages <- getages(J)
+> plotcorr(ages)
+Warning in stats::cov2cor(X$covmat) :
+  diag(.) had 0 or NA entries; non-finite result is doubtful
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getages", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("getmasses")
+> ### * getmasses
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: getmasses
+> ### Title: Select a subset of isotopes from a dataset
+> ### Aliases: getmasses getmasses.default getmasses.logratios
+> ###   getmasses.timeresolved
+> 
+> ### ** Examples
+> 
+> kfile <- system.file("K-glass.csv",package="ArArRedux")
+> masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
+> mk <- loaddata(kfile,masses)
+> lk <- fitlogratios(blankcorr(mk,"EXB#","K:"),"Ar40")
+> k <- getmasses(lk,"Ar39","Ar40") # subset on the relevant isotopes
+> plotcorr(k)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getmasses", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("interference")
+> ### * interference
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: interference
+> ### Title: define the interference corrections
+> ### Aliases: interference
+> 
+> ### ** Examples
+> 
+> samplefile <- system.file("Samples.csv",package="ArArRedux")
+> irrfile <- system.file("irradiations.csv",package="ArArRedux")
+> masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
+> X <- read(samplefile,masses,blabel="EXB#",Jpos=c(3,15))
+> irr <- loadirradiations(irrfile)
+> # assume log(36Ar/37Ar) = log(39Ar/37Ar) = 1 in co-irradiate Ca-salt
+> # with variances of 0.0001 and zero covariances
+> ca <- interference(intercepts=c(1,1),
++                    covmat=matrix(c(0.001,0,0,0.001),nrow=2),
++                    num=c("Ar39","Ar36"),den=c("Ar37","Ar37"),
++                    irr=X$irr[1],label="Ca-salt")
+> # assume log(39Ar/40Ar) = 4.637788 in co-irradiate K-glass
+> # with variance 7.9817e-4
+> k <- interference(intercepts=4.637788,covmat=7.9817e-4,
++                   num="Ar39",den="Ar40",irr=X$irr[1],
++                   label="K-glass")
+> ages <- process(X,irr,ca=ca,k=k)
+> summary(ages)
+      name      age[Ma]             s.e.[Ma]            
+ [1,] "FC1_MD2" "28.2237620267159"  "0.0269147111084562"
+ [2,] "FC2-MD2" "28.191956211882"   "0.0253209277110002"
+ [3,] "FC3-MD2" "28.1919134833219"  "0.0255491836459355"
+ [4,] "FC4-MD2" "28.1798410162245"  "0.0262140890942054"
+ [5,] "MD2-1a"  "-106.313621171309" "0.304699032324512" 
+ [6,] "MD2-1b"  "-104.821745840967" "0.156619312947779" 
+ [7,] "MD2-1c"  "-103.495596610976" "0.106851395531071" 
+ [8,] "MD2-1d"  "-103.398182097861" "0.103213812590012" 
+ [9,] "MD2-1e"  "-103.450163627366" "0.0984339803366754"
+[10,] "MD2-1f"  "-103.365811315276" "0.100717498149939" 
+[11,] "MD2-1g"  "-103.371025452275" "0.101511983168889" 
+[12,] "MD2-1h"  "-103.377124200936" "0.104417150471288" 
+[13,] "MD2-1i"  "-103.407496436603" "0.101932064631989" 
+[14,] "MD2-1j"  "-103.437873353811" "0.101593471625644" 
+[15,] "MD2-1k"  "-103.58580448579"  "0.104019002401873" 
+[16,] "MD2-1l"  "-103.517822454836" "0.104153681744221" 
+[17,] "MD2-1m"  "-103.53032853284"  "0.109540965848045" 
+[18,] "MD2-1n"  "-103.210744216681" "0.102224016966059" 
+[19,] "MD2-1o"  "-102.845946020436" "0.100086102272905" 
+[20,] "MD2-1p"  "-102.629911267364" "0.102001741016456" 
+[21,] "MD2-1r"  "-103.095650790068" "0.12058943508709"  
+[22,] "MD2-1s"  "-103.128341026871" "0.122415391644306" 
+[23,] "MD2-1t"  "-103.31248276504"  "0.109961702485619" 
+[24,] "MD2-2a"  "-114.673714231728" "3.32906270301078"  
+[25,] "MD2-2b"  "-98.9657583268991" "0.49803007384955"  
+[26,] "MD2-2c"  "-99.2805099097257" "0.375246961264443" 
+[27,] "MD2-2d"  "-105.178888016768" "0.302629496926321" 
+[28,] "MD2-2e"  "-104.909974798099" "0.216711252624881" 
+[29,] "MD2-2f"  "-103.939116408363" "0.131878323140778" 
+[30,] "MD2-2g"  "-103.904428562146" "0.100407930071629" 
+[31,] "MD2-2h"  "-103.415690707001" "0.101471379384078" 
+[32,] "MD2-2i"  "-103.408439397137" "0.105483934710344" 
+[33,] "MD2-2j"  "-103.43981155667"  "0.0993173184485819"
+[34,] "MD2-2k"  "-103.509423151807" "0.101128051281518" 
+[35,] "MD2-2l"  "-103.525256005361" "0.098244767307413" 
+[36,] "MD2-2m"  "-103.509876971839" "0.0990727169165144"
+[37,] "MD2-2n"  "-103.586688040729" "0.100300988849249" 
+[38,] "MD2-2o"  "-103.59317476954"  "0.098941207807135" 
+[39,] "MD2-2p"  "-103.62974794583"  "0.098316558993001" 
+[40,] "MD2-2q"  "-103.636522057163" "0.102216678301452" 
+[41,] "MD2-2r"  "-103.561302160236" "0.102991758968662" 
+[42,] "MD2-2s"  "-103.613249167095" "0.0994623544720716"
+[43,] "MD2-2t"  "-103.599924939233" "0.1003845186298"   
+[44,] "MD2-2u"  "-103.455151497088" "0.0996687412214976"
+[45,] "MD2-2v"  "-103.274036363198" "0.0990309237095393"
+[46,] "MD2-2w"  "-103.329468559738" "0.10087842428036"  
+[47,] "MD2-2x"  "-103.110472772969" "0.0990493288329629"
+[48,] "MD2-2y"  "-102.929044785855" "0.10030780540474"  
+[49,] "MD2-2z"  "-102.876396740334" "0.10259245324359"  
+[50,] "MD2-2xz" "-102.536264969098" "0.0988411150333919"
+[51,] "MD2-2yz" "-102.587126382132" "0.105820154149039" 
+[52,] "MD2-1"   "-107.03197144995"  "0.142105399647443" 
+[53,] "MD2-2"   "-108.026158714504" "0.13733447181796"  
+[54,] "MD2-3"   "-105.396376363752" "0.16972406977756"  
+[55,] "MD2-4"   "-105.219384757058" "0.14347666196847"  
+[56,] "MD2-5"   "-100.905148249171" "0.297712743660618" 
+[57,] "MD2-6"   "-104.525169579362" "0.123223997126842" 
+[58,] "MD2-7"   "-107.490616723819" "0.178641514797158" 
+[59,] "MD2-8"   "-107.127382630305" "0.128210834194392" 
+[60,] "MD2-9"   "-105.004018955542" "0.12477825524078"  
+[61,] "MD2-10"  "-104.246874883851" "0.110406123575707" 
+      name      age[Ma]             s.e.[Ma]            
+ [1,] "FC1_MD2" "28.2237620267159"  "0.0269147111084562"
+ [2,] "FC2-MD2" "28.191956211882"   "0.0253209277110002"
+ [3,] "FC3-MD2" "28.1919134833219"  "0.0255491836459355"
+ [4,] "FC4-MD2" "28.1798410162245"  "0.0262140890942054"
+ [5,] "MD2-1a"  "-106.313621171309" "0.304699032324512" 
+ [6,] "MD2-1b"  "-104.821745840967" "0.156619312947779" 
+ [7,] "MD2-1c"  "-103.495596610976" "0.106851395531071" 
+ [8,] "MD2-1d"  "-103.398182097861" "0.103213812590012" 
+ [9,] "MD2-1e"  "-103.450163627366" "0.0984339803366754"
+[10,] "MD2-1f"  "-103.365811315276" "0.100717498149939" 
+[11,] "MD2-1g"  "-103.371025452275" "0.101511983168889" 
+[12,] "MD2-1h"  "-103.377124200936" "0.104417150471288" 
+[13,] "MD2-1i"  "-103.407496436603" "0.101932064631989" 
+[14,] "MD2-1j"  "-103.437873353811" "0.101593471625644" 
+[15,] "MD2-1k"  "-103.58580448579"  "0.104019002401873" 
+[16,] "MD2-1l"  "-103.517822454836" "0.104153681744221" 
+[17,] "MD2-1m"  "-103.53032853284"  "0.109540965848045" 
+[18,] "MD2-1n"  "-103.210744216681" "0.102224016966059" 
+[19,] "MD2-1o"  "-102.845946020436" "0.100086102272905" 
+[20,] "MD2-1p"  "-102.629911267364" "0.102001741016456" 
+[21,] "MD2-1r"  "-103.095650790068" "0.12058943508709"  
+[22,] "MD2-1s"  "-103.128341026871" "0.122415391644306" 
+[23,] "MD2-1t"  "-103.31248276504"  "0.109961702485619" 
+[24,] "MD2-2a"  "-114.673714231728" "3.32906270301078"  
+[25,] "MD2-2b"  "-98.9657583268991" "0.49803007384955"  
+[26,] "MD2-2c"  "-99.2805099097257" "0.375246961264443" 
+[27,] "MD2-2d"  "-105.178888016768" "0.302629496926321" 
+[28,] "MD2-2e"  "-104.909974798099" "0.216711252624881" 
+[29,] "MD2-2f"  "-103.939116408363" "0.131878323140778" 
+[30,] "MD2-2g"  "-103.904428562146" "0.100407930071629" 
+[31,] "MD2-2h"  "-103.415690707001" "0.101471379384078" 
+[32,] "MD2-2i"  "-103.408439397137" "0.105483934710344" 
+[33,] "MD2-2j"  "-103.43981155667"  "0.0993173184485819"
+[34,] "MD2-2k"  "-103.509423151807" "0.101128051281518" 
+[35,] "MD2-2l"  "-103.525256005361" "0.098244767307413" 
+[36,] "MD2-2m"  "-103.509876971839" "0.0990727169165144"
+[37,] "MD2-2n"  "-103.586688040729" "0.100300988849249" 
+[38,] "MD2-2o"  "-103.59317476954"  "0.098941207807135" 
+[39,] "MD2-2p"  "-103.62974794583"  "0.098316558993001" 
+[40,] "MD2-2q"  "-103.636522057163" "0.102216678301452" 
+[41,] "MD2-2r"  "-103.561302160236" "0.102991758968662" 
+[42,] "MD2-2s"  "-103.613249167095" "0.0994623544720716"
+[43,] "MD2-2t"  "-103.599924939233" "0.1003845186298"   
+[44,] "MD2-2u"  "-103.455151497088" "0.0996687412214976"
+[45,] "MD2-2v"  "-103.274036363198" "0.0990309237095393"
+[46,] "MD2-2w"  "-103.329468559738" "0.10087842428036"  
+[47,] "MD2-2x"  "-103.110472772969" "0.0990493288329629"
+[48,] "MD2-2y"  "-102.929044785855" "0.10030780540474"  
+[49,] "MD2-2z"  "-102.876396740334" "0.10259245324359"  
+[50,] "MD2-2xz" "-102.536264969098" "0.0988411150333919"
+[51,] "MD2-2yz" "-102.587126382132" "0.105820154149039" 
+[52,] "MD2-1"   "-107.03197144995"  "0.142105399647443" 
+[53,] "MD2-2"   "-108.026158714504" "0.13733447181796"  
+[54,] "MD2-3"   "-105.396376363752" "0.16972406977756"  
+[55,] "MD2-4"   "-105.219384757058" "0.14347666196847"  
+[56,] "MD2-5"   "-100.905148249171" "0.297712743660618" 
+[57,] "MD2-6"   "-104.525169579362" "0.123223997126842" 
+[58,] "MD2-7"   "-107.490616723819" "0.178641514797158" 
+[59,] "MD2-8"   "-107.127382630305" "0.128210834194392" 
+[60,] "MD2-9"   "-105.004018955542" "0.12477825524078"  
+[61,] "MD2-10"  "-104.246874883851" "0.110406123575707" 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("interference", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("loaddata")
+> ### * loaddata
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: loaddata
+> ### Title: Load mass spectrometer data
+> ### Aliases: loaddata
+> 
+> ### ** Examples
+> 
+> samplefile <- system.file("Samples.csv",package="ArArRedux")
+> masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
+> m <- loaddata(samplefile,masses) # samples and J-standards
+> plot(m,"MD2-1a","Ar40")
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("loaddata", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("loadirradiations")
+> ### * loadirradiations
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: loadirradiations
+> ### Title: Load the irradiation schedule
+> ### Aliases: loadirradiations
+> 
+> ### ** Examples
+> 
+> irrfile <- system.file("irradiations.csv",package="ArArRedux")
+> irr <- loadirradiations(irrfile)
+> str(irr)
+List of 1
+ $ UM52:List of 3
+  ..$ P   : num [1:10] 1 1 1 1 1 1 1 1 1 1
+  ..$ tin : num [1:10] 1.23e+09 1.23e+09 1.23e+09 1.23e+09 1.23e+09 ...
+  ..$ tout: num [1:10] 1.23e+09 1.23e+09 1.23e+09 1.23e+09 1.23e+09 ...
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("loadirradiations", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("massfractionation")
+> ### * massfractionation
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: massfractionation
+> ### Title: Apply the mass fractionation correction
+> ### Aliases: massfractionation
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> C <- calibration(Melbourne$X,"DCAL")
+> A <- massfractionation(C,Melbourne$fract)
+> plotcorr(A)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("massfractionation", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("param")
+> ### * param
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: param
+> ### Title: Set or get Ar-Ar_Redux parameters
+> ### Aliases: param
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> param(Melbourne$X)$air
+[1] 298.56
+> Y <- param(Melbourne$X,air=295.5)
+> param(Y)$air
+[1] 295.5
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("param", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("plot")
+> ### * plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: plot.timeresolved
+> ### Title: Plot a time resolved mass spectrometry signal
+> ### Aliases: plot.PHdata plot.timeresolved
+> 
+> ### ** Examples
+> 
+> samplefile <- system.file("Samples.csv",package="ArArRedux")
+> masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
+> mMC <- loaddata(samplefile,masses)
+> plot(mMC,"MD2-1a","Ar40")
+> mPH <- loaddata(samplefile,masses,PH=TRUE)
+> plot(mPH,"MD2-1a","Ar40")
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("plotcorr")
+> ### * plotcorr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: plotcorr
+> ### Title: Plot a matrix with correlation coefficients
+> ### Aliases: plotcorr
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> plotcorr(Melbourne$X)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plotcorr", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("process")
+> ### * process
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: process
+> ### Title: Process logratio data and calculate 40Ar/39Ar ages
+> ### Aliases: process
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> ages <- process(Melbourne$X,Melbourne$irr,Melbourne$fract)
+> summary(ages)
+      name      age[Ma]             s.e.[Ma]            
+ [1,] "FC1_MD2" "28.2208085049636"  "0.0288296214146824"
+ [2,] "FC2-MD2" "28.1906494896227"  "0.0273689208936056"
+ [3,] "FC3-MD2" "28.1919593406912"  "0.0275982273500936"
+ [4,] "FC4-MD2" "28.1778599509198"  "0.0281860266351195"
+ [5,] "MD2-1a"  "-104.26418251766"  "0.313809715265692" 
+ [6,] "MD2-1b"  "-103.469971878548" "0.163721091020803" 
+ [7,] "MD2-1c"  "-102.418323156006" "0.113857630126563" 
+ [8,] "MD2-1d"  "-102.384519213342" "0.109853535807805" 
+ [9,] "MD2-1e"  "-102.467390316879" "0.105156630112693" 
+[10,] "MD2-1f"  "-102.385826052041" "0.107267994327917" 
+[11,] "MD2-1g"  "-102.395060889098" "0.107938318258344" 
+[12,] "MD2-1h"  "-102.410315436313" "0.110604652063215" 
+[13,] "MD2-1i"  "-102.439100698255" "0.108310346209685" 
+[14,] "MD2-1j"  "-102.472167490121" "0.107991422381297" 
+[15,] "MD2-1k"  "-102.615705274763" "0.11027811745493"  
+[16,] "MD2-1l"  "-102.549665801297" "0.110384450603462" 
+[17,] "MD2-1m"  "-102.555886986779" "0.115476154685643" 
+[18,] "MD2-1n"  "-102.240602460914" "0.108590162994129" 
+[19,] "MD2-1o"  "-101.876556789737" "0.106579965956786" 
+[20,] "MD2-1p"  "-101.666667733425" "0.108292518887328" 
+[21,] "MD2-1r"  "-102.129782994249" "0.125918245683647" 
+[22,] "MD2-1s"  "-102.156772258503" "0.12780773951219"  
+[23,] "MD2-1t"  "-102.337411892583" "0.115922694504452" 
+[24,] "MD2-2a"  "-102.705503661173" "3.35027856395029"  
+[25,] "MD2-2b"  "-95.7168159888448" "0.513870110735592" 
+[26,] "MD2-2c"  "-97.1069062678596" "0.383633427354754" 
+[27,] "MD2-2d"  "-103.489598361127" "0.308745019541378" 
+[28,] "MD2-2e"  "-103.584685573346" "0.221693488549524" 
+[29,] "MD2-2f"  "-102.771616151656" "0.138350092383114" 
+[30,] "MD2-2g"  "-102.876561784268" "0.107417852983507" 
+[31,] "MD2-2h"  "-102.427301902683" "0.108015339584573" 
+[32,] "MD2-2i"  "-102.425241949948" "0.111768935160449" 
+[33,] "MD2-2j"  "-102.463578150491" "0.105931805914803" 
+[34,] "MD2-2k"  "-102.533947742459" "0.107607962725174" 
+[35,] "MD2-2l"  "-102.553358872115" "0.104907407155987" 
+[36,] "MD2-2m"  "-102.53979934055"  "0.105655857636073" 
+[37,] "MD2-2n"  "-102.617685927834" "0.106801393556024" 
+[38,] "MD2-2o"  "-102.624867825804" "0.105533335293585" 
+[39,] "MD2-2p"  "-102.662035114748" "0.104946512714086" 
+[40,] "MD2-2q"  "-102.668522069589" "0.108586987728013" 
+[41,] "MD2-2r"  "-102.593090725711" "0.109315492946378" 
+[42,] "MD2-2s"  "-102.64564185652"  "0.106015169600316" 
+[43,] "MD2-2t"  "-102.632041558834" "0.106881601095316" 
+[44,] "MD2-2u"  "-102.487210261651" "0.106195059969413" 
+[45,] "MD2-2v"  "-102.307682505249" "0.105583774412147" 
+[46,] "MD2-2w"  "-102.363916625357" "0.107298394426298" 
+[47,] "MD2-2x"  "-102.147275921752" "0.105560267511008" 
+[48,] "MD2-2y"  "-101.966400375935" "0.106723584165706" 
+[49,] "MD2-2z"  "-101.913297940907" "0.108847677278038" 
+[50,] "MD2-2xz" "-101.572920470283" "0.105335963497182" 
+[51,] "MD2-2yz" "-101.59602657802"  "0.11211359722769"  
+[52,] "MD2-1"   "-105.463990156718" "0.151700708732303" 
+[53,] "MD2-2"   "-106.397144102033" "0.148050088760021" 
+[54,] "MD2-3"   "-104.048956163644" "0.175846109325759" 
+[55,] "MD2-4"   "-103.891242528955" "0.150459917887621" 
+[56,] "MD2-5"   "-99.1771196164527" "0.303619757877846" 
+[57,] "MD2-6"   "-103.256779306061" "0.130639838423959" 
+[58,] "MD2-7"   "-105.895373274171" "0.186674797503993" 
+[59,] "MD2-8"   "-105.536214667267" "0.139085753095173" 
+[60,] "MD2-9"   "-103.728366431213" "0.132135404471392" 
+[61,] "MD2-10"  "-103.083288418039" "0.117556317727426" 
+      name      age[Ma]             s.e.[Ma]            
+ [1,] "FC1_MD2" "28.2208085049636"  "0.0288296214146824"
+ [2,] "FC2-MD2" "28.1906494896227"  "0.0273689208936056"
+ [3,] "FC3-MD2" "28.1919593406912"  "0.0275982273500936"
+ [4,] "FC4-MD2" "28.1778599509198"  "0.0281860266351195"
+ [5,] "MD2-1a"  "-104.26418251766"  "0.313809715265692" 
+ [6,] "MD2-1b"  "-103.469971878548" "0.163721091020803" 
+ [7,] "MD2-1c"  "-102.418323156006" "0.113857630126563" 
+ [8,] "MD2-1d"  "-102.384519213342" "0.109853535807805" 
+ [9,] "MD2-1e"  "-102.467390316879" "0.105156630112693" 
+[10,] "MD2-1f"  "-102.385826052041" "0.107267994327917" 
+[11,] "MD2-1g"  "-102.395060889098" "0.107938318258344" 
+[12,] "MD2-1h"  "-102.410315436313" "0.110604652063215" 
+[13,] "MD2-1i"  "-102.439100698255" "0.108310346209685" 
+[14,] "MD2-1j"  "-102.472167490121" "0.107991422381297" 
+[15,] "MD2-1k"  "-102.615705274763" "0.11027811745493"  
+[16,] "MD2-1l"  "-102.549665801297" "0.110384450603462" 
+[17,] "MD2-1m"  "-102.555886986779" "0.115476154685643" 
+[18,] "MD2-1n"  "-102.240602460914" "0.108590162994129" 
+[19,] "MD2-1o"  "-101.876556789737" "0.106579965956786" 
+[20,] "MD2-1p"  "-101.666667733425" "0.108292518887328" 
+[21,] "MD2-1r"  "-102.129782994249" "0.125918245683647" 
+[22,] "MD2-1s"  "-102.156772258503" "0.12780773951219"  
+[23,] "MD2-1t"  "-102.337411892583" "0.115922694504452" 
+[24,] "MD2-2a"  "-102.705503661173" "3.35027856395029"  
+[25,] "MD2-2b"  "-95.7168159888448" "0.513870110735592" 
+[26,] "MD2-2c"  "-97.1069062678596" "0.383633427354754" 
+[27,] "MD2-2d"  "-103.489598361127" "0.308745019541378" 
+[28,] "MD2-2e"  "-103.584685573346" "0.221693488549524" 
+[29,] "MD2-2f"  "-102.771616151656" "0.138350092383114" 
+[30,] "MD2-2g"  "-102.876561784268" "0.107417852983507" 
+[31,] "MD2-2h"  "-102.427301902683" "0.108015339584573" 
+[32,] "MD2-2i"  "-102.425241949948" "0.111768935160449" 
+[33,] "MD2-2j"  "-102.463578150491" "0.105931805914803" 
+[34,] "MD2-2k"  "-102.533947742459" "0.107607962725174" 
+[35,] "MD2-2l"  "-102.553358872115" "0.104907407155987" 
+[36,] "MD2-2m"  "-102.53979934055"  "0.105655857636073" 
+[37,] "MD2-2n"  "-102.617685927834" "0.106801393556024" 
+[38,] "MD2-2o"  "-102.624867825804" "0.105533335293585" 
+[39,] "MD2-2p"  "-102.662035114748" "0.104946512714086" 
+[40,] "MD2-2q"  "-102.668522069589" "0.108586987728013" 
+[41,] "MD2-2r"  "-102.593090725711" "0.109315492946378" 
+[42,] "MD2-2s"  "-102.64564185652"  "0.106015169600316" 
+[43,] "MD2-2t"  "-102.632041558834" "0.106881601095316" 
+[44,] "MD2-2u"  "-102.487210261651" "0.106195059969413" 
+[45,] "MD2-2v"  "-102.307682505249" "0.105583774412147" 
+[46,] "MD2-2w"  "-102.363916625357" "0.107298394426298" 
+[47,] "MD2-2x"  "-102.147275921752" "0.105560267511008" 
+[48,] "MD2-2y"  "-101.966400375935" "0.106723584165706" 
+[49,] "MD2-2z"  "-101.913297940907" "0.108847677278038" 
+[50,] "MD2-2xz" "-101.572920470283" "0.105335963497182" 
+[51,] "MD2-2yz" "-101.59602657802"  "0.11211359722769"  
+[52,] "MD2-1"   "-105.463990156718" "0.151700708732303" 
+[53,] "MD2-2"   "-106.397144102033" "0.148050088760021" 
+[54,] "MD2-3"   "-104.048956163644" "0.175846109325759" 
+[55,] "MD2-4"   "-103.891242528955" "0.150459917887621" 
+[56,] "MD2-5"   "-99.1771196164527" "0.303619757877846" 
+[57,] "MD2-6"   "-103.256779306061" "0.130639838423959" 
+[58,] "MD2-7"   "-105.895373274171" "0.186674797503993" 
+[59,] "MD2-8"   "-105.536214667267" "0.139085753095173" 
+[60,] "MD2-9"   "-103.728366431213" "0.132135404471392" 
+[61,] "MD2-10"  "-103.083288418039" "0.117556317727426" 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("process", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("read")
+> ### * read
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: read
+> ### Title: Read mass spectrometer data
+> ### Aliases: read
+> 
+> ### ** Examples
+> 
+> samplefile <-  system.file("Samples.csv",package="ArArRedux")
+> kfile <- system.file("K-glass.csv",package="ArArRedux")
+> cafile <- system.file("Ca-salt.csv",package="ArArRedux")
+> dfile <- system.file("Calibration.csv",package="ArArRedux")
+> masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
+> dlabels <- c("H1","AX","L1","L2")
+> X <- read(samplefile,masses,"EXB#",c(3,15),kfile,cafile,dfile,dlabels)
+> plotcorr(X)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("read", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("subset")
+> ### * subset
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: subset.timeresolved
+> ### Title: Select a subset of some data
+> ### Aliases: subset.logratios subset.redux subset.results
+> ###   subset.timeresolved
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> ages <- process(Melbourne$X,Melbourne$irr,Melbourne$fract)
+> MD <- subset(ages,labels=c("MD2-1","MD2-2","MD2-3","MD2-4","MD2-5"))
+> plotcorr(MD)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("subset", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("summary")
+> ### * summary
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: summary.results
+> ### Title: Summary table
+> ### Aliases: summary.results
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> ages <- process(Melbourne$X,Melbourne$irr,Melbourne$fract)
+> summary(ages)[1:5,]
+      name      age[Ma]             s.e.[Ma]            
+ [1,] "FC1_MD2" "28.2208085049636"  "0.0288296214146824"
+ [2,] "FC2-MD2" "28.1906494896227"  "0.0273689208936056"
+ [3,] "FC3-MD2" "28.1919593406912"  "0.0275982273500936"
+ [4,] "FC4-MD2" "28.1778599509198"  "0.0281860266351195"
+ [5,] "MD2-1a"  "-104.26418251766"  "0.313809715265692" 
+ [6,] "MD2-1b"  "-103.469971878548" "0.163721091020803" 
+ [7,] "MD2-1c"  "-102.418323156006" "0.113857630126563" 
+ [8,] "MD2-1d"  "-102.384519213342" "0.109853535807805" 
+ [9,] "MD2-1e"  "-102.467390316879" "0.105156630112693" 
+[10,] "MD2-1f"  "-102.385826052041" "0.107267994327917" 
+[11,] "MD2-1g"  "-102.395060889098" "0.107938318258344" 
+[12,] "MD2-1h"  "-102.410315436313" "0.110604652063215" 
+[13,] "MD2-1i"  "-102.439100698255" "0.108310346209685" 
+[14,] "MD2-1j"  "-102.472167490121" "0.107991422381297" 
+[15,] "MD2-1k"  "-102.615705274763" "0.11027811745493"  
+[16,] "MD2-1l"  "-102.549665801297" "0.110384450603462" 
+[17,] "MD2-1m"  "-102.555886986779" "0.115476154685643" 
+[18,] "MD2-1n"  "-102.240602460914" "0.108590162994129" 
+[19,] "MD2-1o"  "-101.876556789737" "0.106579965956786" 
+[20,] "MD2-1p"  "-101.666667733425" "0.108292518887328" 
+[21,] "MD2-1r"  "-102.129782994249" "0.125918245683647" 
+[22,] "MD2-1s"  "-102.156772258503" "0.12780773951219"  
+[23,] "MD2-1t"  "-102.337411892583" "0.115922694504452" 
+[24,] "MD2-2a"  "-102.705503661173" "3.35027856395029"  
+[25,] "MD2-2b"  "-95.7168159888448" "0.513870110735592" 
+[26,] "MD2-2c"  "-97.1069062678596" "0.383633427354754" 
+[27,] "MD2-2d"  "-103.489598361127" "0.308745019541378" 
+[28,] "MD2-2e"  "-103.584685573346" "0.221693488549524" 
+[29,] "MD2-2f"  "-102.771616151656" "0.138350092383114" 
+[30,] "MD2-2g"  "-102.876561784268" "0.107417852983507" 
+[31,] "MD2-2h"  "-102.427301902683" "0.108015339584573" 
+[32,] "MD2-2i"  "-102.425241949948" "0.111768935160449" 
+[33,] "MD2-2j"  "-102.463578150491" "0.105931805914803" 
+[34,] "MD2-2k"  "-102.533947742459" "0.107607962725174" 
+[35,] "MD2-2l"  "-102.553358872115" "0.104907407155987" 
+[36,] "MD2-2m"  "-102.53979934055"  "0.105655857636073" 
+[37,] "MD2-2n"  "-102.617685927834" "0.106801393556024" 
+[38,] "MD2-2o"  "-102.624867825804" "0.105533335293585" 
+[39,] "MD2-2p"  "-102.662035114748" "0.104946512714086" 
+[40,] "MD2-2q"  "-102.668522069589" "0.108586987728013" 
+[41,] "MD2-2r"  "-102.593090725711" "0.109315492946378" 
+[42,] "MD2-2s"  "-102.64564185652"  "0.106015169600316" 
+[43,] "MD2-2t"  "-102.632041558834" "0.106881601095316" 
+[44,] "MD2-2u"  "-102.487210261651" "0.106195059969413" 
+[45,] "MD2-2v"  "-102.307682505249" "0.105583774412147" 
+[46,] "MD2-2w"  "-102.363916625357" "0.107298394426298" 
+[47,] "MD2-2x"  "-102.147275921752" "0.105560267511008" 
+[48,] "MD2-2y"  "-101.966400375935" "0.106723584165706" 
+[49,] "MD2-2z"  "-101.913297940907" "0.108847677278038" 
+[50,] "MD2-2xz" "-101.572920470283" "0.105335963497182" 
+[51,] "MD2-2yz" "-101.59602657802"  "0.11211359722769"  
+[52,] "MD2-1"   "-105.463990156718" "0.151700708732303" 
+[53,] "MD2-2"   "-106.397144102033" "0.148050088760021" 
+[54,] "MD2-3"   "-104.048956163644" "0.175846109325759" 
+[55,] "MD2-4"   "-103.891242528955" "0.150459917887621" 
+[56,] "MD2-5"   "-99.1771196164527" "0.303619757877846" 
+[57,] "MD2-6"   "-103.256779306061" "0.130639838423959" 
+[58,] "MD2-7"   "-105.895373274171" "0.186674797503993" 
+[59,] "MD2-8"   "-105.536214667267" "0.139085753095173" 
+[60,] "MD2-9"   "-103.728366431213" "0.132135404471392" 
+[61,] "MD2-10"  "-103.083288418039" "0.117556317727426" 
+     name      age[Ma]            s.e.[Ma]            
+[1,] "FC1_MD2" "28.2208085049636" "0.0288296214146824"
+[2,] "FC2-MD2" "28.1906494896227" "0.0273689208936056"
+[3,] "FC3-MD2" "28.1919593406912" "0.0275982273500936"
+[4,] "FC4-MD2" "28.1778599509198" "0.0281860266351195"
+[5,] "MD2-1a"  "-104.26418251766" "0.313809715265692" 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("summary", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("weightedmean")
+> ### * weightedmean
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: weightedmean
+> ### Title: Calculate the weighted mean age
+> ### Aliases: weightedmean
+> 
+> ### ** Examples
+> 
+> data(Melbourne)
+> ages <- process(Melbourne$X,Melbourne$irr,Melbourne$fract)
+> weightedmean(ages,"MD2-1")
+$avgt
+          [,1]
+[1,] -102.2029
+
+$err
+         [,1]
+[1,] 0.104265
+
+$MSWD
+         [,1]
+[1,] 116.0647
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("weightedmean", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  10.248 0.16 10.404 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
