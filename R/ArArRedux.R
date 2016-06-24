@@ -17,6 +17,18 @@
 #' summary(ages)
 #' @export
 process <- function(X,irr,fract=NULL,ca=NULL,k=NULL){
+    Cl <- corrections(X,irr,fract=fract,ca=ca,k=k)
+    # calculate the 40Ar*/39ArK-ratios 
+    R <- get4039(Cl,irr)
+    # calculate J factors
+    J <- getJfactors(R)
+    # calculate ages
+    ages <- getages(J)
+    return(ages)
+}
+
+# apply calibration, fractionation, decay and interference corrections
+corrections <- function(X,irr,fract=NULL,ca=NULL,k=NULL){
     # apply the detector calibration (this won't affect the Ar40/Ar36 ratio)
     C <- calibration(X,"DCAL")
     # apply the mass fractionation correction
@@ -39,12 +51,5 @@ process <- function(X,irr,fract=NULL,ca=NULL,k=NULL){
     } else {
         Ca <- concat(list(K,ca))
     }
-    Cl <- clcorrection(Ca,irr)
-    # calculate the 40Ar*/39ArK-ratios 
-    R <- get4039(Cl,irr)
-    # calculate J factors
-    J <- getJfactors(R)
-    # calculate ages
-    ages <- getages(J)
-    return(ages)
+    clcorrection(Ca,irr)
 }

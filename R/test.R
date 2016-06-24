@@ -1,4 +1,4 @@
-test <- function(builddata=FALSE,option=TRUE){
+test <- function(option='full'){
     
     samplefile <- "../inst/Samples.csv"
     kfile <- "../inst/K-glass.csv"
@@ -13,23 +13,26 @@ test <- function(builddata=FALSE,option=TRUE){
     dlabels <- c("H1","AX","L1","L2")
     Jpos <- c(3,15)
     
-    if (option){ # full propagation
-        X <- read(samplefile,masses,blanklabel,Jpos,
-                  kfile,cafile,dfile,dlabels)
-        irr <- loadirradiations(irrfile)
-        fract <- list(fractionation(fd37file,"L2",PH=TRUE),
-                      fractionation(fd39file,"AX",PH=TRUE),
-                      fractionation(fd40file,"H1",PH=FALSE))
+    X <- read(samplefile,masses,blanklabel,Jpos,
+              kfile,cafile,dfile,dlabels)
+    irr <- loadirradiations(irrfile)
+    fract <- list(fractionation(fd37file,"L2",PH=TRUE),
+                  fractionation(fd39file,"AX",PH=TRUE),
+                  fractionation(fd40file,"H1",PH=FALSE))
+    if (identical(option,'full')){ # full propagation
         ages <- process(X,irr,fract)
         return(ages)
-    } else {
+    } else if (identical(option,'simple')){
         mMC <- loaddata(samplefile,masses)
         graphics::plot(mMC,"MD2-1a","Ar37")
-    }
-
-    if (builddata){
+    } else if (identical(option,'builddata')){
         Melbourne <- list(X=X,irr=irr,fract=fract)
-        save(Melbourne,file="../data/Melbourne.rda")
+        save(Melbourne,file="../data/Melbourne.rda")        
+    } else if (identical(option, 'isoplotr')){
+        # X <- subset(X,labels=c('FC','MD2-'),include.J=TRUE)
+        data4isoplotr <- redux2isoplotr(X,irr)
+        write.csv(data4isoplotr$x,file='ArAr.csv')
+        return(data4isoplotr)
     }
 
 }

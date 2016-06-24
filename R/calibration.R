@@ -1,3 +1,25 @@
+#' Detector calibration
+#'
+#' Apply the detector calibration for multicollector data
+#' 
+#' @param X an object of class \code{redux}
+#' @param clabel the label of the detector calibration data
+#' @return an object of class \code{redux}
+#' @examples
+#' data(Melbourne)
+#' C <- calibration(Melbourne$X,"DCAL")
+#' plotcorr(C)
+#' @export
+calibration <- function(X,clabel){
+    j <- grep(clabel,X$labels,invert=TRUE)
+    if (length(j)==length(X$labels)) return(X)
+    J <- Jcal(X,clabel,X$detectors)
+    out <- subset(X,j)
+    out$intercepts <- J %*% X$intercepts
+    out$covmat <- J %*% X$covmat %*% t(J)
+    return(out)
+}
+
 # X = object of class "redux"
 Jcal <- function(X,clabel,detectors){
     ci <- array(grep(clabel, X$labels)) # calibration indices
@@ -28,26 +50,4 @@ Jcal <- function(X,clabel,detectors){
         }
     }
     return(J)
-}
-
-#' Detector calibration
-#'
-#' Apply the detector calibration for multicollector data
-#' 
-#' @param X an object of class \code{redux}
-#' @param clabel the label of the detector calibration data
-#' @return an object of class \code{redux}
-#' @examples
-#' data(Melbourne)
-#' C <- calibration(Melbourne$X,"DCAL")
-#' plotcorr(C)
-#' @export
-calibration <- function(X,clabel){
-    j <- grep(clabel,X$labels,invert=TRUE)
-    if (length(j)==length(X$labels)) return(X)
-    J <- Jcal(X,clabel,X$detectors)
-    out <- subset(X,j)
-    out$intercepts <- J %*% X$intercepts
-    out$covmat <- J %*% X$covmat %*% t(J)
-    return(out)
 }

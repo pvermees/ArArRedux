@@ -69,50 +69,23 @@ getindices.logratios <- function(x,iruns,...){
     return(i)
 }
 getindices.redux <- function(X,prefix=NULL,num=NULL,den=NULL,
-                             pos=NULL,exact=TRUE,invert=FALSE,...){
+                             pos=NULL,invert=FALSE,include.J=FALSE,...){
     i <- 1:length(X$intercepts)
     if (is.null(prefix)) {
         i1 <- i
     } else {
-        if (exact){
-            matches <- X$labels %in% prefix
-            if (invert){
-                j <- which(!matches)
-            } else {
-                j <- which(matches)
-            }
-        } else {
-            j <- array(grep(prefix, X$labels, invert))
-        }
+        j <- findrunindices(X,prefixes=prefix,invert=invert,include.J=include.J)
         i1 <- getindices.logratios(X,j)
     }
     if (is.null(num)) {
         i2 <- i
     } else {
-        if (exact){
-            matches <- X$num %in% num
-            if (invert){
-                i2 <- which(!matches)
-            } else {
-                i2 <- which(matches)
-            }
-        } else {
-            i2 <- array(grep(num, X$num, invert))
-        }
+        i2 <- findmatches(X$num,prefixes=num,invert=invert)
     }
     if (is.null(den)) {
         i3 <- i
     } else {
-        if (exact){
-            matches <- X$den %in% den
-            if (invert){
-                i3 <- which(!matches)
-            } else {
-                i3 <- which(matches)
-            }
-        } else {
-            i3 <- array(grep(den, X$den, invert))
-        }
+        i3 <- findmatches(X$den,prefixes=den,invert=invert)
     }
     if (is.null(pos)) {
         i4 <- i
@@ -128,11 +101,24 @@ getindices.redux <- function(X,prefix=NULL,num=NULL,den=NULL,
                  (i %in% i3) & (i %in% i4)))
 }
 
-getrunindices <- function(X,prefixes,invert=FALSE){
-    ns <- nruns(X)
+findrunindices <- function(X,prefixes,invert=FALSE,include.J=FALSE){
+    i <- 1:nruns(X)
+    i1 <- findmatches(X$labels,prefixes,invert)
+    out <- (i %in% i1)
+    if (include.J) {
+        i2 <- findmatches(X$pos,prefixes=X$Jpos,invert)
+        out <- out | (i %in% i2)
+    }
+    which(out)
+}
+
+findmatches <- function(labels,prefixes,invert=FALSE){
+    ns <- length(labels)
     i <- c() # vector of intercepts
     for (prefix in prefixes){
-        i <- c(i,grep(prefix, X$labels))
+        matches <- labels %in% prefix
+        if (any(matches)) i <- c(i,which(matches))
+        else i <- c(i,grep(prefix, labels))
     }
     j <- sort(i)
     if (invert){
@@ -168,8 +154,8 @@ getruns.timeresolved <- function(x,i,...){
 #' plotcorr(MD)
 #' @rdname subset
 #' @export
-subset.timeresolved <- function(x,i=NULL,labels=NULL,...){
-    if (is.null(i)) i <- which(x$labels %in% labels)
+subset.timeresolved <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){
+    if (is.null(i)) i <- findrunindices(x,prefixes=labels,invert=invert,include.J=include.J)
     out <- x
     out$d <- getruns(x,i)
     out$thetime <- x$thetime[,i]
@@ -182,8 +168,8 @@ subset.timeresolved <- function(x,i=NULL,labels=NULL,...){
 }
 #' @rdname subset
 #' @export
-subset.logratios <- function(x,i=NULL,labels=NULL,...){
-    if (is.null(i)) i <- which(x$labels %in% labels)
+subset.logratios <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){
+    if (is.null(i)) i <- findrunindices(x,prefixes=labels,invert=invert,include.J=include.J)
     out <- x
     out$irr <- x$irr[i]
     out$pos <- x$pos[i]
@@ -199,15 +185,14 @@ subset.logratios <- function(x,i=NULL,labels=NULL,...){
 }
 #' @rdname subset
 #' @export
-subset.redux <- function(x,i=NULL,labels=NULL,...){
-    if (is.null(i)) i <- which(x$labels %in% labels)
-    return(subset.logratios(x,i))
+subset.redux <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){
+    subset.logratios(x,i,labels,invert,include.J,...)
 }
 #' @rdname subset
 #' @export
-subset.results <- function(x,i=NULL,labels=NULL,...){
+subset.results <- function(x,i=NULL,labels=NULL,invert=FALSE,...){
     out <- x
-    if (is.null(i)) i <- which(x$labels %in% labels)
+    if (is.null(i)) i <- getindices(x,prefix=labels,invert=invert)
     out$labels <- x$labels[i]
     out$thedate <- x$thedate[i]
     out$ages <- x$ages[i]
@@ -231,7 +216,7 @@ subset.results <- function(x,i=NULL,labels=NULL,...){
 #' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
 #' mk <- loaddata(kfile,masses)
 #' lk <- fitlogratios(blankcorr(mk,"EXB#","K:"),"Ar40")
-#' k <- getmasses(lk,"Ar39","Ar40") # subset on the relevant isotopes
+#' k <- getmasses(lk,"Ar39","Ar40") # subset of the relevant isotopes
 #' plotcorr(k)
 #' @export
 getmasses <- function(x,...){ UseMethod("getmasses",x) }
@@ -258,17 +243,39 @@ getmasses.timeresolved <- function(x,mass,invert=FALSE,...){
 #' @export
 getmasses.logratios <- function(x,num,den,invert=FALSE,...){
     out <- x
-    if (invert){
-        i <- which(!((x$num %in% num) & (x$den %in% den)))
-    } else {
-        i <- which((x$num %in% num) & (x$den %in% den))
-    }
+    if (invert){ i <- which(!((x$num %in% num) & (x$den %in% den))) }
+    else { i <- which((x$num %in% num) & (x$den %in% den)) }
     out$num <- x$num[i]
     out$den <- x$den[i]
     out$intercepts <- x$intercepts[i]
     out$covmat <- x$covmat[i,i]
     out$nlr <- graphics::hist(i,breaks=c(0,cumsum(x$nlr)),
                     plot=FALSE)$counts
+    return(out)
+}
+#' @rdname getmasses
+#' @export
+getmasses.redux <- function(x,num,den,invert=FALSE,...){
+    out <- x
+    if (invert){ hasmass <- !((x$num %in% num) & (x$den %in% den)) }
+    else { hasmass <- (x$num %in% num) & (x$den %in% den) }
+    i <- which(hasmass)
+    bi <- cumsum(c(1,x$nlr))
+    ei <- cumsum(x$nlr)
+    nn <- length(x$labels)
+    retain <- rep(FALSE,nn)
+    for (j in 1:nn) {
+        retain[j] <- any(hasmass[bi[j]:ei[j]])
+    }
+    out$irr <- x$irr[retain]
+    out$pos <- x$pos[retain]
+    out$labels <- x$labels[retain]
+    out$thedate <- x$thedate[i]
+    out$intercepts <- x$intercepts[i]
+    out$covmat <- x$covmat[i,i]
+    out$num <- x$num[i]
+    out$den <- x$den[i]
+    out$nlr <- graphics::hist(i,breaks=c(0,cumsum(x$nlr)),plot=FALSE)$counts[retain]
     return(out)
 }
 
