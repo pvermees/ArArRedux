@@ -344,7 +344,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: getmasses
 ### Title: Select a subset of isotopes from a dataset
 ### Aliases: getmasses getmasses.default getmasses.logratios
-###   getmasses.timeresolved
+###   getmasses.redux getmasses.timeresolved
 
 ### ** Examples
 
@@ -352,7 +352,7 @@ kfile <- system.file("K-glass.csv",package="ArArRedux")
 masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
 mk <- loaddata(kfile,masses)
 lk <- fitlogratios(blankcorr(mk,"EXB#","K:"),"Ar40")
-k <- getmasses(lk,"Ar39","Ar40") # subset on the relevant isotopes
+k <- getmasses(lk,"Ar39","Ar40") # subset of the relevant isotopes
 plotcorr(k)
 
 
@@ -573,6 +573,26 @@ plotcorr(X)
 
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("read", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+cleanEx()
+nameEx("redux2isoplotr")
+### * redux2isoplotr
+
+flush(stderr()); flush(stdout())
+
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+### Name: redux2isoplotr
+### Title: Export 'ArArRedux' data to 'IsoplotR'
+### Aliases: redux2isoplotr
+
+### ** Examples
+
+data(Melbourne)
+print(redux2isoplotr(Melbourne$X,Melbourne$irr))
+
+
+
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("redux2isoplotr", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("subset")
 ### * subset

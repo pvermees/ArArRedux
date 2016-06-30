@@ -20,6 +20,7 @@ getJfactors	getJfactors
 getmasses	getmasses
 getmasses.default	getmasses
 getmasses.logratios	getmasses
+getmasses.redux	getmasses
 getmasses.timeresolved	getmasses
 interference	interference
 loaddata	loaddata
@@ -36,6 +37,7 @@ plotcorr	plotcorr
 process	process
 read	read
 redux	redux
+redux2isoplotr	redux2isoplotr
 results	results
 subset.logratios	subset
 subset.redux	subset

@@ -7,13 +7,16 @@
 \alias{subset.timeresolved}
 \title{Select a subset of some data}
 \usage{
-\method{subset}{timeresolved}(x, i = NULL, labels = NULL, ...)
+\method{subset}{timeresolved}(x, i = NULL, labels = NULL, invert = FALSE,
+  include.J = FALSE, ...)
 
-\method{subset}{logratios}(x, i = NULL, labels = NULL, ...)
+\method{subset}{logratios}(x, i = NULL, labels = NULL, invert = FALSE,
+  include.J = FALSE, ...)
 
-\method{subset}{redux}(x, i = NULL, labels = NULL, ...)
+\method{subset}{redux}(x, i = NULL, labels = NULL, invert = FALSE,
+  include.J = FALSE, ...)
 
-\method{subset}{results}(x, i = NULL, labels = NULL, ...)
+\method{subset}{results}(x, i = NULL, labels = NULL, invert = FALSE, ...)
 }
 \arguments{
 \item{x}{an object of class \code{\link{timeresolved}},
@@ -23,6 +26,13 @@
 \item{i}{a vector with indices of the selected runs}
 
 \item{labels}{a string or a vector of strings with sample names}
+
+\item{invert}{boolean flag indicating whether the selection should
+be inverted, i.e. whether the selected indices or labels should
+be removed rather than retained}
+
+\item{include.J}{if \code{TRUE}, automatically adds the irradiation
+monitors to the selection}
 
 \item{...}{other arguments}
 }

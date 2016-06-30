@@ -13,7 +13,7 @@ param(X, ...)
 }
 \value{
 returns the modified \code{\link{redux}} object OR the
-current parameter values if no optional arguments are supplied.
+    current parameter values if no optional arguments are supplied.
 }
 \description{
 This function is used to query and modify the half lives, standard

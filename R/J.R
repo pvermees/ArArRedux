@@ -28,6 +28,11 @@ getJfactors <- function(R){
     out$intercepts[2*ns+1] <- lambda
     out$labels[2*ns+1] <- 'lambda'
     out$thedate[2*ns+1] <- NA
+    out$irr[2*ns+1] <- NA
+    out$pos[2*ns+1] <- NA
+    out$num[2*ns+1] <- NA
+    out$den[2*ns+1] <- NA
+    out$nlr[2*ns+1] <- 1
     J <- getJJ(RS$intercepts,ns,lambda,ts)
     out$covmat <- J %*% covmat %*% t(J)
     return(out)

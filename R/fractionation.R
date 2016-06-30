@@ -27,7 +27,7 @@ massfractionation <- function(X,fract){
     }
     # apply the fractionation correction
     J <- Jair(Y,fdet)
-    j <- getrunindices(Y,c(unlist(fdet),"air-ratio"),invert=TRUE)
+    j <- findrunindices(Y,c(unlist(fdet),"air-ratio"),invert=TRUE)
     out <- subset(Y,j)
     out$intercepts <- J %*% Y$intercepts
     out$covmat <- J %*% Y$covmat %*% t(J)
@@ -64,8 +64,8 @@ fractionation <- function(fname,detector,MS="ARGUS-VI",PH=FALSE){
 
 Jair <- function(X,detectors){
     ns <- nruns(X)
-    di <- getrunindices(X,detectors)
-    ai <- getrunindices(X,"air-ratio")
+    di <- findrunindices(X,detectors)
+    ai <- findrunindices(X,"air-ratio")
     dai <- c(di,ai)
     si <- (1:ns)[-dai] # sample indices
     ndai <- sum(X$nlr[dai])

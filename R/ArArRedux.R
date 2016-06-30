@@ -30,26 +30,17 @@ process <- function(X,irr,fract=NULL,ca=NULL,k=NULL){
 # apply calibration, fractionation, decay and interference corrections
 corrections <- function(X,irr,fract=NULL,ca=NULL,k=NULL){
     # apply the detector calibration (this won't affect the Ar40/Ar36 ratio)
-    C <- calibration(X,"DCAL")
+    CC <- calibration(X,"DCAL")
     # apply the mass fractionation correction
-    if (is.null(fract)){
-        A <- C
-    } else {
-        A <- massfractionation(C,fract)
-    }
+    if (is.null(fract)) A <- CC
+    else A <- massfractionation(CC,fract)
     # decay corrections
     D9 <- decaycorrection(A,irr,"Ar39")
     D7 <- decaycorrection(D9,irr,"Ar37")
-    if (is.null(k)){
     # interference corrections
-        K <- average(D7,grep("K:",A$labels),newlabel="K-glass")
-    } else {
-        K <- concat(list(D7,k))
-    }
-    if (is.null(ca)){
-        Ca <- average(K,grep("Ca:",K$labels),newlabel="Ca-salt")
-    } else {
-        Ca <- concat(list(K,ca))
-    }
+    if (is.null(k)) K <- average(D7,grep("K:",A$labels),newlabel="K-glass")
+    else K <- concat(list(D7,k))
+    if (is.null(ca)) Ca <- average(K,grep("Ca:",K$labels),newlabel="Ca-salt")
+    else Ca <- concat(list(K,ca))
     clcorrection(Ca,irr)
 }

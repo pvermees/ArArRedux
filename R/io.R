@@ -279,7 +279,7 @@ read <- function(xfile,masses,blabel,Jpos,kfile=NULL,cafile=NULL,
 #' @param X an object of class \code{\link{redux}}
 #' @param ... any combination of the parameters given below
 #' @return returns the modified \code{\link{redux}} object OR the
-#' current parameter values if no optional arguments are supplied.
+#'     current parameter values if no optional arguments are supplied.
 #' @examples
 #' data(Melbourne)
 #' param(Melbourne$X)$air
@@ -294,79 +294,4 @@ param <- function(X,...){
     } else {
         return(X$param)
     }
-}
-
-#' Export \code{ArArRedux} data to \code{IsoplotR}
-#'
-#' Creates a data object compatible with the \code{IsoplotR} package
-#'
-#' @param x an object of class \code{\link{redux}}
-#' @return an object of class \code{ArAr}, i.e. a table with the
-#'     following columns: \code{'Ar4036'}, \code{'errAr4036'},
-#'     \code{'Ar3936'}, \code{'errAr3936'}, \code{'Ar4039'}, and
-#'     \code{'errAr4039'}
-#' @examples
-#' data(Melbourne)
-#' print(redux2isoplotr(Melbourne$X))
-redux2isoplotr <- function(X,irr,fract=NULL,ca=NULL,k=NULL,format=1){
-    Cl <- corrections(X,irr,fract=fract,ca=ca,k=k)
-    # calculate the 40Ar*/39ArK-ratios 
-    R <- get4039(Cl,irr)
-    # calculate J factors
-    J <- getJfactors(R)
-    i <- findmatches(Cl$pos,prefixes=Cl$Jpos,invert=TRUE)
-    Y <- subset(Cl,i)
-    if (format==1){
-        out <- redux2isoplotr1(Y,J)
-    }
-    out
-}
-
-redux2isoplotr1 <- function(x,J){
-    ss <- getmasses(x,c('Ar36','Ar39'),c('Ar40')) # subset
-    snames <- ss$labels
-    nn <- length(snames)
-    out <- list()
-    out$format <- 1
-    out$x <- matrix(0,nn,6)
-    colnames(out$x) <- c('Ar39Ar40','errAr39Ar40','Ar36Ar40',
-                       'errAr36Ar40','Ar39Ar36','errAr39Ar36')
-    rownames(out$x) <- snames
-    Jisoplotr <- matrix(0,3*nn,2*nn)
-    for (ii in 1:nn){
-        if (ss$nlr[ii]==2){
-            l3640 <- getsignal(ss,snames[ii],num='Ar36')[1]
-            l3940 <- getsignal(ss,snames[ii],num='Ar39')[1]
-            Ar3940 <- exp(l3940)
-            Ar3640 <- exp(l3640)
-            Ar3936 <- exp(l3940-l3640)
-            dAr3940dl3940 <-  Ar3940
-            dAr3640dl3640 <-  Ar3640
-            dAr3936dl3940 <-  Ar3936
-            dAr3936dl3640 <- -Ar3936
-            j <- 3*(ii-1)+1
-            k <- 2*(ii-1)+1
-            out$x[ii,'Ar39Ar40'] <- Ar3940
-            out$x[ii,'Ar36Ar40'] <- Ar3640
-            out$x[ii,'Ar39Ar36'] <- Ar3936
-            Jisoplotr[j,k]     <- dAr3940dl3940
-            Jisoplotr[j+1,k+1] <- dAr3640dl3640
-            Jisoplotr[j+2,k]   <- dAr3936dl3940
-            Jisoplotr[j+2,k+1] <- dAr3936dl3640
-        }
-    }
-    covmat <- Jisoplotr %*% ss$covmat %*% t(Jisoplotr)
-    err <- sqrt(diag(covmat))
-    l <- seq(from=1,to=3*nn,by=3)
-    out$x[,'errAr39Ar40'] <- err[l]
-    out$x[,'errAr36Ar40'] <- err[l+1]
-    out$x[,'errAr39Ar36'] <- err[l+2]
-    JJ <- subset(J,label="J:")
-    if (length(JJ$intercepts)==1)
-        out$J <- c(JJ$intercepts,sqrt(JJ$covmat))
-    else if (abs(max(JJ$intercepts)-min(JJ$intercepts))<1e-10)
-        out$J <- c(JJ$intercepts[1],sqrt(JJ$covmat[1,1]))
-    else
-        stop('All samples must have the same J-factor')
-    out
 }

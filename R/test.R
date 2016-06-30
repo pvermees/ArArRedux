@@ -27,12 +27,13 @@ test <- function(option='full'){
         graphics::plot(mMC,"MD2-1a","Ar37")
     } else if (identical(option,'builddata')){
         Melbourne <- list(X=X,irr=irr,fract=fract)
-        save(Melbourne,file="../data/Melbourne.rda")        
+        save(Melbourne,file="../data/Melbourne.rda")
+    } else if (identical(option, 'subset')){
+        ages <- process(X,irr,fract)
+        out <- subset(ages,labels=c("MD2-1","MD2-2","MD2-3","MD2-4","MD2-5"))
     } else if (identical(option, 'isoplotr')){
-        # X <- subset(X,labels=c('FC','MD2-'),include.J=TRUE)
-        data4isoplotr <- redux2isoplotr(X,irr)
-        write.csv(data4isoplotr$x,file='ArAr.csv')
-        return(data4isoplotr)
+        #X <- subset(X,labels=c('MD2-'),include.J=TRUE)
+        out <- redux2isoplotr(X,irr,fract=fract,file='/home/pvermees/Desktop/ArAr.csv')
     }
-
+    out
 }

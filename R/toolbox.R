@@ -122,7 +122,8 @@ findmatches <- function(labels,prefixes,invert=FALSE){
     }
     j <- sort(i)
     if (invert){
-        return((1:ns)[-j])
+        if (length(j)==0) return(1:ns)
+        else return((1:ns)[-j])
     } else {
         return(j)
     }
@@ -141,10 +142,15 @@ getruns.timeresolved <- function(x,i,...){
 #' of indices or labels.
 #' 
 #' @param x an object of class \code{\link{timeresolved}},
-#' \code{\link{logratios}}, \code{\link{redux}} or
-#' \code{\link{results}}
+#'     \code{\link{logratios}}, \code{\link{redux}} or
+#'     \code{\link{results}}
 #' @param i a vector with indices of the selected runs
 #' @param labels a string or a vector of strings with sample names
+#' @param invert boolean flag indicating whether the selection should
+#'     be inverted, i.e. whether the selected indices or labels should
+#'     be removed rather than retained
+#' @param include.J if \code{TRUE}, automatically adds the irradiation
+#'     monitors to the selection
 #' @param ... other arguments
 #' @return an object of the same class as \code{x}
 #' @examples
@@ -163,7 +169,8 @@ subset.timeresolved <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALS
     out$irr <- x$irr[i]
     out$pos <- x$pos[i]
     out$labels <- x$labels[i]
-    if (methods::is(x,"blankcorrected")){ out$blankindices <- x$blankindices[i] }
+    if (methods::is(x,"blankcorrected"))
+        out$blankindices <- x$blankindices[i]
     return(out)
 }
 #' @rdname subset
@@ -192,7 +199,9 @@ subset.redux <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){
 #' @export
 subset.results <- function(x,i=NULL,labels=NULL,invert=FALSE,...){
     out <- x
-    if (is.null(i)) i <- getindices(x,prefix=labels,invert=invert)
+    ##:ess-bp-start::browser@nil:##
+browser(expr=is.null(.ESSBP.[["@24@"]]));##:ess-bp-end:##
+    if (is.null(i)) i <- findrunindices(x,prefixes=labels,invert=invert)
     out$labels <- x$labels[i]
     out$thedate <- x$thedate[i]
     out$ages <- x$ages[i]

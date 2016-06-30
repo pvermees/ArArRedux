@@ -93,19 +93,19 @@ in-ing the amal-ga-mated $^40$Ar$^*$/$^39$Ar$_K$-
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [10]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [11]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [12]
-Overfull \hbox (18.01726pt too wide) in paragraph at lines 686--689
+Overfull \hbox (18.01726pt too wide) in paragraph at lines 690--693
 []\T1/ptm/m/n/10 a boolean in-di-cat-ing whether the data are to be treated as 
 mul-ti-col-lec-tor (PH=FALSE)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [13]
-Underfull \hbox (badness 10000) in paragraph at lines 751--761
+Underfull \hbox (badness 10000) in paragraph at lines 755--765
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [14]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [15]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [16]
-Overfull \hbox (42.6774pt too wide) in paragraph at lines 926--929
+Overfull \hbox (42.6774pt too wide) in paragraph at lines 930--933
 \T1/zi4/m/n/10 signals\T1/ptm/m/n/10 : a list with ob-jects of class [][]\T1/zi
 4/m/n/10 timeresolved[][][]\T1/ptm/m/n/10 , each cor-re-spond-ing to a de-tec-t
 or (i.e. length(\T1/zi4/m/n/10 signals\T1/ptm/m/n/10 )==1
@@ -113,19 +113,26 @@ or (i.e. length(\T1/zi4/m/n/10 signals\T1/ptm/m/n/10 )==1
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [17]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [18]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (3.55779pt too wide) in paragraph at lines 1078--1081
+Overfull \hbox (3.55779pt too wide) in paragraph at lines 1082--1085
 []\T1/ptm/m/n/10 a string de-not-ing the type of mass spec-trom-e-ter. At the m
 o-ment only the ARGUS-
 [19] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [20]
+Overfull \hbox (1.69841pt too wide) in paragraph at lines 1173--1177
+[]\T1/ptm/m/n/10 an ob-ject of class \T1/zi4/m/n/10 ArAr\T1/ptm/m/n/10 , i.e. a
+ ta-ble with the fol-low-ing columns: \TS1/zi4/m/n/10 '\T1/zi4/m/n/10 Ar4036\TS
+1/zi4/m/n/10 '\T1/ptm/m/n/10 , \TS1/zi4/m/n/10 '\T1/zi4/m/n/10 errAr4036\TS1/zi
+4/m/n/10 '\T1/ptm/m/n/10 , \TS1/zi4/m/n/10 '\T1/zi4/m/n/10 Ar3936\TS1/zi4/m/n/1
+0 '\T1/ptm/m/n/10 ,
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
-Underfull \hbox (badness 10000) in paragraph at lines 1134--1138
+Underfull \hbox (badness 10000) in paragraph at lines 1193--1197
 
-[20] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [21]
+[21] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [22]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
-(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [22]
-(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [23]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [24]
 No file Rd2.ind.
-[23] (./Rd2.aux)
+[25] (./Rd2.aux)
 
 Package rerunfilecheck Warning: File `Rd2.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
@@ -141,12 +148,12 @@ consolata-zi4r.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr
 are/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/urw/times/utmri8a.pfb>
-Output written on Rd2.pdf (23 pages, 112298 bytes).
+Output written on Rd2.pdf (25 pages, 114623 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
-Scanning input file Rd2.idx....done (75 entries accepted, 0 rejected).
-Sorting entries....done (480 comparisons).
-Generating output file Rd2.ind....done (108 lines written, 4 warnings).
+Scanning input file Rd2.idx....done (79 entries accepted, 0 rejected).
+Sorting entries....done (541 comparisons).
+Generating output file Rd2.ind....done (109 lines written, 4 warnings).
 Output written in Rd2.ind.
 Transcript written in Rd2.ilg.
 This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian)
@@ -242,19 +249,19 @@ in-ing the amal-ga-mated $^40$Ar$^*$/$^39$Ar$_K$-
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [11]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [12]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [13]
-Overfull \hbox (18.01726pt too wide) in paragraph at lines 686--689
+Overfull \hbox (18.01726pt too wide) in paragraph at lines 690--693
 []\T1/ptm/m/n/10 a boolean in-di-cat-ing whether the data are to be treated as 
 mul-ti-col-lec-tor (PH=FALSE)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [14]
-Underfull \hbox (badness 10000) in paragraph at lines 751--761
+Underfull \hbox (badness 10000) in paragraph at lines 755--765
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [15]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [16]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [17]
-Overfull \hbox (42.6774pt too wide) in paragraph at lines 926--929
+Overfull \hbox (42.6774pt too wide) in paragraph at lines 930--933
 \T1/zi4/m/n/10 signals\T1/ptm/m/n/10 : a list with ob-jects of class [][]\T1/zi
 4/m/n/10 timeresolved[][][]\T1/ptm/m/n/10 , each cor-re-spond-ing to a de-tec-t
 or (i.e. length(\T1/zi4/m/n/10 signals\T1/ptm/m/n/10 )==1
@@ -262,22 +269,30 @@ or (i.e. length(\T1/zi4/m/n/10 signals\T1/ptm/m/n/10 )==1
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [18]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [19]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (3.55779pt too wide) in paragraph at lines 1078--1081
+Overfull \hbox (3.55779pt too wide) in paragraph at lines 1082--1085
 []\T1/ptm/m/n/10 a string de-not-ing the type of mass spec-trom-e-ter. At the m
 o-ment only the ARGUS-
 [20] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [21]
+Overfull \hbox (1.69841pt too wide) in paragraph at lines 1173--1177
+[]\T1/ptm/m/n/10 an ob-ject of class \T1/zi4/m/n/10 ArAr\T1/ptm/m/n/10 , i.e. a
+ ta-ble with the fol-low-ing columns: \TS1/zi4/m/n/10 '\T1/zi4/m/n/10 Ar4036\TS
+1/zi4/m/n/10 '\T1/ptm/m/n/10 , \TS1/zi4/m/n/10 '\T1/zi4/m/n/10 errAr4036\TS1/zi
+4/m/n/10 '\T1/ptm/m/n/10 , \TS1/zi4/m/n/10 '\T1/zi4/m/n/10 Ar3936\TS1/zi4/m/n/1
+0 '\T1/ptm/m/n/10 ,
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
-Underfull \hbox (badness 10000) in paragraph at lines 1134--1138
+Underfull \hbox (badness 10000) in paragraph at lines 1193--1197
 
-[21] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [22]
+[22] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [23]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
-(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [23]
-(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) (./Rd2.ind [24]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [24]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [25] (./Rd2.ind
+[26]
 
 LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
 (Font)              using `T1/zi4/m/n' instead on input line 69.
 
-[25]) (./Rd2.aux)
+[27]) (./Rd2.aux)
 
 Package rerunfilecheck Warning: File `Rd2.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
@@ -296,12 +311,12 @@ consolata-zi4r.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr
 are/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/urw/times/utmri8a.pfb>
-Output written on Rd2.pdf (25 pages, 119339 bytes).
+Output written on Rd2.pdf (27 pages, 121858 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
-Scanning input file Rd2.idx....done (75 entries accepted, 0 rejected).
-Sorting entries....done (480 comparisons).
-Generating output file Rd2.ind....done (108 lines written, 4 warnings).
+Scanning input file Rd2.idx....done (79 entries accepted, 0 rejected).
+Sorting entries....done (541 comparisons).
+Generating output file Rd2.ind....done (109 lines written, 4 warnings).
 Output written in Rd2.ind.
 Transcript written in Rd2.ilg.
 This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian)
@@ -397,19 +412,19 @@ in-ing the amal-ga-mated $^40$Ar$^*$/$^39$Ar$_K$-
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [11]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [12]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [13]
-Overfull \hbox (18.01726pt too wide) in paragraph at lines 686--689
+Overfull \hbox (18.01726pt too wide) in paragraph at lines 690--693
 []\T1/ptm/m/n/10 a boolean in-di-cat-ing whether the data are to be treated as 
 mul-ti-col-lec-tor (PH=FALSE)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [14]
-Underfull \hbox (badness 10000) in paragraph at lines 751--761
+Underfull \hbox (badness 10000) in paragraph at lines 755--765
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [15]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [16]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [17]
-Overfull \hbox (42.6774pt too wide) in paragraph at lines 926--929
+Overfull \hbox (42.6774pt too wide) in paragraph at lines 930--933
 \T1/zi4/m/n/10 signals\T1/ptm/m/n/10 : a list with ob-jects of class [][]\T1/zi
 4/m/n/10 timeresolved[][][]\T1/ptm/m/n/10 , each cor-re-spond-ing to a de-tec-t
 or (i.e. length(\T1/zi4/m/n/10 signals\T1/ptm/m/n/10 )==1
@@ -417,22 +432,30 @@ or (i.e. length(\T1/zi4/m/n/10 signals\T1/ptm/m/n/10 )==1
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [18]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [19]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (3.55779pt too wide) in paragraph at lines 1078--1081
+Overfull \hbox (3.55779pt too wide) in paragraph at lines 1082--1085
 []\T1/ptm/m/n/10 a string de-not-ing the type of mass spec-trom-e-ter. At the m
 o-ment only the ARGUS-
 [20] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [21]
+Overfull \hbox (1.69841pt too wide) in paragraph at lines 1173--1177
+[]\T1/ptm/m/n/10 an ob-ject of class \T1/zi4/m/n/10 ArAr\T1/ptm/m/n/10 , i.e. a
+ ta-ble with the fol-low-ing columns: \TS1/zi4/m/n/10 '\T1/zi4/m/n/10 Ar4036\TS
+1/zi4/m/n/10 '\T1/ptm/m/n/10 , \TS1/zi4/m/n/10 '\T1/zi4/m/n/10 errAr4036\TS1/zi
+4/m/n/10 '\T1/ptm/m/n/10 , \TS1/zi4/m/n/10 '\T1/zi4/m/n/10 Ar3936\TS1/zi4/m/n/1
+0 '\T1/ptm/m/n/10 ,
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
-Underfull \hbox (badness 10000) in paragraph at lines 1134--1138
+Underfull \hbox (badness 10000) in paragraph at lines 1193--1197
 
-[21] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [22]
+[22] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [23]
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
-(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [23]
-(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) (./Rd2.ind [24]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [24]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [25] (./Rd2.ind
+[26]
 
 LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
 (Font)              using `T1/zi4/m/n' instead on input line 69.
 
-[25]) (./Rd2.aux)
+[27]) (./Rd2.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -446,8 +469,8 @@ consolata-zi4r.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr
 are/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/urw/times/utmri8a.pfb>
-Output written on Rd2.pdf (25 pages, 119668 bytes).
+Output written on Rd2.pdf (27 pages, 122156 bytes).
 Transcript written on Rd2.log.
 Saving output to 'ArArRedux-manual.pdf' ...
 Done
-You may want to clean up by 'rm -rf /tmp/Rtmpn8TtiV/Rd2pdf269e241fd134'
+You may want to clean up by 'rm -rf /tmp/Rtmp4366mA/Rd2pdf4c707d2a891b'
