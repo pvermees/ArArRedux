@@ -107,7 +107,8 @@ findrunindices <- function(X,prefixes,invert=FALSE,include.J=FALSE){
     out <- (i %in% i1)
     if (include.J) {
         i2 <- findmatches(X$pos,prefixes=X$Jpos,invert)
-        out <- out | (i %in% i2)
+        i3 <- findmatches(X$labels,prefixes=c("DCAL","K:","Ca:"),invert)
+        out <- out | (i %in% i2) | (i %in% i3)
     }
     which(out)
 }
@@ -199,8 +200,6 @@ subset.redux <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){
 #' @export
 subset.results <- function(x,i=NULL,labels=NULL,invert=FALSE,...){
     out <- x
-    ##:ess-bp-start::browser@nil:##
-browser(expr=is.null(.ESSBP.[["@24@"]]));##:ess-bp-end:##
     if (is.null(i)) i <- findrunindices(x,prefixes=labels,invert=invert)
     out$labels <- x$labels[i]
     out$thedate <- x$thedate[i]

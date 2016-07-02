@@ -1,7 +1,7 @@
 Package: ArArRedux
 Title: Rigorous Data Reduction and Error Propagation of Ar40 / Ar39
         Data
-Version: 0.3
+Version: 1.0
 Authors@R: person("Pieter", "Vermeesch", , "p.vermeesch@ucl.ac.uk", role = c("aut", "cre"))
 Description: Processes noble gas mass spectrometer data to determine the
     isotopic composition of argon (comprised of Ar36, Ar37, Ar38, Ar39 and Ar40)
@@ -25,4 +25,4 @@ Imports: utils, stats, methods, graphics, grDevices
 License: GPL-2
 LazyData: true
 RoxygenNote: 5.0.1
-Built: R 3.4.0; ; 2016-06-28 08:22:09 UTC; unix
+Built: R 3.4.0; ; 2016-06-30 15:09:40 UTC; unix

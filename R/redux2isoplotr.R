@@ -31,7 +31,7 @@ redux2isoplotr <- function(x,irr,fract=NULL,ca=NULL,
                            k=NULL,format=1,file=NULL){
     X <- redux2ArAr(x,irr,fract=fract,ca=ca,k=k,format=format,file=file)
     if (format==1) out <- format1(X)
-    else out <- format2(X)
+    else out <- X
     if (is.null(file)) return(out)
     else utils::write.table(out,file=file,col.names=FALSE,
                             row.names=FALSE,sep=',')
@@ -56,14 +56,14 @@ redux2ArAr <- function(x,irr,fract=NULL,ca=NULL,
     } else {
         stop("The dataset contains more than one J-factor.")
     }
-    labels <- rep(c('Ar36Ar40','Ar39Ar40','Ar39Ar36','Ar40Ar36'),ns)
+    labels <- rep(c('Ar39Ar40','Ar36Ar40','Ar39Ar36','Ar40Ar36'),ns)
     out$x <- rep(0,4*ns)
     out$covmat <- matrix(0,4*ns,4*ns)
     J <- matrix(0,nrow=4*ns,ncol=ni)
     hasKglass <- "K-glass" %in% Cl$labels
     hasCasalt <- "Ca-salt" %in% Cl$labels
     for (i in 1:ns){
-        ri <- (i-1)*4 # row index (36/40,39/40,39/36,40/36)
+        ri <- (i-1)*4 # row index (39/40,36/40,39/36,40/36)
         ci <- (i-1)*6 # column index (A,B,C,D,E,F)
         label <- Y$labels[i]
         AA <- Y$intercepts[getindices(Y,label,num='A')]
@@ -81,26 +81,26 @@ redux2ArAr <- function(x,irr,fract=NULL,ca=NULL,
             BB <- Y$intercepts[getindices(Y,label,num='B')]
             FF <- Y$intercepts[getindices(Y,label,num='F')]
         }
-        out$x[ri+1] <- (AA-BB-CC)/(1-DD)
-        out$x[ri+2] <- (EE-FF)/(1-DD)
-        out$x[ri+3] <- (EE-FF)/(AA-BB-CC)
-        out$x[ri+4] <- (1-DD)/(AA-BB-CC)
-        J[ri+1,ci+1] <- 1/(1-DD)             # dX1dA
-        J[ri+1,ci+2] <- 1/(DD-1)             # dX1dB
-        J[ri+1,ci+3] <- 1/(DD-1)             # dX1dC
-        J[ri+1,ci+4] <- (AA-BB-CC)/(1-DD)^2  # dX1dD
-        J[ri+2,ci+4] <- (EE-FF)/(1-DD)^2     # dY1dD
-        J[ri+2,ci+5] <- 1/(1-DD)             # dY1dE
-        J[ri+2,ci+6] <- 1/(DD-1)             # dY1dF
+        out$x[ri+1] <- (EE-FF)/(1-DD)        # X1=Ar39/Ar40
+        out$x[ri+2] <- (AA-BB-CC)/(1-DD)     # Y1=Ar36/Ar40
+        out$x[ri+3] <- (EE-FF)/(AA-BB-CC)    # X2=Ar39/Ar36
+        out$x[ri+4] <- (1-DD)/(AA-BB-CC)     # Y2=Ar40/Ar36
+        J[ri+1,ci+4] <- -(EE-FF)/(1-DD)^2     # dX1dD
+        J[ri+1,ci+5] <- 1/(1-DD)             # dX1dE
+        J[ri+1,ci+6] <- -1/(1-DD)            # dX1dF
+        J[ri+2,ci+1] <- 1/(1-DD)             # dY1dA
+        J[ri+2,ci+2] <- -1/(1-DD)            # dY1dB
+        J[ri+2,ci+3] <- -1/(1-DD)            # dY1dC
+        J[ri+2,ci+4] <- -(AA-BB-CC)/(1-DD)^2 # dY1dD
         J[ri+3,ci+1] <- (FF-EE)/(AA-BB-CC)^2 # dX2dA
         J[ri+3,ci+2] <- (EE-FF)/(AA-BB-CC)^2 # dX2dB
         J[ri+3,ci+3] <- (EE-FF)/(AA-BB-CC)^2 # dX2dC
-        J[ri+3,ci+4] <- 1/(BB+CC-AA)         # dX2dD
-        J[ri+4,ci+1] <- (DD-1)/(AA-BB-CC)^2  # dY2dA
+        J[ri+3,ci+5] <- 1/(AA-BB-CC)         # dX2dE
+        J[ri+3,ci+6] <- -1/(AA-BB-CC)        # dX2dF
+        J[ri+4,ci+1] <- -(1-DD)/(AA-BB-CC)^2 # dY2dA
         J[ri+4,ci+2] <- (1-DD)/(AA-BB-CC)^2  # dY2dB
         J[ri+4,ci+3] <- (1-DD)/(AA-BB-CC)^2  # dY2dC
-        J[ri+4,ci+5] <- 1/(AA-BB-CC)         # dY2dE
-        J[ri+4,ci+5] <- 1/(BB+CC-AA)         # dY2dF
+        J[ri+4,ci+4] <- -1/(AA-BB-CC)        # dY2dD
     }
     out$covmat <- J %*% Y$covmat %*% t(J)
     names(out$x) <- labels
@@ -129,10 +129,6 @@ format1 <- function(x){
         out[i+3,6] <- sqrt(x$covmat[i96[i],i96[i]])
     }
     out
-}
-
-format2 <- function(x){
-    x
 }
 
 getJABCDEF <- function(Z,Slabels,nl){
