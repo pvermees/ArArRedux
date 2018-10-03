@@ -80,22 +80,22 @@ averagebypos <- function(X,pos,newlabel){
 #' @examples
 #' data(Melbourne)
 #' ages <- process(Melbourne$X,Melbourne$irr,Melbourne$fract)
-#' weightedmean(ages,"MD2-1")
+#' weightedmean(ages,"MD2-")
 #' @export
 weightedmean <- function(ages,prefix=NULL){
     if (is.null(prefix)){
         slabs <- ages$labels
     } else if (length(prefix)==1){
         slabs <- ages$labels[grep(prefix,ages$labels)]
-    } else {
         slabs <- prefix
+    } else {
     }
     subs <- subset(ages,labels=slabs)
     n <- nruns(subs)
-    W <- rep(1,n) # design matrix
+    W <- matrix(1,n,1) # design matrix
     invSigma <- solve(subs$covmat)
-    vart <- 1/(W %*% invSigma %*% W)
-    avgt <- vart*(W %*% invSigma %*% subs$ages)
+    vart <- solve(t(W) %*% invSigma %*% W)
+    avgt <- vart*(t(W) %*% invSigma %*% subs$ages)
     mswd <- ((subs$ages - avgt) %*% solve(subs$covmat) %*%
              (subs$ages - avgt))/(n-1)    
     return(list(avgt=avgt,err=sqrt(vart),MSWD=mswd))

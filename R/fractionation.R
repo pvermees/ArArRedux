@@ -6,8 +6,7 @@
 #' denominator isotopes.
 #' 
 #' @param X an object of class \code{redux}
-#' @param fract a list with fractionation data for the detectors used
-#' to measure the denominator isotopes
+#' @param fract a list with fractionation data for Ar37, Ar39 and Ar40
 #' @return an object of class \code{redux}
 #' @examples
 #' data(Melbourne)

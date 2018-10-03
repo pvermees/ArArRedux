@@ -2,9 +2,9 @@
 % Please edit documentation in R/blank.R
 \name{blankcorr}
 \alias{blankcorr}
-\alias{blankcorr.PHdata}
 \alias{blankcorr.default}
 \alias{blankcorr.timeresolved}
+\alias{blankcorr.PHdata}
 \title{Apply a blank correction}
 \usage{
 blankcorr(x, ...)
@@ -39,4 +39,3 @@ blanklabel <- "EXB#"
 l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
 plotcorr(l)
 }
-

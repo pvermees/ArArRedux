@@ -21,4 +21,3 @@ irradiation stack \cr
 \code{thedate}: a vector containing the acquisition dates and times\cr
 \code{nlr}: a vector with the number of logratios per run\cr
 }
-

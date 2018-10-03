@@ -27,4 +27,3 @@ A <- massfractionation(C,Melbourne$fract)
 D9 <- decaycorrection(A,Melbourne$irr,"Ar39")
 plotcorr(D9)
 }
-

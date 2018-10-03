@@ -47,4 +47,3 @@ data(Melbourne)
 if (isTRUE(all.equal(Melbourne$X,X))) {
    print("We just reconstructed the built-in dataset Melbourne$X")}
 }
-

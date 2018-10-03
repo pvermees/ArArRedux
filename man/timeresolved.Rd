@@ -21,4 +21,3 @@ irradiation stack \cr
 \seealso{
 \code{\link{loaddata}}
 }
-

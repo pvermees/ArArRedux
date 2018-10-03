@@ -90,8 +90,8 @@ flush(stderr()); flush(stdout())
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: blankcorr
 ### Title: Apply a blank correction
-### Aliases: blankcorr blankcorr.PHdata blankcorr.default
-###   blankcorr.timeresolved
+### Aliases: blankcorr blankcorr.default blankcorr.timeresolved
+###   blankcorr.PHdata
 
 ### ** Examples
 
@@ -226,8 +226,8 @@ flush(stderr()); flush(stdout())
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: fitlogratios
 ### Title: Extrapolation to 'time zero'
-### Aliases: fitlogratios fitlogratios.PHdata fitlogratios.default
-###   fitlogratios.timeresolved
+### Aliases: fitlogratios fitlogratios.default fitlogratios.timeresolved
+###   fitlogratios.PHdata
 
 ### ** Examples
 
@@ -343,8 +343,8 @@ flush(stderr()); flush(stdout())
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: getmasses
 ### Title: Select a subset of isotopes from a dataset
-### Aliases: getmasses getmasses.default getmasses.logratios
-###   getmasses.redux getmasses.timeresolved
+### Aliases: getmasses getmasses.default getmasses.timeresolved
+###   getmasses.logratios getmasses.redux
 
 ### ** Examples
 
@@ -491,7 +491,7 @@ flush(stderr()); flush(stdout())
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: plot.timeresolved
 ### Title: Plot a time resolved mass spectrometry signal
-### Aliases: plot.PHdata plot.timeresolved
+### Aliases: plot.timeresolved plot.PHdata
 
 ### ** Examples
 
@@ -566,7 +566,8 @@ cafile <- system.file("Ca-salt.csv",package="ArArRedux")
 dfile <- system.file("Calibration.csv",package="ArArRedux")
 masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
 dlabels <- c("H1","AX","L1","L2")
-X <- read(samplefile,masses,"EXB#",c(3,15),kfile,cafile,dfile,dlabels)
+X <- read(samplefile,masses,blabel="EXB#",Jpos=c(3,15),
+          kfile,cafile,dfile,dlabels)
 plotcorr(X)
 
 
@@ -602,8 +603,8 @@ flush(stderr()); flush(stdout())
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: subset.timeresolved
 ### Title: Select a subset of some data
-### Aliases: subset.logratios subset.redux subset.results
-###   subset.timeresolved
+### Aliases: subset.timeresolved subset.logratios subset.redux
+###   subset.results
 
 ### ** Examples
 
@@ -652,7 +653,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 data(Melbourne)
 ages <- process(Melbourne$X,Melbourne$irr,Melbourne$fract)
-weightedmean(ages,"MD2-1")
+weightedmean(ages,"MD2-")
 
 
 

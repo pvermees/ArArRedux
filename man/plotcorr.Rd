@@ -17,4 +17,3 @@ this is a coloured image for visual inspection.
 data(Melbourne)
 plotcorr(Melbourne$X)
 }
-

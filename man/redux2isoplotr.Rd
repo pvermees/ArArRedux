@@ -45,4 +45,3 @@ Creates a data object compatible with the \code{IsoplotR} package
 data(Melbourne)
 print(redux2isoplotr(Melbourne$X,Melbourne$irr))
 }
-

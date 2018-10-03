@@ -24,4 +24,3 @@ Initialises a new \code{\link{redux}} object by packing a
 \code{\link{logratios}} dataset together with all the parameters
 needed for age calculation
 }
-

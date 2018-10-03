@@ -49,4 +49,3 @@ k <- interference(intercepts=4.637788,covmat=7.9817e-4,
 ages <- process(X,irr,ca=ca,k=k)
 summary(ages)
 }
-

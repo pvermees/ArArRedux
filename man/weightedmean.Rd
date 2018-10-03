@@ -26,6 +26,5 @@ into covariances.
 \examples{
 data(Melbourne)
 ages <- process(Melbourne$X,Melbourne$irr,Melbourne$fract)
-weightedmean(ages,"MD2-1")
+weightedmean(ages,"MD2-")
 }
-

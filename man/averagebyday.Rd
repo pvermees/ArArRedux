@@ -28,4 +28,3 @@ ld <- fitlogratios(blankcorr(md))
 d <- averagebyday(ld,"DCAL")
 plotcorr(d)
 }
-

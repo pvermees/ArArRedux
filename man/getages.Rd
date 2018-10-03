@@ -26,4 +26,3 @@ J <- getJfactors(R)
 ages <- getages(J)
 plotcorr(ages)
 }
-

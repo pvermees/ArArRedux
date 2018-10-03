@@ -2,9 +2,9 @@
 % Please edit documentation in R/timezero.R
 \name{fitlogratios}
 \alias{fitlogratios}
-\alias{fitlogratios.PHdata}
 \alias{fitlogratios.default}
 \alias{fitlogratios.timeresolved}
+\alias{fitlogratios.PHdata}
 \title{Extrapolation to 'time zero'}
 \usage{
 fitlogratios(x, ...)
@@ -42,4 +42,3 @@ blanklabel <- "EXB#"
 l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
 plotcorr(l)
 }
-

@@ -9,8 +9,7 @@ massfractionation(X, fract)
 \arguments{
 \item{X}{an object of class \code{redux}}
 
-\item{fract}{a list with fractionation data for the detectors used
-to measure the denominator isotopes}
+\item{fract}{a list with fractionation data for Ar37, Ar39 and Ar40}
 }
 \value{
 an object of class \code{redux}
@@ -27,4 +26,3 @@ C <- calibration(Melbourne$X,"DCAL")
 A <- massfractionation(C,Melbourne$fract)
 plotcorr(A)
 }
-

@@ -32,13 +32,14 @@ test <- function(option='full'){
         ages <- process(X,irr,fract)
         out <- subset(ages,labels=c("MD2-1","MD2-2","MD2-3","MD2-4","MD2-5"))
     } else if (identical(option, 'isoplotr')){
+        X <- read(samplefile,masses,blanklabel,Jpos)
         Y <- subset(X,labels=c("MD2-2h","MD2-2i","MD2-2j","MD2-2k","MD2-2l",
                                "MD2-2m","MD2-2n","MD2-2o","MD2-2p","MD2-2q",
                                "MD2-2r","MD2-2s","MD2-2t","MD2-2u"),include.J=TRUE)
-        out <- redux2isoplotr(Y,irr,fract=fract,format=1,
-                              file='/home/pvermees/Dropbox/Programming/R/IsoplotR/inst/ArAr.csv')
+        out <- redux2isoplotr(Y,irr,format=1,
+                              file='/home/pvermees/Dropbox/Programming/R/IsoplotR/inst/ArAr3.csv')
         #out <- redux2isoplotr(Y,irr,fract=fract,format=2)
-        #ArAr <- out; save(ArAr,file="/home/pvermees/Dropbox/Programming/R/IsoplotR/data/ArAr.rda")
+#        ArAr <- out; save(ArAr,file="/home/pvermees/Dropbox/Programming/R/IsoplotR/data/ArAr.rda")
     }
     out
 }

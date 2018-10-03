@@ -35,8 +35,8 @@ fitlogratios.timeresolved <- function(x,denmass,...){
 #' @rdname fitlogratios
 #' @export
 fitlogratios.PHdata <- function(x,denmass=NULL,...){
-    z <- newfit(x)
     for (i in 1:nmasses(x)){
+    z <- newfit(x)
         l <- takelogs(x$signals[[i]])
         z <- setmasses(z,z$masses[i],timezero(l))
     }

@@ -25,4 +25,3 @@ data(Melbourne)
 K <- average(Melbourne$X,grep("K:",Melbourne$X$labels),newlabel="K-glass")
 plotcorr(K)
 }
-

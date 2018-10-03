@@ -85,7 +85,7 @@ redux2ArAr <- function(x,irr,fract=NULL,ca=NULL,
         out$x[ri+2] <- (AA-BB-CC)/(1-DD)     # Y1=Ar36/Ar40
         out$x[ri+3] <- (EE-FF)/(AA-BB-CC)    # X2=Ar39/Ar36
         out$x[ri+4] <- (1-DD)/(AA-BB-CC)     # Y2=Ar40/Ar36
-        J[ri+1,ci+4] <- -(EE-FF)/(1-DD)^2     # dX1dD
+        J[ri+1,ci+4] <- -(EE-FF)/(1-DD)^2    # dX1dD
         J[ri+1,ci+5] <- 1/(1-DD)             # dX1dE
         J[ri+1,ci+6] <- -1/(1-DD)            # dX1dF
         J[ri+2,ci+1] <- 1/(1-DD)             # dY1dA
@@ -133,9 +133,14 @@ format1 <- function(x){
 
 getJABCDEF <- function(Z,Slabels,nl){
     J <- matrix(0,nrow=nl,ncol=length(Z$intercepts))
-    i67ca <- getindices(Z,"Ca-salt","Ar36","Ar37")
-    i97ca <- getindices(Z,"Ca-salt","Ar39","Ar37")
-    i09k <- getindices(Z,"K-glass","Ar40","Ar39")
+    hasKglass <- "K-glass" %in% Z$labels
+    hasCasalt <- "Ca-salt" %in% Z$labels
+    if (hasCasalt){
+        i67ca <- getindices(Z,"Ca-salt","Ar36","Ar37")
+        i97ca <- getindices(Z,"Ca-salt","Ar39","Ar37")
+    }
+    if (hasKglass)
+        i09k <- getindices(Z,"K-glass","Ar40","Ar39")
     for (i in 1:length(Slabels)){
         j <- (i-1)*6
         label <- Slabels[i]
@@ -144,12 +149,12 @@ getJABCDEF <- function(Z,Slabels,nl){
         i80 <- getindices(Z,label,"Ar38","Ar40")
         i90 <- getindices(Z,label,"Ar39","Ar40")
         i68cl <- getindices(Z,paste("Cl:",label,sep=""),"Ar36","Ar38")
-        J[j+1,i60]    <- 1         # A
-        J[j+2,c(i67ca,i70)] <- 1   # B
-        J[j+3,c(i68cl,i80)] <- 1   # C
-        J[j+4,c(i09k,i90)] <- 1    # D
-        J[j+5,i90] <- 1            # E
-        J[j+6,c(i70,i97ca)] <- 1   # F
+        J[j+1,i60]    <- 1                        # A
+        if (hasCasalt) J[j+2,c(i67ca,i70)] <- 1   # B
+        J[j+3,c(i68cl,i80)] <- 1                  # C
+        if (hasKglass) J[j+4,c(i09k,i90)] <- 1    # D
+        J[j+5,i90] <- 1                           # E
+        if (hasCasalt) J[j+6,c(i70,i97ca)] <- 1   # F
     }
     return(J)
 }

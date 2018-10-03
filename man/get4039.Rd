@@ -26,4 +26,3 @@ data(Melbourne)
 R <- get4039(Melbourne$X,Melbourne$irr)
 plotcorr(R)
 }
-

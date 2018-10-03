@@ -18,4 +18,3 @@ to a detector (i.e. length(\code{signals})==1 for single collector instruments).
 \seealso{
 \code{\link{loaddata}}
 }
-

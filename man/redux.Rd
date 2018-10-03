@@ -25,4 +25,3 @@ irradiation stack \cr
 \seealso{
 param
 }
-

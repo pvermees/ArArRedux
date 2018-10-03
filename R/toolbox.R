@@ -204,8 +204,7 @@ subset.results <- function(x,i=NULL,labels=NULL,invert=FALSE,...){
     out$labels <- x$labels[i]
     out$thedate <- x$thedate[i]
     out$ages <- x$ages[i]
-    out$covmat <- x$covmat[i,]
-    out$covmat <- out$covmat[,i]
+    out$covmat <- x$covmat[i,i]
     return(out)
 }
 

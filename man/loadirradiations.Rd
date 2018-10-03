@@ -26,4 +26,3 @@ irrfile <- system.file("irradiations.csv",package="ArArRedux")
 irr <- loadirradiations(irrfile)
 str(irr)
 }
-

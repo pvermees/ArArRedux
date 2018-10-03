@@ -26,4 +26,3 @@ R <- get4039(Melbourne$X,Melbourne$irr)
 J <- getJfactors(R)
 plotcorr(J)
 }
-

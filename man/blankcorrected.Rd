@@ -14,4 +14,3 @@ Extends the class classes \code{\link{timeresolved}} and
 blank. \code{\link{fitlogratios}} uses this information to group
 the samples during regression to 'time zero'.
 }
-

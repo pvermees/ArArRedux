@@ -13,4 +13,3 @@ A list with the following items:
 \code{covmat}: the covariance matrix of \code{intercepts}\cr
 \code{thedate}: a vector containing the acquisition dates and times\cr
 }
-

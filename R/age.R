@@ -52,6 +52,5 @@ getages <- function(RJ){
 summary.results <- function(object,...){
     tab <- cbind(object$labels,object$ages,sqrt(diag(object$covmat)))
     colnames(tab) <- c("name","age[Ma]","s.e.[Ma]")
-    print(tab)
     return(tab)
 }

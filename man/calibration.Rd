@@ -22,4 +22,3 @@ data(Melbourne)
 C <- calibration(Melbourne$X,"DCAL")
 plotcorr(C)
 }
-

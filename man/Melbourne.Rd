@@ -15,4 +15,3 @@ plotcorr(Melbourne$X)
 \author{
 David Philips \email{dphillip@unimelb.edu.au}
 }
-

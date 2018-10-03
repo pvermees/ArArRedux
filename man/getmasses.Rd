@@ -3,9 +3,9 @@
 \name{getmasses}
 \alias{getmasses}
 \alias{getmasses.default}
+\alias{getmasses.timeresolved}
 \alias{getmasses.logratios}
 \alias{getmasses.redux}
-\alias{getmasses.timeresolved}
 \title{Select a subset of isotopes from a dataset}
 \usage{
 getmasses(x, ...)
@@ -49,4 +49,3 @@ lk <- fitlogratios(blankcorr(mk,"EXB#","K:"),"Ar40")
 k <- getmasses(lk,"Ar39","Ar40") # subset of the relevant isotopes
 plotcorr(k)
 }
-

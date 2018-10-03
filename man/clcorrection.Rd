@@ -22,4 +22,3 @@ data(Melbourne)
 Cl <- clcorrection(Melbourne$X,Melbourne$irr)
 plotcorr(Cl)
 }
-

@@ -211,14 +211,15 @@ loadirradiations <- function(fname){
 #' dfile <- system.file("Calibration.csv",package="ArArRedux")
 #' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
 #' dlabels <- c("H1","AX","L1","L2")
-#' X <- read(samplefile,masses,"EXB#",c(3,15),kfile,cafile,dfile,dlabels)
+#' X <- read(samplefile,masses,blabel="EXB#",Jpos=c(3,15),
+#'           kfile,cafile,dfile,dlabels)
 #' plotcorr(X)
 #' @export
 read <- function(xfile,masses,blabel,Jpos,kfile=NULL,cafile=NULL,
                   dfile=NULL,dlabels=NULL,MS="ARGUS-VI"){
     # load the .csv files
-    m <- loaddata(xfile,masses,MS) # samples and J-standards
-    x <- fitlogratios(blankcorr(m,blabel),"Ar40")    
+    m <- loaddata(xfile,masses,MS,PH=FALSE) # samples and J-standards
+    x <- fitlogratios(blankcorr(m,blabel),"Ar40")
     if (!is.null(kfile)){ # K-interference data
         # subset of the relevant isotopes
         mk <- loaddata(kfile,masses,MS)
