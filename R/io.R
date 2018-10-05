@@ -186,55 +186,61 @@ loadirradiations <- function(fname){
 #' Reads raw mass spectrometer data and parses it into a
 #' \code{\link{redux}} format for further processing.
 #' 
-#' @param xfile a .csv file with samples and fluence monitor data
-#' @param masses a list which specifies the order in which the isotopes
-#' are recorded by the mass spectrometer
+#' @param x a \code{.csv} file with samples and fluence monitor data
+#'     (if \code{MS = 'ARGUS-VI'}) OR a directory with \code{.RUN}
+#'     files (if \code{MS = 'WiscAr'})
 #' @param blabel a prefix string denoting the blanks
 #' @param Jpos a vector of integers denoting the positions of the
-#' fluence monitors in the irradiation stack
-#' @param kfile a .csv file with the K-interference monitor data
-#' (optional)
-#' @param cafile a .csv file with the Ca-interference monitor data
-#' (optional)
-#' @param dfile a .csv file with the detector calibration data
-#' (optional)
-#' @param dlabels a list which specifies the names of the detectors
-#' and the order in which they were recorded by the mass spectrometer
+#'     fluence monitors in the irradiation stack
+#' @param kdat a \code{.csv} file with the K-interference monitor data
+#'     (if \code{MS = 'ARGUS-VI'}) OR a directory with \code{.RUN}
+#'     files of K-interference monitor data (if \code{MS = 'WiscAr'})
+#'     (optional)
+#' @param cadat a \code{.csv} file with the Ca-interference monitor
+#'     data (if \code{MS = 'ARGUS-VI'}) OR a directory with
+#'     \code{.RUN} files of Ca-interference monitor data (if \code{MS
+#'     = 'WiscAr'}) (optional)
+#' @param ddat a \code{.csv} file with the detector calibration data
+#'     (if \code{MS = 'ARGUS-VI'}) OR the prefix of the standard gas
+#'     measurements (if \code{MS = 'WiscAr'}) (optional)
 #' @param MS a string denoting the type of mass spectrometer. At the
-#' moment only the ARGUS-IV is listed. Please contact the author to
-#' add other file formats to Ar-Ar_Redux.
+#'     moment there are two options: \code{'ARGUS-VI'}, for data that
+#'     are acquired on the eponymous instrument following the
+#'     measurement protocols at Melbourne University, and
+#'     \code{'WiscAr'} for the 5-detector Noblesse instrument at the
+#'     University of Wisconsin. Please contact the author to add other
+#'     file formats to Ar-Ar_Redux.
 #' @return an object of class \code{\link{redux}}.
 #' @examples
 #' samplefile <-  system.file("Samples.csv",package="ArArRedux")
 #' kfile <- system.file("K-glass.csv",package="ArArRedux")
 #' cafile <- system.file("Ca-salt.csv",package="ArArRedux")
 #' dfile <- system.file("Calibration.csv",package="ArArRedux")
-#' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-#' dlabels <- c("H1","AX","L1","L2")
-#' X <- read(samplefile,masses,blabel="EXB#",Jpos=c(3,15),
-#'           kfile,cafile,dfile,dlabels)
+#' X <- read(samplefile,blabel="EXB#",Jpos=c(3,15),
+#'           kdat=kfile,cadat=cafile,ddat=dfile)
 #' plotcorr(X)
 #' @export
-read <- function(xfile,masses,blabel,Jpos,kfile=NULL,cafile=NULL,
-                  dfile=NULL,dlabels=NULL,MS="ARGUS-VI"){
+read <- function(x,blabel,Jpos,kdat=NULL,cadat=NULL,ddat=NULL,MS="ARGUS-VI"){
+    masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
+    dlabels <- c("H1","AX","L1","L2")    
     # load the .csv files
-    m <- loaddata(xfile,masses,MS,PH=FALSE) # samples and J-standards
+    m <- loaddata(x,masses,MS,PH=FALSE) # samples and J-standards
     x <- fitlogratios(blankcorr(m,blabel),"Ar40")
-    if (!is.null(kfile)){ # K-interference data
+    if (!is.null(kdat)){ # K-interference data
         # subset of the relevant isotopes
-        mk <- loaddata(kfile,masses,MS)
+        mk <- loaddata(kdat,masses,MS)
         lk <- fitlogratios(blankcorr(mk,blabel,"K:"),"Ar39")
         k <- getmasses(lk,"Ar40","Ar39")
         x <- concat(list(x,k))
     }
-    if (!is.null(cafile)){ # Ca interference data
-        mca <- loaddata(cafile,masses,MS)
+    if (!is.null(cadat)){ # Ca interference data
+        mca <- loaddata(cadat,masses,MS)
         lca <- fitlogratios(blankcorr(mca,blabel,"Ca:"),"Ar37")
         ca <- getmasses(lca,c("Ar36","Ar39"),c("Ar37","Ar37"))
         x <- concat(list(x,ca))
     }
-    if (!is.null(dfile)){
-        md <- loaddata(dfile,dlabels,MS,PH=TRUE)
+    if (!is.null(ddat)){
+        md <- loaddata(ddat,dlabels,MS,PH=TRUE)
         ld <- fitlogratios(blankcorr(md))
         d <- averagebyday(ld,"DCAL")
         x <- concat(list(x,d))
