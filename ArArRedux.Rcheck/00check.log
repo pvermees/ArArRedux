@@ -8,8 +8,6 @@
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: ‘Pieter Vermeesch <p.vermeesch@ucl.ac.uk>’
 
-The Date field is over a month old.
-
 The build time stamp is missing.
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -22,6 +20,7 @@ Source packages should not contain undeclared executable files.
 See section ‘Package structure’ in the ‘Writing R Extensions’ manual.
 * checking for hidden files and directories ... NOTE
 Found the following hidden files and directories:
+  R/.Rhistory
   .git
 These were most likely included in error. See section ‘Package
 structure’ in the ‘Writing R Extensions’ manual.
@@ -36,8 +35,8 @@ CRAN-pack does not know about
 * checking DESCRIPTION meta-information ... NOTE
 Checking should be performed on sources prepared by ‘R CMD build’.
 * checking top-level files ... NOTE
-Non-standard file/directory found at top level:
-  ‘ArArRedux.Rcheck’
+Non-standard files/directories found at top level:
+  ‘ArArRedux.Rcheck’ ‘ArArRedux_1.0.tar.gz’
 * checking for left-over files ... OK
 * checking index information ... OK
 * checking package subdirectories ... WARNING
