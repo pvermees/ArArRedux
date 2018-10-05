@@ -208,7 +208,7 @@ loadirradiations <- function(fname){
 #' @export
 read <- function(x,blabel,Jpos,kdat=NULL,cadat=NULL,ddat=NULL,MS="ARGUS-VI"){
     # load the .csv files
-    m <- loaddata(x,MS) # samples and J-standards
+    m <- loaddata(x,MS=MS) # samples and J-standards
     x <- fitlogratios(blankcorr(m,blabel),"Ar40")
     if (!is.null(kdat)){ # K-interference data
         # subset of the relevant isotopes
