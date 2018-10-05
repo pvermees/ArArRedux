@@ -1,9 +1,9 @@
 loadArgusData <- function(fname){
-    thetable <- utils::read.csv(file=fname,header=FALSE)
-    PHtags <- parseArgusHeader(thetable[2,]) # extract isotopes and detectors from header
+    header <- utils::read.csv(file=fname,header=FALSE,skip=1,nrows=1)
+    dat <- utils::read.csv(file=fname,header=FALSE,skip=3)
+    PHtags <- parseArgusHeader(header) # extract isotopes and detectors from header
     PH <- PHtags$PH
     tags <- PHtags$tags
-    dat <- thetable[-(1:3),]
     nrows <- dim(dat)[1] # number of MS runs
     ncols <- dim(dat)[2] # number of columns
     ntags <- length(tags) # number of isotopes or detectors
