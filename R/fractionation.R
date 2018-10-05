@@ -41,8 +41,6 @@ massfractionation <- function(X,fract){
 #' @param fname a .csv file with the air shot data
 #' @param detector the name of the ion detector
 #' @param MS the type of mass spectrometer
-#' @param PH TRUE if the data were recorded in 'peak hopping' mode,
-#' FALSE if recorded in multicollector mode.
 #' @examples
 #' data(Melbourne)
 #' fd37file <- system.file("AirL2.csv",package="ArArRedux")
@@ -54,8 +52,8 @@ massfractionation <- function(X,fract){
 #' }
 #' @return an object of class \code{\link{logratios}}
 #' @export
-fractionation <- function(fname,detector,MS="ARGUS-VI",PH=FALSE){
-    mf <- loaddata(fname,c("Ar40","Ar36"),MS,PH)
+fractionation <- function(fname,detector,MS="ARGUS-VI"){
+    mf <- loaddata(fname,MS)
     lf <- fitlogratios(blankcorr(mf),"Ar40")
     f <- averagebyday(lf,detector)
     return(f)

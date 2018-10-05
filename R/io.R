@@ -119,26 +119,12 @@ newPHdata <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
 #' m <- loaddata(samplefile,masses) # samples and J-standards
 #' plot(m,"MD2-1a","Ar40")
 #' @export
-loaddata <- function(fname,masses,MS="ARGUS-VI",PH=FALSE){
-    thetable <- utils::read.csv(file=fname,header=FALSE,skip=3)
-    nrows <- dim(thetable)[1] # number of MS runs
-    ncols <- dim(thetable)[2] # number of columns
-    nmass <- length(masses) # number of isotopes
-    ncycles <- (ncols-3)/(2*nmass)
-    cirr <- 1
-    cpos <- 2
-    clabel <- 3
-    cdate <- 4 # column with the date
-    ci <- matrix(NA,nrow=ncycles,ncol=nmass) # column indices
-    for (i in 1:nmass){
-        ci[,i] <- seq(from=3+2*i,to=ncols,by=2*nmass)
-    }
-    if (PH) {
-        out <- newPHdata(thetable,masses,cirr,cpos,clabel,cdate,ci)
-    } else {
-        out <- newtimeresolved(thetable,masses,cirr,cpos,clabel,cdate,ci)
-    }
-    return(out)
+loaddata <- function(fname,MS="ARGUS-VI"){
+    if (identical(MS,'ARGUS-VI'))
+        out <- loadArgusData(fname)
+    else if (identical(MS,'WiscAr'))
+        out <- loadWiscAr(fname)
+    out
 }
 
 #' Load the irradiation schedule
@@ -221,26 +207,24 @@ loadirradiations <- function(fname){
 #' plotcorr(X)
 #' @export
 read <- function(x,blabel,Jpos,kdat=NULL,cadat=NULL,ddat=NULL,MS="ARGUS-VI"){
-    masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-    dlabels <- c("H1","AX","L1","L2")    
     # load the .csv files
-    m <- loaddata(x,masses,MS,PH=FALSE) # samples and J-standards
+    m <- loaddata(x,MS) # samples and J-standards
     x <- fitlogratios(blankcorr(m,blabel),"Ar40")
     if (!is.null(kdat)){ # K-interference data
         # subset of the relevant isotopes
-        mk <- loaddata(kdat,masses,MS)
+        mk <- loaddata(kdat,MS)
         lk <- fitlogratios(blankcorr(mk,blabel,"K:"),"Ar39")
         k <- getmasses(lk,"Ar40","Ar39")
         x <- concat(list(x,k))
     }
     if (!is.null(cadat)){ # Ca interference data
-        mca <- loaddata(cadat,masses,MS)
+        mca <- loaddata(cadat,MS)
         lca <- fitlogratios(blankcorr(mca,blabel,"Ca:"),"Ar37")
         ca <- getmasses(lca,c("Ar36","Ar39"),c("Ar37","Ar37"))
         x <- concat(list(x,ca))
     }
     if (!is.null(ddat)){
-        md <- loaddata(ddat,dlabels,MS,PH=TRUE)
+        md <- loaddata(ddat,MS)
         ld <- fitlogratios(blankcorr(md))
         d <- averagebyday(ld,"DCAL")
         x <- concat(list(x,d))
