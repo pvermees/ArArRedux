@@ -21,6 +21,7 @@ loadArgusData <- function(fname){
     } else {
         out <- newtimeresolved(dat,tags,cirr,cpos,clabel,cdate,ci)
     }
+    class(out) <- append(class(out),"ArgusVI")
     return(out)
 }
 
@@ -51,4 +52,44 @@ parseArgusHeader <- function(header){
         tags <- paste0('Ar',isotopes)
     }
     list(PH=PH,tags=tags)
+}
+
+# masses = vector of strings
+# cirr = column with irradiation can label
+# cpos = column with position in irradiation stack
+# clabel = column containing the sample labels
+# cdate = column containing the date
+# ci = matrix with column indices of the masses of interest
+newtimeresolved <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
+    out <- list()
+    class(out) <- "timeresolved"
+    out$masses <- masses
+    out$irr <- as.character(thetable[,cirr])
+    out$pos <- as.numeric(thetable[,cpos])
+    out$labels <- as.character(thetable[,clabel])
+    out$thedate <- readthedate(thetable[,cdate])
+    nmasses <- nmasses(out)
+    nruns <- nruns(out)
+    ncycles <- dim(ci)[1]
+    out$d <- matrix(0,nrow=ncycles,ncol=nmasses*nruns)
+    out$thetime <- t(thetable[,ci[,1]+1])
+    for (i in 1:ncycles){
+        for (j in 1:nmasses){
+            k <- seq(from=j,to=nmasses*nruns,by=nmasses)
+            out$d[i,k] <- thetable[,ci[i,j]]
+        }
+    }
+    return(out)
+}
+
+newPHdata <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
+    out <- list()
+    class(out) <- "PHdata"
+    out$masses <- masses
+    for (i in 1:nmasses(out)){
+        out$signals[[masses[i]]] <-
+            newtimeresolved(thetable,masses[i],
+                cirr,cpos,clabel,cdate,as.matrix(ci[,i]))
+    }
+    return(out)
 }

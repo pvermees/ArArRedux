@@ -1,0 +1,38 @@
+loadWiscArData <- function(dname){ 
+    out <- list()
+    filenames <- Sys.glob(paste0(dname,"/*.RUN"))
+    nf <- length(filenames)
+    for (i in 1:nf){
+        con = file(filenames[i], "r")
+        while (TRUE){
+            line = readLines(con,n=1)
+            if (grepl("Start Of Run",line)){
+                txt <- unlist(strsplit(line,'#'))[2]
+                thedate <- readthedate(txt)
+            } else if (grepl(".mdf",line)){
+                line = readLines(con,n=1) # the next line contains the sample name
+                sname <- unlist(strsplit(line,'"'))[2]
+            } else if (identical(line,'""')){ # start of signal
+                d <- readWiscArSignal(con)
+                out[[sname]] <- list(thedate=thedate,d=d)
+                break
+            }
+        }
+        close(con)
+    }
+    class(out) <- 'WiscAr'
+    out
+}
+
+readWiscArSignal <- function(con,tags=c('0','1','101','102')){
+    out <- list()
+    while (TRUE){
+        line = readLines(con,n=1)
+        if (length(line)==0) break
+        txt <- unlist(strsplit(line,','))
+        out[[txt[7]]] <- rbind(out[[txt[7]]],
+                               as.numeric(txt[c(6,1,2,3,4,5)]))
+    } 
+    out
+}
+

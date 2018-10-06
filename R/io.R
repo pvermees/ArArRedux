@@ -55,75 +55,32 @@ cast <- function(from,to){
 
 readthedate <- function(x){
     thedate <- strptime(x,"%d-%b-%Y %H:%M")
+    if (any(is.na(thedate))) thedate <- strptime(x,"%Y-%m-%d %H:%M:%S")
     if (any(is.na(thedate))) thedate <- strptime(x,"%d/%m/%y %H:%M")
     if (any(is.na(thedate))) thedate <- strptime(x,"%d-%b-%Y")
     return(as.numeric(thedate))
 }
 
-# masses = vector of strings
-# cirr = column with irradiation can label
-# cpos = column with position in irradiation stack
-# clabel = column containing the sample labels
-# cdate = column containing the date
-# ci = matrix with column indices of the masses of interest
-newtimeresolved <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
-    out <- list()
-    class(out) <- "timeresolved"
-    out$masses <- masses
-    out$irr <- as.character(thetable[,cirr])
-    out$pos <- as.numeric(thetable[,cpos])
-    out$labels <- as.character(thetable[,clabel])
-    out$thedate <- readthedate(thetable[,cdate])
-    nmasses <- nmasses(out)
-    nruns <- nruns(out)
-    ncycles <- dim(ci)[1]
-    out$d <- matrix(0,nrow=ncycles,ncol=nmasses*nruns)
-    out$thetime <- t(thetable[,ci[,1]+1])
-    for (i in 1:ncycles){
-        for (j in 1:nmasses){
-            k <- seq(from=j,to=nmasses*nruns,by=nmasses)
-            out$d[i,k] <- thetable[,ci[i,j]]
-        }
-    }
-    return(out)
-}
-
-newPHdata <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
-    out <- list()
-    class(out) <- "PHdata"
-    out$masses <- masses
-    for (i in 1:nmasses(out)){
-        out$signals[[masses[i]]] <-
-            newtimeresolved(thetable,masses[i],
-                cirr,cpos,clabel,cdate,as.matrix(ci[,i]))
-    }
-    return(out)
-}
-
 #' Load mass spectrometer data
 #'
-#' Loads a .csv file with raw mass spectrometer data
+#' Loads a file or directory with raw mass spectrometer data
 #' 
-#' @param fname the file name, must end with .csv
+#' @param fid the file or directory name containing the data
 #' @param masses a vector of strings denoting the order of the
-#' isotopes listed in the table
+#'     isotopes listed in the table
 #' @param MS the type of mass spectrometer
-#' @param PH a boolean indicating whether the data are to be treated
-#' as multicollector (PH=FALSE) or 'peak hopping' (PH=TRUE) data. The
-#' default is PH=FALSE.
-#' @return if PH=FALSE: an object of class \code{timeresolved}\cr
-#' if PH=TRUE: an object of class \code{PHdata}
+#' @return an object of class \code{timeresolved} or \code{PHdata}
 #' @examples
 #' samplefile <- system.file("Samples.csv",package="ArArRedux")
 #' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
 #' m <- loaddata(samplefile,masses) # samples and J-standards
 #' plot(m,"MD2-1a","Ar40")
 #' @export
-loaddata <- function(fname,MS="ARGUS-VI"){
+loaddata <- function(fid,MS="ARGUS-VI"){
     if (identical(MS,'ARGUS-VI'))
-        out <- loadArgusData(fname)
+        out <- loadArgusData(fname=fid)
     else if (identical(MS,'WiscAr'))
-        out <- loadWiscAr(fname)
+        out <- loadWiscArData(dname=fid)
     out
 }
 
@@ -198,12 +155,12 @@ loadirradiations <- function(fname){
 #'     file formats to Ar-Ar_Redux.
 #' @return an object of class \code{\link{redux}}.
 #' @examples
-#' samplefile <-  system.file("Samples.csv",package="ArArRedux")
+#' samplefile <- system.file("Samples.csv",package="ArArRedux")
 #' kfile <- system.file("K-glass.csv",package="ArArRedux")
 #' cafile <- system.file("Ca-salt.csv",package="ArArRedux")
 #' dfile <- system.file("Calibration.csv",package="ArArRedux")
 #' X <- read(samplefile,blabel="EXB#",Jpos=c(3,15),
-#'           kdat=kfile,cadat=cafile,ddat=dfile)
+#'           kdat=kfile,cadat=cafile,ddat=dfile,MS='ARGUS-VI')
 #' plotcorr(X)
 #' @export
 read <- function(x,blabel,Jpos,kdat=NULL,cadat=NULL,ddat=NULL,MS="ARGUS-VI"){
