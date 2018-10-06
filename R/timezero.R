@@ -26,7 +26,7 @@ fitlogratios.default <- function(x,...){ stop() }
 #' @param denmass a string denoting the denominator isotope
 #' @rdname fitlogratios
 #' @export
-fitlogratios.timeresolved <- function(x,denmass,...){
+fitlogratios.ArgusVI <- function(x,denmass,...){
     r <- takeratios(x,denmass)
     l <- takelogs(r)
     f <- timezero(l)

@@ -22,24 +22,7 @@ blankcorr <- function(x,...){ UseMethod("blankcorr",x) }
 blankcorr.default <- function(x,...){stop()}
 #' @rdname blankcorr
 #' @export
-blankcorr.timeresolved <- function(x,blanklabel=NULL,prefix='',...){
-    out <- timeresolvedblankcorr(x,blanklabel=blanklabel,prefix=prefix,...)
-    return(out)
-}
-#' @rdname blankcorr
-#' @export
-blankcorr.PHdata <- function(x,blanklabel=NULL,prefix='',...){
-    out <- x
-    for (mass in out$masses){
-        out$signals[[mass]] <-
-            blankcorr.timeresolved(out$signals[[mass]],blanklabel,prefix,...)
-    }
-    return(out)
-}
-
-timeresolvedblankcorr <- function(x,...){ UseMethod("timeresolvedblankcorr",x) }
-timeresolvedblankcorr.default <- function(x,...){stop()}
-timeresolvedblankcorr.ArgusVI <- function(x,blanklabel=NULL,prefix='',...){
+blankcorr.ArgusVI <- function(x,blanklabel=NULL,prefix='',...){
     if (is.null(blanklabel)){
         out <- x
         out$blankindices <- 1:nruns(x)
@@ -58,7 +41,19 @@ timeresolvedblankcorr.ArgusVI <- function(x,blanklabel=NULL,prefix='',...){
     class(out) <- append(class(out),"blankcorrected")
     return(out)
 }
-timeresolvedblankcorr.WiscAr <- function(x,blanklabel=NULL,prefix='',...){
+#' @rdname blankcorr
+#' @export
+blankcorr.PHdata <- function(x,blanklabel=NULL,prefix='',...){
+    out <- x
+    for (mass in out$masses){
+        out$signals[[mass]] <-
+            blankcorr.ArgusVI(out$signals[[mass]],blanklabel,prefix,...)
+    }
+    return(out)
+}
+#' @rdname blankcorr
+#' @export
+blankcorr.WiscAr <- function(x,blanklabel=NULL,prefix='',...){
     iblanks <- array(grep(blanklabel,names(x)))
     iothers <- array(grep(blanklabel,names(x),invert=TRUE))
     blanks <- x[iblanks]
@@ -78,6 +73,6 @@ timeresolvedblankcorr.WiscAr <- function(x,blanklabel=NULL,prefix='',...){
         for (tag in names(d))
             out[[i]]$d[[tag]][,2:6] <- d[[tag]][,2:6] - b[[tag]][,2:6]
     }
-    class(out) <- append(class(out),"blankcorrected")
+    class(out) <- append(class(x),"blankcorrected")
     return(out)
 }
