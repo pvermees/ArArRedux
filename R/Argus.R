@@ -21,7 +21,6 @@ loadArgusData <- function(fname){
     } else {
         out <- newtimeresolved.ArgusVI(dat,tags,cirr,cpos,clabel,cdate,ci)
     }
-    class(out) <- append(class(out),"ArgusVI")
     return(out)
 }
 
@@ -62,7 +61,7 @@ parseArgusHeader <- function(header){
 # ci = matrix with column indices of the masses of interest
 newtimeresolved.ArgusVI <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
     out <- list()
-    class(out) <- "timeresolved"
+    class(out) <- c("timeresolved","ArgusVI")
     out$masses <- masses
     out$irr <- as.character(thetable[,cirr])
     out$pos <- as.numeric(thetable[,cpos])
@@ -84,7 +83,7 @@ newtimeresolved.ArgusVI <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
 
 newPHdata.ArgusVI <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
     out <- list()
-    class(out) <- "PHdata"
+    class(out) <- c("PHdata","ArgusVI")
     out$masses <- masses
     for (i in 1:nmasses(out)){
         out$signals[[masses[i]]] <-
@@ -94,7 +93,7 @@ newPHdata.ArgusVI <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
     return(out)
 }
 
-timeresolvedplot.ArgusVI <- function(x,mass,label=NULL,run=1,...){
+plottimeresolved.ArgusVI <- function(x,mass,label=NULL,run=1,...){
     if (!is.null(label))
         run <- which(x$labels==label)-1
     if (length(run)!=1){
@@ -105,4 +104,20 @@ timeresolvedplot.ArgusVI <- function(x,mass,label=NULL,run=1,...){
     i <- run*nmasses(x)+k
     graphics::plot(x$thetime[,i],x$d[,i],type='p',
                    xlab='time',ylab=mass)
+}
+
+subsettimeresolved.ArgusVI <- function(x,i=NULL,labels=NULL,invert=FALSE,
+                                       include.J=FALSE,...){
+    if (is.null(i))
+        i <- findrunindices(x,prefixes=labels,invert=invert,include.J=include.J)
+    out <- x
+    out$d <- getruns(x,i)
+    out$thetime <- x$thetime[,i]
+    out$thedate <- x$thedate[i]
+    out$irr <- x$irr[i]
+    out$pos <- x$pos[i]
+    out$labels <- x$labels[i]
+    if (methods::is(x,"blankcorrected"))
+        out$blankindices <- x$blankindices[i]
+    return(out)
 }

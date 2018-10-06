@@ -12,7 +12,7 @@ loadWiscArData <- function(dname){
             if (grepl("Start Of Run",line)){
                 txt <- unlist(strsplit(line,'#'))[2]
                 thedate <- readthedate(txt)
-            } else if (grepl(".mdf",line)){
+            } else if (grepl(".mdf",line,ignore.case=TRUE)){
                 line = readLines(con,n=1) # the next line contains the sample name
                 sname <- unlist(strsplit(line,'"'))[2]
                 naliquots <- length(names(out) %in% sname)
@@ -47,7 +47,7 @@ readWiscArSignal <- function(con,masses){
     out
 }
 
-timeresolvedplot.WiscAr <- function(x,mass='Ar40',label=NULL,run=1,...){
+plottimeresolved.WiscAr <- function(x,mass='Ar40',label=NULL,run=1,...){
     if (!is.null(label))
         run <- which(label %in% names(x))
     samp <- x[[run]]

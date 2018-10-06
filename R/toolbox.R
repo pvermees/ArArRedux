@@ -162,18 +162,10 @@ getruns.timeresolved <- function(x,i,...){
 #' @rdname subset
 #' @export
 subset.timeresolved <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){
-    if (is.null(i)) i <- findrunindices(x,prefixes=labels,invert=invert,include.J=include.J)
-    out <- x
-    out$d <- getruns(x,i)
-    out$thetime <- x$thetime[,i]
-    out$thedate <- x$thedate[i]
-    out$irr <- x$irr[i]
-    out$pos <- x$pos[i]
-    out$labels <- x$labels[i]
-    if (methods::is(x,"blankcorrected"))
-        out$blankindices <- x$blankindices[i]
-    return(out)
+    subsettimeresolved(x,i=i,labels=labels,invert=invert,include.J=include.J,...)
 }
+subsettimeresolved <- function(x,...){ UseMethod("subsettimeresolved",x) }
+subsettimeresolved.default <- function(x,...){stop()}
 #' @rdname subset
 #' @export
 subset.logratios <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){

@@ -16,7 +16,7 @@
 #' @rdname plot
 #' @export
 plot.timeresolved <- function(x,mass,label=NULL,run=1,...){
-    timeresolvedplot(x,mass,label=label,run=run,...)
+    plottimeresolved(x,mass,label=label,run=run,...)
 }
 #' @examples
 #' mPH <- loaddata(samplefile,masses,PH=TRUE)

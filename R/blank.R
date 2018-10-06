@@ -24,7 +24,6 @@ blankcorr.default <- function(x,...){stop()}
 #' @export
 blankcorr.timeresolved <- function(x,blanklabel=NULL,prefix='',...){
     out <- timeresolvedblankcorr(x,blanklabel=blanklabel,prefix=prefix,...)
-    class(out) <- append(class(out),"blankcorrected")
     return(out)
 }
 #' @rdname blankcorr
@@ -33,7 +32,7 @@ blankcorr.PHdata <- function(x,blanklabel=NULL,prefix='',...){
     out <- x
     for (mass in out$masses){
         out$signals[[mass]] <-
-            timeresolvedblankcorr.ArgusVI(out$signals[[mass]],blanklabel,prefix)
+            blankcorr.timeresolved(out$signals[[mass]],blanklabel,prefix,...)
     }
     return(out)
 }
@@ -56,10 +55,29 @@ timeresolvedblankcorr.ArgusVI <- function(x,blanklabel=NULL,prefix='',...){
         out$d <- others$d - getruns(blanks,inearestblanks)
         out$blankindices <- as.vector(inearestblanks)
     }
+    class(out) <- append(class(out),"blankcorrected")
     return(out)
 }
-timeresolvedblankcorr.WiscAr <- function(x,blanklabel=NULL,prefix='',...){    
+timeresolvedblankcorr.WiscAr <- function(x,blanklabel=NULL,prefix='',...){
     iblanks <- array(grep(blanklabel,names(x)))
     iothers <- array(grep(blanklabel,names(x),invert=TRUE))
-    
+    blanks <- x[iblanks]
+    others <- x[iothers]
+    nblanks <- length(iblanks)
+    nothers <- length(iothers)
+    blankdates <- rep(NA,nblanks)
+    otherdates <- rep(NA,nothers)
+    for (i in 1:nblanks) blankdates[i] <- blanks[[i]]$thedate
+    for (i in 1:nothers) otherdates[i] <- others[[i]]$thedate
+    inearestblanks <- nearest(otherdates,blankdates)
+    out <- others
+    for (i in 1:nothers){
+        j <- inearestblanks[i]
+        d <- others[[i]]$d
+        b <- blanks[[j]]$d
+        for (tag in names(d))
+            out[[i]]$d[[tag]][,2:6] <- d[[tag]][,2:6] - b[[tag]][,2:6]
+    }
+    class(out) <- append(class(out),"blankcorrected")
+    return(out)
 }

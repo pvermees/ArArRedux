@@ -66,14 +66,13 @@ readthedate <- function(x){
 #' Loads a file or directory with raw mass spectrometer data
 #' 
 #' @param fid the file or directory name containing the data
-#' @param masses a vector of strings denoting the order of the
-#'     isotopes listed in the table
-#' @param MS the type of mass spectrometer
-#' @return an object of class \code{timeresolved} or \code{PHdata}
+#' @param MS one of either \code{ARGUS-VI} or \code{WiscAr}
+#' @return an object of class \code{timeresolved} or \code{PHdata} and
+#'     \code{ArgusVI} or \code{WiscAr}
 #' @examples
 #' samplefile <- system.file("Samples.csv",package="ArArRedux")
 #' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-#' m <- loaddata(samplefile,masses) # samples and J-standards
+#' m <- loaddata(samplefile,MS='ARGUS-VI') # samples and J-standards
 #' plot(m,"MD2-1a","Ar40")
 #' @export
 loaddata <- function(fid,MS="ARGUS-VI"){
