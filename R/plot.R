@@ -4,8 +4,9 @@
 #' 
 #' @param x an object of class \code{\link{timeresolved}} or
 #' \code{\link{PHdata}}
-#' @param label a string with the name of the run
 #' @param mass a string indicating the isotope of interest
+#' @param label a string with the name of the run
+#' @param run the run number
 #' @param ... optional parameters
 #' @examples
 #' samplefile <- system.file("Samples.csv",package="ArArRedux")
@@ -14,24 +15,19 @@
 #' plot(mMC,"MD2-1a","Ar40")
 #' @rdname plot
 #' @export
-plot.timeresolved <- function(x,label,mass,...){
-    j <- which(x$labels==label)-1
-    if (length(j)!=1){
-        print('invalid input into plot function')
-        return(NA)
-    }
-    k <- which(x$masses==mass)
-    i <- j*nmasses(x)+k
-    graphics::plot(x$thetime[,i],x$d[,i],type='p')
+plot.timeresolved <- function(x,mass,label=NULL,run=1,...){
+    timeresolvedplot(x,mass,label=label,run=run,...)
 }
 #' @examples
 #' mPH <- loaddata(samplefile,masses,PH=TRUE)
 #' plot(mPH,"MD2-1a","Ar40")
 #' @rdname plot
 #' @export
-plot.PHdata <- function(x,label,mass,...){
-    plot.timeresolved(x$signals[[mass]],label,mass,...)
+plot.PHdata <- function(x,mass,label=NULL,run=1,...){
+    plot.timeresolved(x$signals[[mass]],mass,label=label,run=run,...)
 }
+timeresolvedplot <- function(x,...){ UseMethod("timeresolvedplot",x) }
+timeresolvedplot.default <- function(x,...){stop()}
 
 #' Plot a matrix with correlation coefficients
 #'

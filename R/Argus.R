@@ -21,7 +21,7 @@ loadArgusData <- function(fname){
     } else {
         out <- newtimeresolved(dat,tags,cirr,cpos,clabel,cdate,ci)
     }
-    class(out) <- "ArgusVI"
+    class(out) <- append(class(out),"ArgusVI")
     return(out)
 }
 
@@ -61,7 +61,8 @@ parseArgusHeader <- function(header){
 # cdate = column containing the date
 # ci = matrix with column indices of the masses of interest
 newtimeresolved <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
-    out <- list(PH=FALSE)
+    out <- list()
+    class(out) <- "timeresolved"
     out$masses <- masses
     out$irr <- as.character(thetable[,cirr])
     out$pos <- as.numeric(thetable[,cpos])
@@ -83,6 +84,7 @@ newtimeresolved <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
 
 newPHdata <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
     out <- list(PH=TRUE)
+    class(out) <- "PHdata"
     out$masses <- masses
     for (i in 1:nmasses(out)){
         out$signals[[masses[i]]] <-
@@ -90,4 +92,17 @@ newPHdata <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
                 cirr,cpos,clabel,cdate,as.matrix(ci[,i]))
     }
     return(out)
+}
+
+timeresolvedplot.ArgusVI <- function(x,mass,label=NULL,run=1,...){
+    if (!is.null(label))
+        run <- which(x$labels==label)-1
+    if (length(run)!=1){
+        print('invalid input into plot function')
+        return(NA)
+    }
+    k <- which(x$masses==mass)
+    i <- run*nmasses(x)+k
+    graphics::plot(x$thetime[,i],x$d[,i],type='p',
+                   xlab='time',ylab=mass)
 }

@@ -51,3 +51,10 @@ blankcorr.PHdata <- function(x,blanklabel=NULL,prefix='',...){
     }
     return(out)
 }
+#' @rdname blankcorr
+#' @export
+blankcorr.WiscAr <- function(x,blanklabel=NULL,prefix='',...){
+    ##:ess-bp-start::browser@nil:##
+browser(expr=is.null(.ESSBP.[["@10@"]]));##:ess-bp-end:##
+    iblanks <- array(grep(blanklabel,x$labels))
+}
