@@ -21,7 +21,7 @@ loadArgusData <- function(fname){
     } else {
         out <- newtimeresolved(dat,tags,cirr,cpos,clabel,cdate,ci)
     }
-    class(out) <- append(class(out),"ArgusVI")
+    class(out) <- "ArgusVI"
     return(out)
 }
 
@@ -61,8 +61,7 @@ parseArgusHeader <- function(header){
 # cdate = column containing the date
 # ci = matrix with column indices of the masses of interest
 newtimeresolved <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
-    out <- list()
-    class(out) <- "timeresolved"
+    out <- list(PH=FALSE)
     out$masses <- masses
     out$irr <- as.character(thetable[,cirr])
     out$pos <- as.numeric(thetable[,cpos])
@@ -83,8 +82,7 @@ newtimeresolved <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
 }
 
 newPHdata <- function(thetable,masses,cirr,cpos,clabel,cdate,ci){
-    out <- list()
-    class(out) <- "PHdata"
+    out <- list(PH=TRUE)
     out$masses <- masses
     for (i in 1:nmasses(out)){
         out$signals[[masses[i]]] <-
