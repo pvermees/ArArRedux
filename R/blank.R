@@ -23,6 +23,24 @@ blankcorr.default <- function(x,...){stop()}
 #' @rdname blankcorr
 #' @export
 blankcorr.timeresolved <- function(x,blanklabel=NULL,prefix='',...){
+    out <- timeresolvedblankcorr(x,blanklabel=blanklabel,prefix=prefix,...)
+    class(out) <- append(class(out),"blankcorrected")
+    return(out)
+}
+#' @rdname blankcorr
+#' @export
+blankcorr.PHdata <- function(x,blanklabel=NULL,prefix='',...){
+    out <- x
+    for (mass in out$masses){
+        out$signals[[mass]] <-
+            timeresolvedblankcorr.ArgusVI(out$signals[[mass]],blanklabel,prefix)
+    }
+    return(out)
+}
+
+timeresolvedblankcorr <- function(x,...){ UseMethod("timeresolvedblankcorr",x) }
+timeresolvedblankcorr.default <- function(x,...){stop()}
+timeresolvedblankcorr.ArgusVI <- function(x,blanklabel=NULL,prefix='',...){
     if (is.null(blanklabel)){
         out <- x
         out$blankindices <- 1:nruns(x)
@@ -38,23 +56,10 @@ blankcorr.timeresolved <- function(x,blanklabel=NULL,prefix='',...){
         out$d <- others$d - getruns(blanks,inearestblanks)
         out$blankindices <- as.vector(inearestblanks)
     }
-    class(out) <- append(class(out),"blankcorrected")
     return(out)
 }
-#' @rdname blankcorr
-#' @export
-blankcorr.PHdata <- function(x,blanklabel=NULL,prefix='',...){
-    out <- x
-    for (mass in out$masses){
-        out$signals[[mass]] <-
-            blankcorr.timeresolved(out$signals[[mass]],blanklabel,prefix)
-    }
-    return(out)
-}
-#' @rdname blankcorr
-#' @export
-blankcorr.WiscAr <- function(x,blanklabel=NULL,prefix='',...){
-    ##:ess-bp-start::browser@nil:##
-browser(expr=is.null(.ESSBP.[["@10@"]]));##:ess-bp-end:##
-    iblanks <- array(grep(blanklabel,x$labels))
+timeresolvedblankcorr.WiscAr <- function(x,blanklabel=NULL,prefix='',...){    
+    iblanks <- array(grep(blanklabel,names(x)))
+    iothers <- array(grep(blanklabel,names(x),invert=TRUE))
+    
 }

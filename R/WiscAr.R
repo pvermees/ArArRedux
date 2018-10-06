@@ -15,6 +15,8 @@ loadWiscArData <- function(dname){
             } else if (grepl(".mdf",line)){
                 line = readLines(con,n=1) # the next line contains the sample name
                 sname <- unlist(strsplit(line,'"'))[2]
+                naliquots <- length(names(out) %in% sname)
+                if (naliquots > 0) sname <- paste(sname,naliquots,sep=' ')
             } else if (identical(line,'""')){ # start of signal
                 d <- readWiscArSignal(con,masses=labels)
                 out[[sname]] <- list(thedate=thedate,d=d)
@@ -23,7 +25,7 @@ loadWiscArData <- function(dname){
         }
         close(con)
     }
-    class(out) <- c('timeresolved','WiscAr')
+    class(out) <- c('WiscAr','timeresolved')
     out
 }
 
