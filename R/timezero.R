@@ -48,6 +48,14 @@ fitlogratios.PHdata <- function(x,denmass=NULL,...){
     }
     return(cast(f,"logratios"))
 }
+#' @rdname fitlogratios
+#' @export
+fitlogratios.WiscAr <- function(x,denmass,...){
+    r <- takeratios(x,'Ar39')
+    l <- takelogs(r)
+    f <- timezero(l)
+    return(cast(f,"logratios"))
+}
 
 Jtakeratios <- function(nruns,inum,iden){
     nlr <- length(inum)

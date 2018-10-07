@@ -22,7 +22,7 @@ blankcorr <- function(x,...){ UseMethod("blankcorr",x) }
 blankcorr.default <- function(x,...){stop()}
 #' @rdname blankcorr
 #' @export
-blankcorr.ArgusVI <- function(x,blanklabel=NULL,prefix='',...){
+blankcorr.timeresolved <- function(x,blanklabel=NULL,prefix='',...){
     if (is.null(blanklabel)){
         out <- x
         out$blankindices <- 1:nruns(x)
@@ -32,10 +32,9 @@ blankcorr.ArgusVI <- function(x,blanklabel=NULL,prefix='',...){
         iothers <- array(grep(blanklabel,x$labels,invert=TRUE))
         blanks <- subset(x,iblanks)
         others <- subset(x,iothers)
-        out <- others
-        out$labels <- unlist(lapply(prefix,paste0,others$labels))
         inearestblanks <- nearest(others$thedate,blanks$thedate)
-        out$d <- others$d - getruns(blanks,inearestblanks)
+        out <- blanksubtract(others,getruns(blanks,inearestblanks))
+        out$labels <- unlist(lapply(prefix,paste0,others$labels))
         out$blankindices <- as.vector(inearestblanks)
     }
     class(out) <- append(class(out),"blankcorrected")
@@ -47,32 +46,22 @@ blankcorr.PHdata <- function(x,blanklabel=NULL,prefix='',...){
     out <- x
     for (mass in out$masses){
         out$signals[[mass]] <-
-            blankcorr.ArgusVI(out$signals[[mass]],blanklabel,prefix,...)
+            blankcorr.timeresolved(out$signals[[mass]],blanklabel,prefix,...)
     }
     return(out)
 }
-#' @rdname blankcorr
-#' @export
-blankcorr.WiscAr <- function(x,blanklabel=NULL,prefix='',...){
-    iblanks <- array(grep(blanklabel,names(x)))
-    iothers <- array(grep(blanklabel,names(x),invert=TRUE))
-    blanks <- x[iblanks]
-    others <- x[iothers]
-    nblanks <- length(iblanks)
-    nothers <- length(iothers)
-    blankdates <- rep(NA,nblanks)
-    otherdates <- rep(NA,nothers)
-    for (i in 1:nblanks) blankdates[i] <- blanks[[i]]$thedate
-    for (i in 1:nothers) otherdates[i] <- others[[i]]$thedate
-    inearestblanks <- nearest(otherdates,blankdates)
-    out <- others
-    for (i in 1:nothers){
-        j <- inearestblanks[i]
-        d <- others[[i]]$d
-        b <- blanks[[j]]$d
-        for (tag in names(d))
-            out[[i]]$d[[tag]][,2:6] <- d[[tag]][,2:6] - b[[tag]][,2:6]
+
+blanksubtract <- function(x,...){ UseMethod("blanksubtract",x) }
+blanksubtract.default <- function(x,...){stop()}
+blanksubtract.ArgusVI <- function(samps,blanks){
+    out <- samps
+    out$d <- samps$d - blanks$d
+    out
+}
+blanksubtract.WiscAr <- function(samps,blanks){
+    out <- samps
+    for (hop in names(samps$hops)){
+        out[[hop]]$d <- samps[[hop]]$d - blanks[[hop]]$d
     }
-    class(out) <- append(class(x),"blankcorrected")
-    return(out)
+    out
 }

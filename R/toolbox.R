@@ -46,8 +46,8 @@ ncycles.timeresolved <- function(x,...){
 getsignal <- function(X,prefix,num=NULL){
     i <- getindices(X,prefix,num)
     return(cbind(X$intercepts[i], sqrt(X$covmat[i,i])))
-}
 
+}
 getindices <- function(...){ UseMethod("getindices") }
 getindices.default <- function(nmasses,nruns=NULL,
                                imasses=NULL,iruns=NULL,...){
@@ -131,10 +131,19 @@ findmatches <- function(labels,prefixes,invert=FALSE){
 }
 
 getruns <- function(x,...){ UseMethod("getruns",x) }
-getruns.default <- function(x,...){stop()}
-getruns.timeresolved <- function(x,i,...){
+getruns.default <- function(x,i,...){
+    out <- x
     ii <- getindices(nmasses=nmasses(x),iruns=i)
-    return(x$d[,ii])
+    out$thetime <- x$thetime[,i]
+    out$d <- x$d[,ii]
+    out
+}
+getruns.WiscAr <- function(x,i,...){
+    out <- x
+    for (hop in names(x$hops))
+    out[[hop]] <- getruns(x[[hop]],i)
+    out[[hop]] <- getruns(x[[hop]],i)
+    out
 }
 
 #' Select a subset of some data
@@ -162,10 +171,18 @@ getruns.timeresolved <- function(x,i,...){
 #' @rdname subset
 #' @export
 subset.timeresolved <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){
-    subsettimeresolved(x,i=i,labels=labels,invert=invert,include.J=include.J,...)
+    if (is.null(i))
+        i <- findrunindices(x,prefixes=labels,invert=invert,include.J=include.J)
+    out <- getruns(x,i)
+    out$thetime <- x$thetime[,i]
+    out$thedate <- x$thedate[i]
+    out$irr <- x$irr[i]
+    out$pos <- x$pos[i]
+    out$labels <- x$labels[i]
+    if (methods::is(x,"blankcorrected"))
+        out$blankindices <- x$blankindices[i]
+    return(out)
 }
-subsettimeresolved <- function(x,...){ UseMethod("subsettimeresolved",x) }
-subsettimeresolved.default <- function(x,...){stop()}
 #' @rdname subset
 #' @export
 subset.logratios <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){

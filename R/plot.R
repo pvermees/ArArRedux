@@ -26,8 +26,8 @@ plot.timeresolved <- function(x,mass,label=NULL,run=1,...){
 plot.PHdata <- function(x,mass,label=NULL,run=1,...){
     plot.timeresolved(x$signals[[mass]],mass,label=label,run=run,...)
 }
-timeresolvedplot <- function(x,...){ UseMethod("timeresolvedplot",x) }
-timeresolvedplot.default <- function(x,...){stop()}
+plottimeresolved <- function(x,...){ UseMethod("plottimeresolved",x) }
+plottimeresolved.default <- function(x,...){stop()}
 
 #' Plot a matrix with correlation coefficients
 #'
