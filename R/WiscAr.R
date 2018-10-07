@@ -55,29 +55,3 @@ addWiscArSignal <- function(dat,con){
     }
     out
 }
-
-plottimeresolved.WiscAr <- function(x,mass='Ar40',label=NULL,run=1,...){
-    if (!is.null(label))
-        run <- which(label %in% names(x))
-    samp <- x[[run]]
-    dat <- samp$d
-    X <- NULL
-    Y <- NULL
-    hops <- NULL
-    for (hop in names(dat)){
-        signal <- dat[[hop]]
-        if (mass %in% colnames(signal)){
-            hops <- c(hops,mass)
-            X <- cbind(X,signal[,'time'])
-            Y <- cbind(Y,signal[,mass])
-        }
-    }
-    graphics::plot(range(X),range(Y),type='n',
-                   xlab='time',ylab=mass)
-    title(names(x)[[run]])
-    cols <- c('red','blue','green')
-    for (i in 1:ncol(X)){
-        graphics::points(X[,i],Y[,i],col=cols[i],...)
-        graphics::lines(X[,i],Y[,i],col=cols[i],...)
-    }
-}

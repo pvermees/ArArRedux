@@ -15,8 +15,18 @@
 #' plot(mMC,"MD2-1a","Ar40")
 #' @rdname plot
 #' @export
-plot.timeresolved <- function(x,mass,label=NULL,run=1,...){
-    plottimeresolved(x,mass,label=label,run=run,...)
+plot.timeresolved <- function(x,mass,label=NULL,run=1,hop='101',...){
+    if (methods::is(x,'WiscAr')) x <- x[[hop]]
+    if (!is.null(label))
+        run <- which(x$labels==label)-1
+    if (length(run)!=1){
+        print('invalid input into plot function')
+        return(NA)
+    }
+    k <- which(x$masses==mass)
+    i <- run*nmasses(x)+k
+    graphics::plot(x$thetime[,run],x$d[,i],type='p',
+                   xlab='time',ylab=mass)
 }
 #' @examples
 #' mPH <- loaddata(samplefile,masses,PH=TRUE)
