@@ -16,7 +16,6 @@
 #' @rdname plot
 #' @export
 plot.timeresolved <- function(x,mass,label=NULL,run=1,hop='101',...){
-    if (methods::is(x,'WiscAr')) x <- x[[hop]]
     if (!is.null(label))
         run <- which(x$labels==label)-1
     if (length(run)!=1){
@@ -28,6 +27,9 @@ plot.timeresolved <- function(x,mass,label=NULL,run=1,hop='101',...){
     graphics::plot(x$thetime[,run],x$d[,i],type='p',
                    xlab='time',ylab=mass)
 }
+plot.WiscAr <- function(x,mass,label=NULL,run=1,hop='101',...){
+    plot(x[[hop]],mass,label,run)
+}
 #' @examples
 #' mPH <- loaddata(samplefile,masses,PH=TRUE)
 #' plot(mPH,"MD2-1a","Ar40")
@@ -36,8 +38,6 @@ plot.timeresolved <- function(x,mass,label=NULL,run=1,hop='101',...){
 plot.PHdata <- function(x,mass,label=NULL,run=1,...){
     plot.timeresolved(x$signals[[mass]],mass,label=label,run=run,...)
 }
-plottimeresolved <- function(x,...){ UseMethod("plottimeresolved",x) }
-plottimeresolved.default <- function(x,...){stop()}
 
 #' Plot a matrix with correlation coefficients
 #'

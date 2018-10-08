@@ -33,8 +33,9 @@ blankcorr.timeresolved <- function(x,blanklabel=NULL,prefix='',...){
         blanks <- subset(x,iblanks)
         others <- subset(x,iothers)
         inearestblanks <- nearest(others$thedate,blanks$thedate)
-        out <- blanksubtract(others,getruns(blanks,inearestblanks))
+        out <- others
         out$labels <- unlist(lapply(prefix,paste0,others$labels))
+        out$d <- others$d - getruns(blanks,inearestblanks)
         out$blankindices <- as.vector(inearestblanks)
     }
     class(out) <- append(class(out),"blankcorrected")
@@ -50,18 +51,12 @@ blankcorr.PHdata <- function(x,blanklabel=NULL,prefix='',...){
     }
     return(out)
 }
-
-blanksubtract <- function(x,...){ UseMethod("blanksubtract",x) }
-blanksubtract.default <- function(x,...){stop()}
-blanksubtract.ArgusVI <- function(samps,blanks){
-    out <- samps
-    out$d <- samps$d - blanks$d
-    out
-}
-blanksubtract.WiscAr <- function(samps,blanks){
-    out <- samps
-    for (hop in names(samps$hops)){
-        out[[hop]]$d <- samps[[hop]]$d - blanks[[hop]]$d
+#' @rdname blankcorr
+#' @export
+blankcorr.WiscAr <- function(x,blanklabel=NULL,prefix='',...){
+    out <- x
+    for (hop in names(x)){
+        out[[hop]] <- blankcorr(out[[hop]],blanklabel,prefix,...)
     }
-    out
+    return(out)
 }

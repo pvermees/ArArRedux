@@ -26,7 +26,7 @@ fitlogratios.default <- function(x,...){ stop() }
 #' @param denmass a string denoting the denominator isotope
 #' @rdname fitlogratios
 #' @export
-fitlogratios.ArgusVI <- function(x,denmass,...){
+fitlogratios.timeresolved <- function(x,denmass,...){
     r <- takeratios(x,denmass)
     l <- takelogs(r)
     f <- timezero(l)
@@ -51,10 +51,11 @@ fitlogratios.PHdata <- function(x,denmass=NULL,...){
 #' @rdname fitlogratios
 #' @export
 fitlogratios.WiscAr <- function(x,denmass,...){
-    r <- takeratios(x,'Ar39')
-    l <- takelogs(r)
-    f <- timezero(l)
-    return(cast(f,"logratios"))
+    lr39 <- x
+    for (hop in names(x)){
+        lr39[[hop]] <- fitlogratios(x[[hop]],denmass='Ar39',...)
+    }
+    lr39
 }
 
 Jtakeratios <- function(nruns,inum,iden){
@@ -75,7 +76,7 @@ Jtakeratios <- function(nruns,inum,iden){
 }
 
 takeratios <- function(x,...){ UseMethod("takeratios",x) }
-takeratios.default <- function(x,...){stop()}
+takeratios.default <- function(x,...){ stop() }
 takeratios.timeresolved <- function(x,denmass,...){
     den <- getmasses(x,denmass)
     num <- getmasses(x,denmass,invert=TRUE)
@@ -109,8 +110,7 @@ takelogs <- function(x){
 }
 
 newfit <- function(x,...){ UseMethod("newfit",x) }
-newfit.default <- function(x,...){ stop() }
-newfit.timeresolved <- function(x,nmasses=NULL,nruns=NULL,...){
+newfit.default <- function(x,nmasses=NULL,nruns=NULL,...){
     out <- x
     class(out) <- "fit"
     if (is.null(nmasses)) nmasses <- nmasses(x)
@@ -129,13 +129,15 @@ newfit.PHdata <- function(x,...){
     return(out)
 }
 
-timezero <- function(x){
+timezero <- function(x,blankindices=NA){
+    if (all(is.na(blankindices)))
+        blankindices <- x$blankindices
     nmasses <- nmasses(x)
     out <- newfit(x,nmasses)
-    bi <- rle(as.vector(x$blankindices))$values # blank indices
+    bi <- rle(as.vector(blankindices))$values # blank indices
     irunsout <- 0
     for (i in bi){ # loop through the groups
-        irunsx <- which(i==x$blankindices)
+        irunsx <- which(i==blankindices)
         irunsout <- utils::tail(irunsout,n=1) + (1:length(irunsx))
         g <- subset(x,irunsx) # extract group
         out <- setfit(out,fit(g),nmasses,irunsout)

@@ -33,13 +33,14 @@ nruns <- function(x,...){ UseMethod("nruns",x) }
 nruns.default <- function(x,...){
     length(x$labels)
 }
+nruns.hop <- function(x,...){
+    ncol(x$thetime)
+}
 nruns.PHdata <- function(x,...){
     return(nruns(x$signals[[1]]))
 }
 
-ncycles <- function(x,...){ UseMethod("ncycles",x) }
-ncycles.default <- function(x,...){stop()}
-ncycles.timeresolved <- function(x,...){
+ncycles <- function(x,...){
     return(dim(x$thetime)[1])
 }
 
@@ -131,19 +132,10 @@ findmatches <- function(labels,prefixes,invert=FALSE){
 }
 
 getruns <- function(x,...){ UseMethod("getruns",x) }
-getruns.default <- function(x,i,...){
-    out <- x
+getruns.default <- function(x,...){stop()}
+getruns.timeresolved <- function(x,i,...){
     ii <- getindices(nmasses=nmasses(x),iruns=i)
-    out$thetime <- x$thetime[,i]
-    out$d <- x$d[,ii]
-    out
-}
-getruns.WiscAr <- function(x,i,...){
-    out <- x
-    for (hop in names(x$hops))
-    out[[hop]] <- getruns(x[[hop]],i)
-    out[[hop]] <- getruns(x[[hop]],i)
-    out
+    return(x$d[,ii])
 }
 
 #' Select a subset of some data
@@ -173,7 +165,8 @@ getruns.WiscAr <- function(x,i,...){
 subset.timeresolved <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){
     if (is.null(i))
         i <- findrunindices(x,prefixes=labels,invert=invert,include.J=include.J)
-    out <- getruns(x,i)
+    out <- x
+    out$d <- getruns(x,i)
     out$thetime <- x$thetime[,i]
     out$thedate <- x$thedate[i]
     out$irr <- x$irr[i]
@@ -253,6 +246,15 @@ getmasses.timeresolved <- function(x,mass,invert=FALSE,...){
     out$d <- x$d[,ii]
     return(out)
 }
+#' @rdname getmasses
+#' @export
+getmasses.WiscAr <- function(x,mass,invert=FALSE,...){
+    out <- x
+    for (hop in names(x)){
+        out[[hop]] <- getmasses(x[[hop]],mass,invert=invert,...)
+    }
+    out
+}
 #' @param num vector of strings indicating the numerator isotopes
 #' @param den vector of string indicating the denominator isotopes
 #' @rdname getmasses
@@ -295,15 +297,22 @@ getmasses.redux <- function(x,num,den,invert=FALSE,...){
     return(out)
 }
 
-setmasses <- function(x,mass,value){ UseMethod("setmasses",x) }
-setmasses.default <- function(x,mass,value){stop()}
-setmasses.timeresolved <- function(x,mass,value){
+setmasses <- function(x,...){ UseMethod("setmasses",x) }
+setmasses.default <- function(x,mass,value,...){ stop() }
+setmasses.timeresolved <- function(x,mass,value,...){
     imasses <- which(x$masses == mass)
     ii <- getindices(nmasses(x),nruns(x),imasses)
     x$d[,ii] <- value
     return(x)
 }
-setmasses.fit <- function(x,mass,value){
+setmasses.WiscAr <- function(x,mass,value,...){
+    out <- x
+    for (hop in names(x)){
+        out[[hop]] <- setmasses(x[[hop]],mass,value)
+    }
+    out
+}
+setmasses.fit <- function(x,mass,value,...){
     imasses <- which(x$masses == mass)
     ii <- getindices(nmasses(x),nruns(x),imasses)
     x$intercepts[ii] <- value$intercepts
