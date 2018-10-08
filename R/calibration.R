@@ -10,13 +10,39 @@
 #' C <- calibration(Melbourne$X,"DCAL")
 #' plotcorr(C)
 #' @export
-calibration <- function(X,clabel){
-    j <- grep(clabel,X$labels,invert=TRUE)
-    if (length(j)==length(X$labels)) return(X)
-    J <- Jcal(X,clabel,X$detectors)
-    out <- subset(X,j)
-    out$intercepts <- J %*% X$intercepts
-    out$covmat <- J %*% X$covmat %*% t(J)
+calibration <- function(x,...){ UseMethod("calibration",x) }
+#' @rdname calibration
+#' @export
+calibration.default <- function(x,clabel,...){
+    j <- grep(clabel,x$labels,invert=TRUE)
+    if (length(j)==length(x$labels)) return(X)
+    J <- Jcal(x,clabel,x$detectors)
+    out <- subset(x,j)
+    out$intercepts <- J %*% x$intercepts
+    out$covmat <- J %*% x$covmat %*% t(J)
+    return(out)
+}
+#' @rdname calibration
+#' @export
+calibration.WiscAr <- function(x,clabel){
+    out <- x
+    for (hop in names(x)){
+        Wiscal(x[[hop]],clabel)
+    }
+    return(out)    
+}
+Wiscal <- function(x,clabel="Air"){
+    ##:ess-bp-start::browser@nil:##
+browser(expr=is.null(.ESSBP.[["@14@"]]));##:ess-bp-end:##
+    icalgas <- array(grep(clabel,x$labels))
+    iothers <- array(grep(clabel,x$labels,invert=TRUE))
+    calgas <- subset(x,icalgas)
+    others <- subset(x,iothers)
+    inearestcalgas <- nearest(others$thedate,calgas$thedate)
+    out <- others
+    out$labels <- unlist(lapply(prefix,paste0,others$labels))
+    out$d <- others$d - getruns(blanks,inearestblanks)
+    out$blankindices <- as.vector(inearestblanks)
     return(out)
 }
 

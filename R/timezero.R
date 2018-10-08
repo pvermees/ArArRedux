@@ -26,7 +26,7 @@ fitlogratios.default <- function(x,...){ stop() }
 #' @param denmass a string denoting the denominator isotope
 #' @rdname fitlogratios
 #' @export
-fitlogratios.timeresolved <- function(x,denmass,...){
+fitlogratios.timeresolved <- function(x,denmass="Ar40",...){
     r <- takeratios(x,denmass)
     l <- takelogs(r)
     f <- timezero(l)
@@ -36,7 +36,7 @@ fitlogratios.timeresolved <- function(x,denmass,...){
 #' @export
 fitlogratios.PHdata <- function(x,denmass=NULL,...){
     for (i in 1:nmasses(x)){
-    z <- newfit(x)
+        z <- newfit(x)
         l <- takelogs(x$signals[[i]])
         z <- setmasses(z,z$masses[i],timezero(l))
     }
@@ -50,12 +50,12 @@ fitlogratios.PHdata <- function(x,denmass=NULL,...){
 }
 #' @rdname fitlogratios
 #' @export
-fitlogratios.WiscAr <- function(x,denmass,...){
-    lr39 <- x
+fitlogratios.WiscAr <- function(x,denmass='Ar39',...){
+    out <- x
     for (hop in names(x)){
-        lr39[[hop]] <- fitlogratios(x[[hop]],denmass='Ar39',...)
+        out[[hop]] <- fitlogratios(x[[hop]],denmass=denmass,...)
     }
-    lr39
+    out
 }
 
 Jtakeratios <- function(nruns,inum,iden){
@@ -91,8 +91,8 @@ takeratios.timeresolved <- function(x,denmass,...){
 }
 takeratios.fit <- function(x,denmass,...){
     out <- x
-    iden <- which(x$mass == denmass)
-    inum <- which(x$mass != denmass)
+    iden <- which(x$masses == denmass)
+    inum <- which(x$masses != denmass)
     J <- Jtakeratios(nruns(x),inum,iden)
     out$masses <- x$masses[inum]
     out$intercepts <- J %*% x$intercepts

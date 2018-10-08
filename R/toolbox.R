@@ -393,3 +393,8 @@ concat <- function(lrlist){
     }
     return(out)
 }
+
+# change denominator isotope
+renormalise <- function(x,denmass='Ar40'){
+    
+}
