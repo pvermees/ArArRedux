@@ -21,7 +21,7 @@ loadWiscArData <- function(dname){
             } else if (grepl(".mdf",line,ignore.case=TRUE)){
                 line = readLines(con,n=1) # the next line contains the sample name
                 sname <- unlist(strsplit(line,'"'))[2]
-                naliquots <- length(which(grepl(sname,labels)))
+                naliquots <- length(names(out) %in% sname)
                 if (naliquots > 0) sname <- paste(sname,naliquots,sep=' ')
                 labels[i] <- sname
             } else if (identical(line,'""')){ # start of signal
@@ -69,7 +69,7 @@ addWiscArSignal <- function(dat,con,hops,keep,thedate=NA,
     out
 }
 
-Wiscalgas <- function(){
+Wiscalgas <- function(label='CAL'){
     # standard gas composition from WiscAr spreadsheet
     meas <- log(c(4.2055,69.948,0.9714))
     names(meas) <- c('09','96','68')
@@ -80,7 +80,7 @@ Wiscalgas <- function(){
     out <- list()
     out$irr <- rep(NA,3)
     out$pos <- rep(NA,3)
-    out$labels <- 'CAL'
+    out$labels <- label
     out$thedate <- readthedate("3-12-2016 12:00")
     out$num <- c('Ar40','Ar38','Ar36')
     out$den <- 'Ar39'

@@ -27,12 +27,8 @@ calibration.default <- function(x,clabel,...){
 calibration.WiscAr <- function(x,irradiations,clabel){
     D <- getDmatrix(x,irradiations,clabel)
     X <- concat(list(x,D))
-    icalgas <- findrunindices(X,prefixes=clabel)
     iothers <- findrunindices(X,prefixes=clabel,invert=TRUE)
-    ng <- length(icalgas)/3
     ns <- length(iothers)/3
-    icalgas <- icalgas[1:ng]
-    iothers <- iothers[1:ns]
     nc <- length(X$intercepts)
     J <- matrix(0,4*ns,nc)
     # standard gas indices
@@ -47,7 +43,7 @@ calibration.WiscAr <- function(x,irradiations,clabel){
     i69a101 <- getindices(X,num='Ar36',den='Ar39',hop='101')
     i89a102 <- getindices(X,num='Ar38',den='Ar39',hop='102')
     i69a102 <- getindices(X,num='Ar36',den='Ar39',hop='102')
-    # sample indices are difference between 'g' and 'a'
+    # sample indices is difference between 'g' and 'a'
     i09s101 <- i09a101[!(i09a101 %in% i09g101)]
     i79s101 <- i79a101[!(i79a101 %in% i79g101)]
     i69s101 <- i69a101[!(i69a101 %in% i69g101)]
@@ -60,39 +56,40 @@ calibration.WiscAr <- function(x,irradiations,clabel){
     i09w <- getindices(X,prefix='DCAL',num='Ar40',den='Ar39')
     i89w <- getindices(X,prefix='DCAL',num='Ar38',den='Ar39')
     i69w <- getindices(X,prefix='DCAL',num='Ar36',den='Ar39')
-    # match the samples with the nearest standard gas
-    inearestgas <- nearest(X$thedate[iothers],X$thedate[icalgas])
-    for (i in 1:ns){
-        j <- inearestgas[i]
-        # s09corr
-        J[(4*i-3),i09g101[j]] <- -1
-        J[(4*i-3),i09s101[i]] <-  1
-        J[(4*i-3),iD9[i]]     <- -1
-        J[(4*i-3),i09w[j]]    <-  1
-        # s89corr
-        J[(4*i-2),i89g102[j]] <- -1
-        J[(4*i-2),i89s102[i]] <-  1
-        J[(4*i-2),iD9[i]]     <- -1
-        J[(4*i-2),i89w[j]]    <-  1
-        # s79corr
-        J[(4*i-1),i79s101[i]] <-  1
-        J[(4*i-1),i89g102[j]] <- -1
-        J[(4*i-1),i69g102[j]] <-  1
-        J[(4*i-1),iD7[i]]     <-  1
-        J[(4*i-1),iD9[i]]     <- -1
-        J[(4*i-1),i89w[j]]    <-  1
-        J[(4*i-1),i69w[j]]    <- -1
-        # s69corr
-        J[4*i,i69g101[j]] <- -1/2
-        J[4*i,i69s101[i]] <-  1/2
-        J[4*i,i69g102[j]] <- -1/2
-        J[4*i,i69s102[i]] <-  1/2
-        J[4*i,iD9[i]]     <- -1
-        J[4*i,i69w[j]]    <-  1
-    }
+    i <- 1:ns
+    # s09corr
+    ##:ess-bp-start::browser@nil:##
+browser(expr=is.null(.ESSBP.[["@46@"]]));##:ess-bp-end:##
+    J[(4*i-3),i09g101] <- -1
+    J[(4*i-3),i09s101] <-  1
+    J[(4*i-3),iD9]     <- -1
+    J[(4*i-3),i09w]    <-  1
+    # s89corr
+    J[(4*i-2),i89g102] <- -1
+    J[(4*i-2),i89s102] <-  1
+    J[(4*i-2),iD9]     <- -1
+    J[(4*i-2),i89w]    <-  1
+    # s79corr
+    J[(4*i-1),i79s101] <-  1
+    J[(4*i-1),i89g102] <- -1
+    J[(4*i-1),i69g102] <-  1
+    J[(4*i-1),iD7]     <-  1
+    J[(4*i-1),iD9]     <- -1
+    J[(4*i-1),i89w]    <-  1
+    J[(4*i-1),i69w]    <- -1
+    # s69corr
+    J[(4*i),i69g101] <- -1/2
+    J[(4*i),i69s101] <-  1/2
+    J[(4*i),i69g102] <- -1/2
+    J[(4*i),i69s102] <-  1/2
+    J[(4*i),iD9]     <- -1
+    J[(4*i),i69w]    <-  1
+    # apply
+    ##:ess-bp-start::browser@nil:##
+browser(expr=is.null(.ESSBP.[["@44@"]]));##:ess-bp-end:##
+    intercepts <- J %*% X$intercepts
+    covmat <- J %*% X$covmat %*% t(J)
     out <- list()
-    out$intercepts <- J %*% X$intercepts
-    out$covmat <- J %*% X$covmat %*% t(J)
     out
 }
 

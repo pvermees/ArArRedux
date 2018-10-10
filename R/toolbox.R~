@@ -16,7 +16,7 @@ mergematrices <- function(xcovmat,ycovmat){
     return(covmat)
 }
 
-# returns the indices of timevec2 that are closest to timevec1
+# returns the indices of timevec2 which are closest to timevec1
 nearest <- function(timevec1,timevec2){
     ii <- NULL
     for (i in 1:length(timevec1)) {
