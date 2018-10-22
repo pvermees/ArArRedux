@@ -23,7 +23,7 @@ plot.timeresolved <- function(x,mass,label=NULL,run=1,hop='101',...){
         return(NA)
     }
     k <- which(x$masses==mass)
-    i <- run*nmasses(x)+k
+    i <- (run-1)*nmasses(x)+k
     graphics::plot(x$thetime[,run],x$d[,i],type='p',
                    xlab='time',ylab=mass)
 }

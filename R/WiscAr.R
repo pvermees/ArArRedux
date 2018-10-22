@@ -98,3 +98,23 @@ Wiscalgas <- function(){
     out$covmat <- J %*% covmat %*% t(J)
     out
 }
+renormalise.WiscAr <- function(x){
+    i0 <- getindices(x,num='Ar40')
+    i8 <- getindices(x,num='Ar38')
+    i7 <- getindices(x,num='Ar37')
+    i6 <- getindices(x,num='Ar36')
+    ns <- length(x$labels)
+    J <- matrix(0,4*ns,4*ns)
+    for (i in 1:ns){
+        J[4*i-3,i6[i]] <- 1
+        J[4*i-2,i7[i]] <- 1
+        J[4*i-1,i8[i]] <- 1
+        J[4*i-(0:3),i0[i]] <- -1
+    }
+    out <- x
+    out$intercepts <- J %*% x$intercept
+    out$covmat <- J %*% x$covmat %*% t(J)
+    out$num <- rep(c("Ar36","Ar37","Ar38","Ar39"),ns)
+    out$den <- rep("Ar40",4*ns)
+    out
+}

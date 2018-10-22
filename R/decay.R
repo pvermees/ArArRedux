@@ -87,7 +87,7 @@ getDmatrix.WiscAr <- function(x,irradiations,clabel){
     w <- Wiscalgas()
     icalgas <- findrunindices(x,prefixes=clabel,invert=FALSE)
     iothers <- findrunindices(x,prefixes=clabel,invert=TRUE)
-    ngas <- length(icalgas)/2 # only use step 101
+    ngas <- length(icalgas)/2 # only use hop 101
     noth <- length(iothers)/2 # only use hop 101
     icalgas <- icalgas[1:ngas]
     iothers <- iothers[1:noth]
@@ -120,7 +120,7 @@ getDmatrix.WiscAr <- function(x,irradiations,clabel){
             out$nlr[i] <- 2
             j <- j + 2
         } else if (i %in% icalgas){ # the calibration gas does not contain Ar37
-            dt <- (x$thedate[i]-w$thedate)/(365*24*3600)
+            dt <- (x$thedate[i]-w$thedate)/(365.25*24*3600)
             D[j] <- w$intercepts[1] - l9*dt   # restored l[0/9] of gas shot i
             D[j+1] <- w$intercepts[2] - l9*dt # restored l[8/9] of gas shot i
             D[j+2] <- w$intercepts[3] - l9*dt # restored l[6/9] of gas shot i

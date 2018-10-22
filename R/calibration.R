@@ -90,9 +90,14 @@ calibration.WiscAr <- function(x,irradiations,clabel){
         J[4*i,iD9[i]]     <- -1
         J[4*i,i69w[j]]    <-  1
     }
-    out <- list()
+    isamp <- findrunindices(x,prefixes=clabel,invert=TRUE)[1:ns]
+    out <- subset(X,i=isamp)
     out$intercepts <- J %*% X$intercepts
     out$covmat <- J %*% X$covmat %*% t(J)
+    out$hop <- NULL
+    out$num <- rep(c("Ar40","Ar38","Ar37","Ar36"),ns)
+    out$den <- rep("Ar39",4*ns)
+    out$nlr <- rep(4,ns)
     out
 }
 

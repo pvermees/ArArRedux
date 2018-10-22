@@ -419,7 +419,3 @@ concat.WiscAr <- function(lrlist){
     class(out) <- append(class(out),"WiscAr")
     out
 }
-# change denominator isotope
-renormalise <- function(x,denmass='Ar40'){
-    
-}
