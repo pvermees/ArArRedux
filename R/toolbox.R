@@ -339,10 +339,12 @@ replacenegatives <- function(x){
     out <- x
     nmasses <- nmasses(x)
     nruns <- nruns(x)
-    isnegative <- apply(x$d<0,2,"sum")>0
-    ntoreplace <- sum(isnegative)
-    out$d[,isnegative] <- # effectively set to zero
-    seq(from=1e-18,to=1e-20,length.out=ncycles(x)*ntoreplace)
+    logm <- apply(x$d,2,function(x) mean(log(x[x>0])))
+    logs <- apply(x$d,2,function(x) sd(log(x[x>0])))
+    for (i in 1:length(logm)){
+        neg <- out$d[,i]<=0
+        out$d[neg,i] <- exp(logm[i]-2*logs[i])
+    }
     return(out)
 }
 

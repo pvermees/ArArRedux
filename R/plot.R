@@ -12,31 +12,41 @@
 #' samplefile <- system.file("Samples.csv",package="ArArRedux")
 #' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
 #' mMC <- loaddata(samplefile,masses)
-#' plot(mMC,"MD2-1a","Ar40")
+#' plot(mMC,"MD2-1a")
 #' @rdname plot
 #' @export
-plot.timeresolved <- function(x,mass,label=NULL,run=1,hop='101',...){
+plot.timeresolved <- function(x,label=NULL,mass=NA,
+                              run=1,hop='101',tmin=0,...){
     if (!is.null(label))
         run <- which(x$labels==label)-1
     if (length(run)!=1){
         print('invalid input into plot function')
         return(NA)
     }
-    k <- which(x$masses==mass)
-    i <- (run-1)*nmasses(x)+k
-    graphics::plot(x$thetime[,run],x$d[,i],type='p',
-                   xlab='time',ylab=mass)
+    therun <- subset(x,i=run)
+    nm <- length(x$masses)
+    par(mfrow=rep(ceiling(sqrt(nm)),2))
+    for (m in 1:nm){
+        f <- fit(therun,tmin=tmin,mass=x$masses[m],returnfit=TRUE)
+        p <- stats::predict.lm(f$fit,newdata=data.frame(tt=therun$thetime))
+        graphics::plot(therun$thetime,therun$d[,m],type='p',
+                       xlab='time',ylab=x$masses[m])
+        graphics::lines(therun$thetime,p)
+        graphics::points(0,f$intercepts,pch=22,bg='black')
+    }
+    f <- fit(therun,tmin=tmin,returnfit=TRUE)
+    invisible(f$fit)
 }
-plot.WiscAr <- function(x,mass,label=NULL,run=1,hop='101',...){
-    plot(x[[hop]],mass,label,run)
+plot.WiscAr <- function(x,hop='101',...){
+    plot(x[[hop]],...)
 }
 #' @examples
 #' mPH <- loaddata(samplefile,masses,PH=TRUE)
 #' plot(mPH,"MD2-1a","Ar40")
 #' @rdname plot
 #' @export
-plot.PHdata <- function(x,mass,label=NULL,run=1,...){
-    plot.timeresolved(x$signals[[mass]],mass,label=label,run=run,...)
+plot.PHdata <- function(x,...){
+    plot.timeresolved(x,...)
 }
 
 #' Plot a matrix with correlation coefficients
