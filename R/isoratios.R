@@ -1,0 +1,128 @@
+#' Isochron ratios
+#'
+#' Calculate the Calculate the inverse isochron ratios of interference
+#' corrected logratio intercept data
+#' 
+#' @param X an object of class \code{redux} containing some
+#'     interference corrected logratio intercept data
+#' @param inverse logical. If \code{TRUE}, returns inverse isochron
+#'     ratios (\eqn{^{36}}Ar/\eqn{^{40}}Ar
+#'     vs. \eqn{^{39}}Ar/\eqn{^{40}}Ar). Otherwise returns normal
+#'     isochron ratios (\eqn{^{40}}Ar/\eqn{^{36}}Ar
+#'     vs. \eqn{^{39}}Ar/\eqn{^{36}}Ar).
+#' @return an object of class \code{link{isoratios}} containing the
+#'     isochron ratios and their covariance matrix.
+#' @examples
+#' data(Melbourne)
+#' IR <- isoratios(Melbourne$X,irr=Melbourne$irr,fract=Melbourne$fract)
+#' @export
+isoratios <- function(X,irr,fract=NULL,ca=NULL,k=NULL,inverse=TRUE){
+    Cl <- corrections(X=X,irr=irr,fract=fract,ca=ca,k=k)
+    Y <- getABCDEFG(Cl)
+    ns <- nruns(Y)
+    ni <- length(Y$intercepts)
+    out <- Y
+    out$inverse <- inverse
+    out$intercepts <- rep(0,2*ns)
+    out$covmat <- matrix(0,2*ns,2*ns)
+    if (inverse){
+        out$num <- rep(c('Ar39','Ar36'),ns)
+        out$den <- rep('Ar40',2*ns)
+    } else {
+        out$num <- rep(c('Ar39','Ar40'),ns)
+        out$den <- rep('Ar36',2*ns)
+    }
+    out$nlr <- rep(2,ns)
+    J <- matrix(0,nrow=2*ns,ncol=ni)
+    hasKglass <- "K-glass" %in% Cl$labels
+    hasCasalt <- "Ca-salt" %in% Cl$labels
+    for (i in 1:ns){
+        j <- (i-1)*7
+        k <- (i-1)*2
+        label <- Y$labels[i]
+        aa <- Y$intercepts[getindices(Y,label,num='A')]
+        bb <- Y$intercepts[getindices(Y,label,num='B')]
+        cc <- Y$intercepts[getindices(Y,label,num='C')]
+        dd <- Y$intercepts[getindices(Y,label,num='D')]
+        ee <- Y$intercepts[getindices(Y,label,num='E')]
+        ff <- Y$intercepts[getindices(Y,label,num='F')]
+        gg <- Y$intercepts[getindices(Y,label,num='G')]
+        if (!hasKglass){
+            dd <- ee <- 0
+        }
+        if (!hasCasalt | expired(irr[[Y$irr[i]]],Y$thedate[i],Y$param$l7)){
+            bb <- dd <- gg <- 0
+        }
+        if (inverse){
+            out$intercepts[k+1] <- (aa-bb-cc)/(1+dd-ee) # 60
+            J[k+1,j+1] <- 1/(1+dd-ee)               # d60/da
+            J[k+1,j+2] <- -1/(1+dd-ee)              # d60/db
+            J[k+1,j+3] <- -1/(1+dd-ee)              # d60/dc
+            J[k+1,j+4] <- -(aa-bb-cc)/(1+dd-ee)^2   # d60/dd
+            J[k+1,j+5] <- (aa-bb-cc)/(1+dd-ee)^2    # d60/de
+            out$intercepts[k+2] <- (ff-gg)/(1+dd-ee)    # 90
+            J[k+2,j+4] <- -(ff-gg)/(1+dd-ee)^2      # d90/dd
+            J[k+2,j+5] <- (ff-gg)/(1+dd-ee)^2       # d90/de
+            J[k+2,j+6] <- 1/(1+dd-ee)               # d90/df
+            J[k+2,j+7] <- -1/(1+dd-ee)              # d90/dg
+        } else {
+            out$intercepts[(i-1)*2+1] <- (1+dd-ee)/(aa-bb-cc) # 06
+            J[k+1,j+1] <- -(1+dd-ee)/(aa-bb-cc)^2   # d06/da
+            J[k+1,j+2] <- -(1+dd-ee)/(aa-bb-cc)^2   # d06/db
+            J[k+1,j+3] <- -(1+dd-ee)/(aa-bb-cc)^2   # d06/dc
+            J[k+1,j+4] <- 1/(aa-bb-cc)              # d06/dd
+            J[k+1,j+5] <- -1/(aa-bb-cc)             # d06/de
+            out$intercepts[(i-1)*2+2] <- (ff-gg)/(aa-bb-cc)   # 96
+            J[k+1,j+1] <- -(ff-gg)/(aa-bb-cc)^2     # d96/da
+            J[k+1,j+2] <- (ff-gg)/(aa-bb-cc)^2      # d96/db
+            J[k+1,j+3] <- (ff-gg)/(aa-bb-cc)^2      # d96/dc
+            J[k+1,j+6] <- 1/(aa-bb-cc)              # d96/df
+            J[k+1,j+7] <- -1/(aa-bb-cc)             # d96/dg
+        }
+    }
+    out$covmat <- J %*% Y$covmat %*% t(J)
+    class(out) <- append(class(out),"isoratios")
+    return(out)
+}
+
+getJABCDEFG <- function(Z,Slabels,nl){
+    J <- matrix(0,nrow=nl,ncol=length(Z$intercepts))
+    i67ca <- getindices(Z,"Ca-salt","Ar36","Ar37")
+    i97ca <- getindices(Z,"Ca-salt","Ar39","Ar37")
+    i09k <- getindices(Z,"K-glass","Ar40","Ar39")
+    for (i in 1:length(Slabels)){
+        j <- (i-1)*7
+        label <- Slabels[i]
+        i60 <- getindices(Z,label,"Ar36","Ar40")
+        i70 <- getindices(Z,label,"Ar37","Ar40")
+        i80 <- getindices(Z,label,"Ar38","Ar40")
+        i90 <- getindices(Z,label,"Ar39","Ar40")
+        i68cl <- getindices(Z,paste0("Cl:",label),"Ar36","Ar38")
+        J[j+1,i60] <- 1
+        J[j+2,c(i67ca,i70)] <- 1
+        J[j+3,c(i68cl,i80)] <- 1
+        J[j+4,c(i97ca,i70,i09k)] <- 1
+        J[j+5,c(i90,i09k)] <- 1
+        J[j+6,i90] <- 1
+        J[j+7,c(i90,i09k)] <- 1
+    }
+    return(J)
+}
+
+getABCDEFG <- function(Cl){
+    Z <- concat(list(Cl,air(Cl))) # matrix with everything
+    i <- findrunindices(Z,c("Ca-salt","K-glass","Cl:"),invert=TRUE)
+    j <- findmatches(Z$pos,NA,invert=TRUE)
+    ii <- 1:nruns(Z)
+    si <- which((ii %in% i) & (ii %in% j))
+    ns <- length(si)
+    out <- subset(Z,si)
+    out$num <- c(rep(c("A","B","C","D","E","F","G"),ns))
+    out$den <- rep(NA,7*ns)
+    out$nlr <- rep(7,ns)
+    Jv <- getJABCDEFG(Z,Z$labels[si],length(out$num))
+    out$intercepts <- exp(Jv %*% Z$intercepts)
+    Jw <- apply(Jv,2,"*",out$intercepts)
+    out$covmat <- Jw %*% Z$covmat %*% t(Jw)
+    return(out)
+}

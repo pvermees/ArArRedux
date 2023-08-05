@@ -148,7 +148,7 @@ getruns <- function(x,...){ UseMethod("getruns",x) }
 getruns.default <- function(x,...){stop()}
 getruns.timeresolved <- function(x,i,...){
     ii <- getindices(nmasses=nmasses(x),iruns=i)
-    return(x$d[,ii])
+    return(x$d[,ii,drop=FALSE])
 }
 
 #' Select a subset of some data
@@ -180,7 +180,7 @@ subset.timeresolved <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALS
         i <- findrunindices(x,prefixes=labels,invert=invert,include.J=include.J)
     out <- x
     out$d <- getruns(x,i)
-    out$thetime <- x$thetime[,i]
+    out$thetime <- x$thetime[,i,drop=FALSE]
     out$thedate <- x$thedate[i]
     out$irr <- x$irr[i]
     out$pos <- x$pos[i]

@@ -36,7 +36,7 @@ getEmatrix <- function(X,irradiations){
     ns <- nruns(X)
     lpcl <- log(X$param$pcl)
     slpcl <- X$param$spcl/X$param$pcl
-    out$intercepts <- rep(lpcl,ns)
+    out$intercepts <- rep(NA,ns)
     out$num <- rep("Ar36",ns) 
     out$den <- rep("Ar38",ns)
     out$nlr <- rep(1,ns)
@@ -45,8 +45,7 @@ getEmatrix <- function(X,irradiations){
     for (i in 1:ns){ # loop through the samples
         irr <- irradiations[[X$irr[i]]]
         Tdt <- getTdt(irr,X$thedate[i])
-        out$intercepts[i] <- out$intercepts[i] +
-                             getE(irr$P,Tdt$T,Tdt$dt,lambda)
+        out$intercepts[i] <- lpcl + getE(irr$P,Tdt$T,Tdt$dt,lambda)
         dEdL[i] <- getdEdL(irr$P,Tdt$T,Tdt$dt,lambda)
         out$labels[i] <- paste("Cl:",X$labels[i],sep='')
     }

@@ -38,7 +38,7 @@ fitlogratios.PHdata <- function(x,denmass=NULL,tmin=0,...){
     for (i in 1:nmasses(x)){
         z <- newfit(x)
         l <- takelogs(x$signals[[i]])
-        z <- setmasses(z,z$masses[i],timezero(l,tmin=tmin))
+        z <- setmasses(x=z,mass=z$masses[i],value=timezero(l,tmin=tmin))
     }
     if (is.null(denmass)) {
         f <- z
