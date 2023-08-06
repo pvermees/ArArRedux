@@ -4,35 +4,39 @@
 \alias{read}
 \title{Read mass spectrometer data}
 \usage{
-read(xfile, masses, blabel, Jpos, kfile = NULL, cafile = NULL,
-  dfile = NULL, dlabels = NULL, MS = "ARGUS-VI")
+read(x, blabel, Jpos, kdat = NULL, cadat = NULL, ddat = NULL, MS = "ARGUS-VI")
 }
 \arguments{
-\item{xfile}{a .csv file with samples and fluence monitor data}
-
-\item{masses}{a list which specifies the order in which the isotopes
-are recorded by the mass spectrometer}
+\item{x}{a \code{.csv} file with samples and fluence monitor data
+(if \code{MS = 'ARGUS-VI'}) OR a directory with \code{.RUN}
+files (if \code{MS = 'WiscAr'})}
 
 \item{blabel}{a prefix string denoting the blanks}
 
 \item{Jpos}{a vector of integers denoting the positions of the
 fluence monitors in the irradiation stack}
 
-\item{kfile}{a .csv file with the K-interference monitor data
+\item{kdat}{a \code{.csv} file with the K-interference monitor data
+(if \code{MS = 'ARGUS-VI'}) OR a directory with \code{.RUN}
+files of K-interference monitor data (if \code{MS = 'WiscAr'})
 (optional)}
 
-\item{cafile}{a .csv file with the Ca-interference monitor data
-(optional)}
+\item{cadat}{a \code{.csv} file with the Ca-interference monitor
+data (if \code{MS = 'ARGUS-VI'}) OR a directory with
+\code{.RUN} files of Ca-interference monitor data (if \code{MS
+= 'WiscAr'}) (optional)}
 
-\item{dfile}{a .csv file with the detector calibration data
-(optional)}
-
-\item{dlabels}{a list which specifies the names of the detectors
-and the order in which they were recorded by the mass spectrometer}
+\item{ddat}{a \code{.csv} file with the detector calibration data
+(if \code{MS = 'ARGUS-VI'}) OR the prefix of the standard gas
+measurements (if \code{MS = 'WiscAr'}) (optional)}
 
 \item{MS}{a string denoting the type of mass spectrometer. At the
-moment only the ARGUS-IV is listed. Please contact the author to
-add other file formats to Ar-Ar_Redux.}
+moment there are two options: \code{'ARGUS-VI'}, for data that
+are acquired on the eponymous instrument following the
+measurement protocols at Melbourne University, and
+\code{'WiscAr'} for the 5-detector Noblesse instrument at the
+University of Wisconsin. Please contact the author to add other
+file formats to Ar-Ar_Redux.}
 }
 \value{
 an object of class \code{\link{redux}}.
@@ -42,13 +46,11 @@ Reads raw mass spectrometer data and parses it into a
 \code{\link{redux}} format for further processing.
 }
 \examples{
-samplefile <-  system.file("Samples.csv",package="ArArRedux")
+samplefile <- system.file("Samples.csv",package="ArArRedux")
 kfile <- system.file("K-glass.csv",package="ArArRedux")
 cafile <- system.file("Ca-salt.csv",package="ArArRedux")
 dfile <- system.file("Calibration.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-dlabels <- c("H1","AX","L1","L2")
-X <- read(samplefile,masses,blabel="EXB#",Jpos=c(3,15),
-          kfile,cafile,dfile,dlabels)
+X <- read(samplefile,blabel="EXB#",Jpos=c(3,15),
+          kdat=kfile,cadat=cafile,ddat=dfile,MS='ARGUS-VI')
 plotcorr(X)
 }

@@ -4,10 +4,10 @@
 \alias{decaycorrection}
 \title{Correct for radioactive decay occurred since irradiation}
 \usage{
-decaycorrection(X, irr, isotope)
+decaycorrection(x, irr, isotope)
 }
 \arguments{
-\item{X}{an objects of class \code{redux}}
+\item{x}{an objects of class \code{redux} or \code{WiscAr}}
 
 \item{irr}{the irradiation schedule}
 

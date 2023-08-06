@@ -4,6 +4,7 @@
 \alias{getmasses}
 \alias{getmasses.default}
 \alias{getmasses.timeresolved}
+\alias{getmasses.WiscAr}
 \alias{getmasses.logratios}
 \alias{getmasses.redux}
 \title{Select a subset of isotopes from a dataset}
@@ -13,6 +14,8 @@ getmasses(x, ...)
 \method{getmasses}{default}(x, ...)
 
 \method{getmasses}{timeresolved}(x, mass, invert = FALSE, ...)
+
+\method{getmasses}{WiscAr}(x, mass, invert = FALSE, ...)
 
 \method{getmasses}{logratios}(x, num, den, invert = FALSE, ...)
 
@@ -43,8 +46,7 @@ isotopes from a larger dataset
 }
 \examples{
 kfile <- system.file("K-glass.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-mk <- loaddata(kfile,masses)
+mk <- loaddata(kfile)
 lk <- fitlogratios(blankcorr(mk,"EXB#","K:"),"Ar40")
 k <- getmasses(lk,"Ar39","Ar40") # subset of the relevant isotopes
 plotcorr(k)

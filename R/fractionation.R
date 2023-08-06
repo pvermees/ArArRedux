@@ -9,10 +9,11 @@
 #' @param fract a list with fractionation data for Ar37, Ar39 and Ar40
 #' @return an object of class \code{redux}
 #' @examples
+#' graphics.off()
 #' data(Melbourne)
 #' C <- calibration(Melbourne$X,"DCAL")
 #' A <- massfractionation(C,Melbourne$fract)
-#' plotcorr(A)
+#'  plotcorr(A)
 #' @export
 massfractionation <- function(X,fract){
     fdet <- X$detectors[c("Ar37","Ar39","Ar40")]
@@ -45,8 +46,8 @@ massfractionation <- function(X,fract){
 #' data(Melbourne)
 #' fd37file <- system.file("AirL2.csv",package="ArArRedux")
 #' fd40file <- system.file("AirH1.csv",package="ArArRedux")
-#' fract <- list(fractionation(fd37file,"L2",PH=TRUE),
-#'               fractionation(fd40file,"H1",PH=FALSE))
+#' fract <- list(fractionation(fd37file,"L2"),
+#'               fractionation(fd40file,"H1"))
 #' if (isTRUE(all.equal(Melbourne$fract,fract))){
 #'   print("We just re-created the fractionation correction for the Melbourne dataset")
 #' }

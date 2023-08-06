@@ -2,9 +2,15 @@
 % Please edit documentation in R/toolbox.R
 \name{concat}
 \alias{concat}
+\alias{concat.default}
+\alias{concat.WiscAr}
 \title{Merge a list of logratio data}
 \usage{
 concat(lrlist)
+
+\method{concat}{default}(lrlist)
+
+\method{concat}{WiscAr}(lrlist)
 }
 \arguments{
 \item{lrlist}{a list containing items of class
@@ -12,7 +18,7 @@ concat(lrlist)
 }
 \value{
 an object of the same class as \code{x} containing the
-merged dataset
+    merged dataset
 }
 \description{
 Recursively concatenates a list of logratio data into one big dataset
@@ -22,15 +28,13 @@ samplefile <-  system.file("Samples.csv",package="ArArRedux")
 kfile <- system.file("K-glass.csv",package="ArArRedux")
 cafile <- system.file("Ca-salt.csv",package="ArArRedux")
 dfile <- system.file("Calibration.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
 blanklabel <- "EXB#"
 Jpos <- c(3,15)
-dlabels <- c("H1","AX","L1","L2")
  
-m <- loaddata(samplefile,masses) # samples and J-standards
-mk <- loaddata(kfile,masses) # K-interference data
-mca <- loaddata(cafile,masses) # Ca interference data
-md <- loaddata(dfile,dlabels,PH=TRUE) # detector intercalibrations
+m <- loaddata(samplefile) # samples and J-standards
+mk <- loaddata(kfile) # K-interference data
+mca <- loaddata(cafile) # Ca interference data
+md <- loaddata(dfile) # detector intercalibrations
  
 # form and fit logratios
 l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")

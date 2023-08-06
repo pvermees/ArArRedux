@@ -5,15 +5,18 @@
 \alias{fitlogratios.default}
 \alias{fitlogratios.timeresolved}
 \alias{fitlogratios.PHdata}
+\alias{fitlogratios.WiscAr}
 \title{Extrapolation to 'time zero'}
 \usage{
 fitlogratios(x, ...)
 
 \method{fitlogratios}{default}(x, ...)
 
-\method{fitlogratios}{timeresolved}(x, denmass, ...)
+\method{fitlogratios}{timeresolved}(x, denmass = "Ar40", tmin = 0, ...)
 
-\method{fitlogratios}{PHdata}(x, denmass = NULL, ...)
+\method{fitlogratios}{PHdata}(x, denmass = NULL, tmin = 0, ...)
+
+\method{fitlogratios}{WiscAr}(x, denmass = "Ar39", ...)
 }
 \arguments{
 \item{x}{an object of class \code{timeresolved} or \code{PHdata}}
@@ -21,6 +24,8 @@ fitlogratios(x, ...)
 \item{...}{further arguments (see below)}
 
 \item{denmass}{a string denoting the denominator isotope}
+
+\item{tmin}{time stamp (in seconds) of 'time zero'}
 }
 \value{
 an object of class \code{logratios}
@@ -36,8 +41,7 @@ extrapolated.
 }
 \examples{
 samplefile <- system.file("Samples.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-m <- loaddata(samplefile,masses) # samples and J-standards
+m <- loaddata(samplefile) # samples and J-standards
 blanklabel <- "EXB#"
 l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
 plotcorr(l)

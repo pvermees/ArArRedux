@@ -17,6 +17,7 @@ getJfactors             Calculate the irradiation parameter ('J
 getages                 Calculate 40Ar/39Ar ages
 getmasses               Select a subset of isotopes from a dataset
 interference            define the interference corrections
+isoratios               Isochron ratios
 loaddata                Load mass spectrometer data
 loadirradiations        Load the irradiation schedule
 logratios               The 'logratios' class
@@ -29,7 +30,6 @@ process                 Process logratio data and calculate 40Ar/39Ar
                         ages
 read                    Read mass spectrometer data
 redux                   The 'redux' class
-redux2isoplotr          Export 'ArArRedux' data to 'IsoplotR'
 results                 The 'results' class
 subset.timeresolved     Select a subset of some data
 summary.results         Summary table

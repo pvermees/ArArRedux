@@ -9,15 +9,16 @@
 #' extrapolated.
 #' 
 #' @param x an object of class \code{timeresolved} or \code{PHdata}
+#' @param tmin time stamp (in seconds) of 'time zero'
 #' @param ... further arguments (see below)
 #' @return an object of class \code{logratios}
 #' @examples
 #' samplefile <- system.file("Samples.csv",package="ArArRedux")
-#' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-#' m <- loaddata(samplefile,masses) # samples and J-standards
+#' m <- loaddata(samplefile) # samples and J-standards
 #' blanklabel <- "EXB#"
 #' l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
 #' plotcorr(l)
+#' @rdname fitlogratios
 #' @export
 fitlogratios <- function(x,...){ UseMethod("fitlogratios",x) }
 #' @rdname fitlogratios

@@ -1,10 +1,11 @@
-* using log directory ‘/home/pvermees/Dropbox/Programming/R/ArArRedux/ArArRedux.Rcheck’
-* using R version 3.4.4 (2018-03-15)
+* using log directory ‘/home/pvermees/Documents/Programming/R/ArArRedux/ArArRedux.Rcheck’
+* using R version 4.1.2 (2021-11-01)
 * using platform: x86_64-pc-linux-gnu (64-bit)
 * using session charset: UTF-8
-* using option ‘--as-cran’
+* using options ‘--run-donttest --as-cran’
 * checking for file ‘ArArRedux/DESCRIPTION’ ... OK
-* this is package ‘ArArRedux’ version ‘1.0’
+* this is package ‘ArArRedux’ version ‘2.0’
+* package encoding: UTF-8
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: ‘Pieter Vermeesch <p.vermeesch@ucl.ac.uk>’
 
@@ -13,14 +14,10 @@ The build time stamp is missing.
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
 * checking if there is a namespace ... OK
-* checking for executable files ... WARNING
-Found the following executable file:
-  .git/objects/b4/2dcca86ba59653b94b511cf091184e76c37481
-Source packages should not contain undeclared executable files.
-See section ‘Package structure’ in the ‘Writing R Extensions’ manual.
+* checking for executable files ... OK
 * checking for hidden files and directories ... NOTE
 Found the following hidden files and directories:
-  R/.Rhistory
+  .gitignore
   .git
 These were most likely included in error. See section ‘Package
 structure’ in the ‘Writing R Extensions’ manual.
@@ -32,11 +29,12 @@ CRAN-pack does not know about
 * checking whether package ‘ArArRedux’ can be installed ... OK
 * checking installed package size ... OK
 * checking package directory ... OK
+* checking for future file timestamps ... OK
 * checking DESCRIPTION meta-information ... NOTE
 Checking should be performed on sources prepared by ‘R CMD build’.
 * checking top-level files ... NOTE
-Non-standard files/directories found at top level:
-  ‘ArArRedux.Rcheck’ ‘ArArRedux_1.0.tar.gz’
+Non-standard file/directory found at top level:
+  ‘ArArRedux.Rcheck’
 * checking for left-over files ... OK
 * checking index information ... OK
 * checking package subdirectories ... WARNING
@@ -71,8 +69,18 @@ These should not be in a package tarball.
 * checking for unstated dependencies in examples ... OK
 * checking contents of ‘data’ directory ... OK
 * checking data for non-ASCII characters ... OK
+* checking LazyData ... OK
 * checking data for ASCII and uncompressed saves ... OK
-* checking examples ... OK
+* checking examples ... NOTE
+Examples with CPU (user + system) or elapsed time > 5s
+              user system elapsed
+subset       1.898  4.994   0.534
+isoratios    1.613  5.235   0.560
+weightedmean 1.634  5.087   0.495
+summary      1.322  4.066   0.426
+process      1.368  3.882   0.466
 * checking PDF version of manual ... OK
+* checking for non-standard things in the check directory ... OK
+* checking for detritus in the temp directory ... OK
 * DONE
-Status: 2 WARNINGs, 4 NOTEs
+Status: 1 WARNING, 5 NOTEs

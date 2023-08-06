@@ -235,8 +235,7 @@ subset.results <- function(x,i=NULL,labels=NULL,invert=FALSE,...){
 #' @return an object of the same class as x
 #' @examples
 #' kfile <- system.file("K-glass.csv",package="ArArRedux")
-#' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-#' mk <- loaddata(kfile,masses)
+#' mk <- loaddata(kfile)
 #' lk <- fitlogratios(blankcorr(mk,"EXB#","K:"),"Ar40")
 #' k <- getmasses(lk,"Ar39","Ar40") # subset of the relevant isotopes
 #' plotcorr(k)
@@ -340,7 +339,7 @@ replacenegatives <- function(x){
     nmasses <- nmasses(x)
     nruns <- nruns(x)
     logm <- apply(x$d,2,function(x) mean(log(x[x>0])))
-    logs <- apply(x$d,2,function(x) sd(log(x[x>0])))
+    logs <- apply(x$d,2,function(x) stats::sd(log(x[x>0])))
     for (i in 1:length(logm)){
         neg <- out$d[,i]<=0
         out$d[neg,i] <- exp(logm[i]-2*logs[i])
@@ -353,23 +352,21 @@ replacenegatives <- function(x){
 #' Recursively concatenates a list of logratio data into one big dataset
 #' 
 #' @param lrlist a list containing items of class
-#' \code{\link{logratios}} or \code{\link{redux}}
+#'     \code{\link{logratios}} or \code{\link{redux}}
 #' @return an object of the same class as \code{x} containing the
-#' merged dataset
+#'     merged dataset
 #' @examples
 #' samplefile <-  system.file("Samples.csv",package="ArArRedux")
 #' kfile <- system.file("K-glass.csv",package="ArArRedux")
 #' cafile <- system.file("Ca-salt.csv",package="ArArRedux")
 #' dfile <- system.file("Calibration.csv",package="ArArRedux")
-#' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
 #' blanklabel <- "EXB#"
 #' Jpos <- c(3,15)
-#' dlabels <- c("H1","AX","L1","L2")
 #'  
-#' m <- loaddata(samplefile,masses) # samples and J-standards
-#' mk <- loaddata(kfile,masses) # K-interference data
-#' mca <- loaddata(cafile,masses) # Ca interference data
-#' md <- loaddata(dfile,dlabels,PH=TRUE) # detector intercalibrations
+#' m <- loaddata(samplefile) # samples and J-standards
+#' mk <- loaddata(kfile) # K-interference data
+#' mca <- loaddata(cafile) # Ca interference data
+#' md <- loaddata(dfile) # detector intercalibrations
 #'  
 #' # form and fit logratios
 #' l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
@@ -385,9 +382,12 @@ replacenegatives <- function(x){
 #' data(Melbourne)
 #' if (isTRUE(all.equal(Melbourne$X,X))) {
 #'    print("We just reconstructed the built-in dataset Melbourne$X")}
+#' @rdname concat
 #' @export
-concat <- function(lrlist,...){ UseMethod("concat",lrlist) }
-concat.default <- function(lrlist,...){
+concat <- function(lrlist){ UseMethod("concat",lrlist) }
+#' @rdname concat
+#' @export
+concat.default <- function(lrlist){
     if (length(lrlist)==2) {
         x <- lrlist[[1]]
         y <- lrlist[[2]]
@@ -411,6 +411,8 @@ concat.default <- function(lrlist,...){
     }
     return(out)
 }
+#' @rdname concat
+#' @export
 concat.WiscAr <- function(lrlist){
     out <- concat.default(lrlist)
     out$hop <- NULL

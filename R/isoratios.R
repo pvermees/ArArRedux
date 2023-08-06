@@ -5,6 +5,15 @@
 #' 
 #' @param X an object of class \code{redux} containing some
 #'     interference corrected logratio intercept data
+#' @param irr the irradiation schedule
+#' @param fract list with air shot data (one item per denominator
+#'     isotope)
+#' @param ca an object of class \code{\link{logratios}} with
+#'     Ca-interference data (not necessary if interferences are
+#'     included in X)
+#' @param k an object of class \code{\link{logratios}} with
+#'     K-interference data (not necessary if interferences are
+#'     included in X)
 #' @param inverse logical. If \code{TRUE}, returns inverse isochron
 #'     ratios (\eqn{^{36}}Ar/\eqn{^{40}}Ar
 #'     vs. \eqn{^{39}}Ar/\eqn{^{40}}Ar). Otherwise returns normal

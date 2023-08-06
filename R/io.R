@@ -4,16 +4,21 @@
 #' \code{\link{logratios}} dataset together with all the parameters
 #' needed for age calculation
 #' 
-#' @param X an object of class \code{\link{logratios}}
+#' @param x an object of class \code{\link{logratios}}
 #' @param Jpos a vector of integers denoting the positions of the
-#' fluence monitors in the irradiation stack
+#'     fluence monitors in the irradiation stack
 #' @param detectors a list of strings denoting the detectors for each
-#' argon isotope
+#'     argon isotope
+#' @param ... optional arguments
 #' @return an object of class \code{\link{redux}}
+#' @rdname newredux
 #' @export
 newredux <- function(x,...){ UseMethod("newredux",x) }
-newredux.default <- function(x,Jpos,detectors=
-                             list(Ar36="H1",Ar37="L2",Ar38="L1",Ar39="AX",Ar40="H1")){
+#' @rdname newredux
+#' @export
+newredux.default <- function(x,Jpos,
+                             detectors=list(Ar36="H1",Ar37="L2",Ar38="L1",
+                                            Ar39="AX",Ar40="H1"),...){
     out <- x
     out$Jpos <- Jpos
     out$detectors <- detectors
@@ -34,7 +39,9 @@ newredux.default <- function(x,Jpos,detectors=
     class(out) <- "redux"
     return(out)
 }
-newredux.WiscAr <- function(x,Jpos){
+#' @rdname newredux
+#' @export
+newredux.WiscAr <- function(x,Jpos,...){
     merged <- concat(x)
     out <- newredux.default(merged,Jpos,detectors=NULL)
     class(out) <- append(class(out),'WiscAr')
@@ -88,6 +95,8 @@ loaddata <- function(fid,MS="ARGUS-VI"){
         out <- loadArgusData(fname=fid)
     else if (identical(MS,'WiscAr'))
         out <- loadWiscArData(dname=fid)
+    else
+        stop('Invalid mass spectrometer.')
     out
 }
 
@@ -178,7 +187,7 @@ read <- function(x,blabel,Jpos,kdat=NULL,cadat=NULL,ddat=NULL,MS="ARGUS-VI"){
         # subset of the relevant isotopes
         mk <- loaddata(kdat,MS)
         lk <- fitlogratios(blankcorr(mk,blabel,"K:"),"Ar39")
-        k <- getmasses(lk,"Ar40","Ar39")
+        k <- getmasses(lk,c("Ar40","Ar39"),c("Ar38","Ar39"))
         x <- concat(list(x,k))
     }
     if (!is.null(cadat)){ # Ca interference data

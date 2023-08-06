@@ -16,8 +16,7 @@
 #' @examples
 #' samplefile <- system.file("Samples.csv",package="ArArRedux")
 #' irrfile <- system.file("irradiations.csv",package="ArArRedux")
-#' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-#' X <- read(samplefile,masses,blabel="EXB#",Jpos=c(3,15))
+#' X <- read(samplefile,blabel="EXB#",Jpos=c(3,15))
 #' irr <- loadirradiations(irrfile)
 #'# assume log(36Ar/37Ar) = log(39Ar/37Ar) = 1 in co-irradiate Ca-salt
 #'# with variances of 0.0001 and zero covariances

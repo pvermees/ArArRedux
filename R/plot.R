@@ -3,15 +3,17 @@
 #' Plots the raw signal of a given isotope against time.
 #' 
 #' @param x an object of class \code{\link{timeresolved}} or
-#' \code{\link{PHdata}}
+#'     \code{\link{PHdata}}
 #' @param mass a string indicating the isotope of interest
 #' @param label a string with the name of the run
 #' @param run the run number
+#' @param hop identifier for mass channel in Noblesse instruments (if
+#'     \code{x} has class \code{WiscAr}).
+#' @param tmin time stamp (in seconds) of 'time zero'
 #' @param ... optional parameters
 #' @examples
 #' samplefile <- system.file("Samples.csv",package="ArArRedux")
-#' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-#' mMC <- loaddata(samplefile,masses)
+#' mMC <- loaddata(samplefile)
 #' plot(mMC,"MD2-1a")
 #' @rdname plot
 #' @export
@@ -25,7 +27,7 @@ plot.timeresolved <- function(x,label=NULL,mass=NA,
     }
     therun <- subset(x,i=run)
     nm <- length(x$masses)
-    par(mfrow=rep(ceiling(sqrt(nm)),2))
+    graphics::par(mfrow=rep(ceiling(sqrt(nm)),2))
     for (m in 1:nm){
         f <- fit(therun,tmin=tmin,mass=x$masses[m],returnfit=TRUE)
         p <- stats::predict.lm(f$fit,newdata=data.frame(tt=therun$thetime))
@@ -37,11 +39,13 @@ plot.timeresolved <- function(x,label=NULL,mass=NA,
     f <- fit(therun,tmin=tmin,returnfit=TRUE)
     invisible(f$fit)
 }
+#' @rdname plot
+#' @export
 plot.WiscAr <- function(x,hop='101',...){
     plot(x[[hop]],...)
 }
 #' @examples
-#' mPH <- loaddata(samplefile,masses,PH=TRUE)
+#' mPH <- loaddata(samplefile)
 #' plot(mPH,"MD2-1a","Ar40")
 #' @rdname plot
 #' @export
@@ -56,11 +60,13 @@ plot.PHdata <- function(x,...){
 #' 
 #' @param X a data structure (list) containing an item called `covmat' (covariance matrix)
 #' @examples
+#' graphics.off()
 #' data(Melbourne)
 #' plotcorr(Melbourne$X)
 #' @export
 plotcorr <- function(X){
-    image.with.legend(z=stats::cov2cor(X$covmat),color.palette=grDevices::heat.colors)
+    image.with.legend(z=stats::cov2cor(X$covmat),
+                      color.palette=grDevices::heat.colors)
 }
 
 # modified version of filled.contour with ".filled.contour" part replaced with "image"

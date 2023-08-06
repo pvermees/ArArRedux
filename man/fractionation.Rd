@@ -4,7 +4,7 @@
 \alias{fractionation}
 \title{Compute the mass fractionation correction}
 \usage{
-fractionation(fname, detector, MS = "ARGUS-VI", PH = FALSE)
+fractionation(fname, detector, MS = "ARGUS-VI")
 }
 \arguments{
 \item{fname}{a .csv file with the air shot data}
@@ -12,9 +12,6 @@ fractionation(fname, detector, MS = "ARGUS-VI", PH = FALSE)
 \item{detector}{the name of the ion detector}
 
 \item{MS}{the type of mass spectrometer}
-
-\item{PH}{TRUE if the data were recorded in 'peak hopping' mode,
-FALSE if recorded in multicollector mode.}
 }
 \value{
 an object of class \code{\link{logratios}}
@@ -27,8 +24,8 @@ detector with the atmospheric ratio.
 data(Melbourne)
 fd37file <- system.file("AirL2.csv",package="ArArRedux")
 fd40file <- system.file("AirH1.csv",package="ArArRedux")
-fract <- list(fractionation(fd37file,"L2",PH=TRUE),
-              fractionation(fd40file,"H1",PH=FALSE))
+fract <- list(fractionation(fd37file,"L2"),
+              fractionation(fd40file,"H1"))
 if (isTRUE(all.equal(Melbourne$fract,fract))){
   print("We just re-created the fractionation correction for the Melbourne dataset")
 }

@@ -2,13 +2,25 @@
 % Please edit documentation in R/io.R
 \name{newredux}
 \alias{newredux}
+\alias{newredux.default}
+\alias{newredux.WiscAr}
 \title{Create a new \code{\link{redux}} object}
 \usage{
-newredux(X, Jpos, detectors = list(Ar36 = "H1", Ar37 = "L2", Ar38 = "L1", Ar39
-  = "AX", Ar40 = "H1"))
+newredux(x, ...)
+
+\method{newredux}{default}(
+  x,
+  Jpos,
+  detectors = list(Ar36 = "H1", Ar37 = "L2", Ar38 = "L1", Ar39 = "AX", Ar40 = "H1"),
+  ...
+)
+
+\method{newredux}{WiscAr}(x, Jpos, ...)
 }
 \arguments{
-\item{X}{an object of class \code{\link{logratios}}}
+\item{x}{an object of class \code{\link{logratios}}}
+
+\item{...}{optional arguments}
 
 \item{Jpos}{a vector of integers denoting the positions of the
 fluence monitors in the irradiation stack}

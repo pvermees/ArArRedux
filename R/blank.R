@@ -10,11 +10,11 @@
 #' @return an object of class \code{\link{blankcorrected}}
 #' @examples
 #' samplefile <- system.file("Samples.csv",package="ArArRedux")
-#' masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-#' m <- loaddata(samplefile,masses) # samples and J-standards
+#' m <- loaddata(samplefile) # samples and J-standards
 #' blanklabel <- "EXB#"
 #' l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
 #' plotcorr(l)
+#' @rdname blankcorr
 #' @export
 blankcorr <- function(x,...){ UseMethod("blankcorr",x) }
 #' @rdname blankcorr

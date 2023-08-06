@@ -2,12 +2,20 @@
 % Please edit documentation in R/calibration.R
 \name{calibration}
 \alias{calibration}
+\alias{calibration.default}
+\alias{calibration.WiscAr}
 \title{Detector calibration}
 \usage{
-calibration(X, clabel)
+calibration(x, ...)
+
+\method{calibration}{default}(x, clabel, ...)
+
+\method{calibration}{WiscAr}(x, clabel, ...)
 }
 \arguments{
-\item{X}{an object of class \code{redux}}
+\item{x}{an object of class \code{redux}}
+
+\item{...}{optional arguments}
 
 \item{clabel}{the label of the detector calibration data}
 }

@@ -4,30 +4,23 @@
 \alias{loaddata}
 \title{Load mass spectrometer data}
 \usage{
-loaddata(fname, masses, MS = "ARGUS-VI", PH = FALSE)
+loaddata(fid, MS = "ARGUS-VI")
 }
 \arguments{
-\item{fname}{the file name, must end with .csv}
+\item{fid}{the file or directory name containing the data}
 
-\item{masses}{a vector of strings denoting the order of the
-isotopes listed in the table}
-
-\item{MS}{the type of mass spectrometer}
-
-\item{PH}{a boolean indicating whether the data are to be treated
-as multicollector (PH=FALSE) or 'peak hopping' (PH=TRUE) data. The
-default is PH=FALSE.}
+\item{MS}{one of either \code{ARGUS-VI} or \code{WiscAr}}
 }
 \value{
-if PH=FALSE: an object of class \code{timeresolved}\cr
-if PH=TRUE: an object of class \code{PHdata}
+an object of class \code{timeresolved} or \code{PHdata} and
+    \code{ArgusVI} or \code{WiscAr}
 }
 \description{
-Loads a .csv file with raw mass spectrometer data
+Loads a file or directory with raw mass spectrometer data
 }
 \examples{
 samplefile <- system.file("Samples.csv",package="ArArRedux")
 masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-m <- loaddata(samplefile,masses) # samples and J-standards
+m <- loaddata(samplefile,MS='ARGUS-VI') # samples and J-standards
 plot(m,"MD2-1a","Ar40")
 }

@@ -16,6 +16,7 @@ pos = 'CheckExEnv')
 library('ArArRedux')
 
 base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 cleanEx()
 nameEx("Melbourne")
 ### * Melbourne
@@ -71,8 +72,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### ** Examples
 
 dfile <- system.file("Calibration.csv",package="ArArRedux")
-dlabels <- c("H1","AX","L1","L2")
-md <- loaddata(dfile,dlabels,PH=TRUE)
+md <- loaddata(dfile)
 ld <- fitlogratios(blankcorr(md))
 d <- averagebyday(ld,"DCAL")
 plotcorr(d)
@@ -91,13 +91,12 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: blankcorr
 ### Title: Apply a blank correction
 ### Aliases: blankcorr blankcorr.default blankcorr.timeresolved
-###   blankcorr.PHdata
+###   blankcorr.PHdata blankcorr.WiscAr
 
 ### ** Examples
 
 samplefile <- system.file("Samples.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-m <- loaddata(samplefile,masses) # samples and J-standards
+m <- loaddata(samplefile) # samples and J-standards
 blanklabel <- "EXB#"
 l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
 plotcorr(l)
@@ -115,7 +114,7 @@ flush(stderr()); flush(stdout())
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: calibration
 ### Title: Detector calibration
-### Aliases: calibration
+### Aliases: calibration calibration.default calibration.WiscAr
 
 ### ** Examples
 
@@ -157,7 +156,7 @@ flush(stderr()); flush(stdout())
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: concat
 ### Title: Merge a list of logratio data
-### Aliases: concat
+### Aliases: concat concat.default concat.WiscAr
 
 ### ** Examples
 
@@ -165,15 +164,13 @@ samplefile <-  system.file("Samples.csv",package="ArArRedux")
 kfile <- system.file("K-glass.csv",package="ArArRedux")
 cafile <- system.file("Ca-salt.csv",package="ArArRedux")
 dfile <- system.file("Calibration.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
 blanklabel <- "EXB#"
 Jpos <- c(3,15)
-dlabels <- c("H1","AX","L1","L2")
  
-m <- loaddata(samplefile,masses) # samples and J-standards
-mk <- loaddata(kfile,masses) # K-interference data
-mca <- loaddata(cafile,masses) # Ca interference data
-md <- loaddata(dfile,dlabels,PH=TRUE) # detector intercalibrations
+m <- loaddata(samplefile) # samples and J-standards
+mk <- loaddata(kfile) # K-interference data
+mca <- loaddata(cafile) # Ca interference data
+md <- loaddata(dfile) # detector intercalibrations
  
 # form and fit logratios
 l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
@@ -227,13 +224,12 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: fitlogratios
 ### Title: Extrapolation to 'time zero'
 ### Aliases: fitlogratios fitlogratios.default fitlogratios.timeresolved
-###   fitlogratios.PHdata
+###   fitlogratios.PHdata fitlogratios.WiscAr
 
 ### ** Examples
 
 samplefile <- system.file("Samples.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-m <- loaddata(samplefile,masses) # samples and J-standards
+m <- loaddata(samplefile) # samples and J-standards
 blanklabel <- "EXB#"
 l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
 plotcorr(l)
@@ -258,8 +254,8 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 data(Melbourne)
 fd37file <- system.file("AirL2.csv",package="ArArRedux")
 fd40file <- system.file("AirH1.csv",package="ArArRedux")
-fract <- list(fractionation(fd37file,"L2",PH=TRUE),
-              fractionation(fd40file,"H1",PH=FALSE))
+fract <- list(fractionation(fd37file,"L2"),
+              fractionation(fd40file,"H1"))
 if (isTRUE(all.equal(Melbourne$fract,fract))){
   print("We just re-created the fractionation correction for the Melbourne dataset")
 }
@@ -344,13 +340,12 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: getmasses
 ### Title: Select a subset of isotopes from a dataset
 ### Aliases: getmasses getmasses.default getmasses.timeresolved
-###   getmasses.logratios getmasses.redux
+###   getmasses.WiscAr getmasses.logratios getmasses.redux
 
 ### ** Examples
 
 kfile <- system.file("K-glass.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-mk <- loaddata(kfile,masses)
+mk <- loaddata(kfile)
 lk <- fitlogratios(blankcorr(mk,"EXB#","K:"),"Ar40")
 k <- getmasses(lk,"Ar39","Ar40") # subset of the relevant isotopes
 plotcorr(k)
@@ -374,8 +369,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 samplefile <- system.file("Samples.csv",package="ArArRedux")
 irrfile <- system.file("irradiations.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-X <- read(samplefile,masses,blabel="EXB#",Jpos=c(3,15))
+X <- read(samplefile,blabel="EXB#",Jpos=c(3,15))
 irr <- loadirradiations(irrfile)
 # assume log(36Ar/37Ar) = log(39Ar/37Ar) = 1 in co-irradiate Ca-salt
 # with variances of 0.0001 and zero covariances
@@ -396,6 +390,26 @@ summary(ages)
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("interference", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
+nameEx("isoratios")
+### * isoratios
+
+flush(stderr()); flush(stdout())
+
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+### Name: isoratios
+### Title: Isochron ratios
+### Aliases: isoratios
+
+### ** Examples
+
+data(Melbourne)
+IR <- isoratios(Melbourne$X,irr=Melbourne$irr,fract=Melbourne$fract)
+
+
+
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("isoratios", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+cleanEx()
 nameEx("loaddata")
 ### * loaddata
 
@@ -410,7 +424,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 samplefile <- system.file("Samples.csv",package="ArArRedux")
 masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-m <- loaddata(samplefile,masses) # samples and J-standards
+m <- loaddata(samplefile,MS='ARGUS-VI') # samples and J-standards
 plot(m,"MD2-1a","Ar40")
 
 
@@ -451,10 +465,11 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+graphics.off()
 data(Melbourne)
 C <- calibration(Melbourne$X,"DCAL")
 A <- massfractionation(C,Melbourne$fract)
-plotcorr(A)
+ plotcorr(A)
 
 
 
@@ -491,15 +506,14 @@ flush(stderr()); flush(stdout())
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: plot.timeresolved
 ### Title: Plot a time resolved mass spectrometry signal
-### Aliases: plot.timeresolved plot.PHdata
+### Aliases: plot.timeresolved plot.WiscAr plot.PHdata
 
 ### ** Examples
 
 samplefile <- system.file("Samples.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-mMC <- loaddata(samplefile,masses)
-plot(mMC,"MD2-1a","Ar40")
-mPH <- loaddata(samplefile,masses,PH=TRUE)
+mMC <- loaddata(samplefile)
+plot(mMC,"MD2-1a")
+mPH <- loaddata(samplefile)
 plot(mPH,"MD2-1a","Ar40")
 
 
@@ -519,6 +533,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+graphics.off()
 data(Melbourne)
 plotcorr(Melbourne$X)
 
@@ -560,40 +575,18 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
-samplefile <-  system.file("Samples.csv",package="ArArRedux")
+samplefile <- system.file("Samples.csv",package="ArArRedux")
 kfile <- system.file("K-glass.csv",package="ArArRedux")
 cafile <- system.file("Ca-salt.csv",package="ArArRedux")
 dfile <- system.file("Calibration.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-dlabels <- c("H1","AX","L1","L2")
-X <- read(samplefile,masses,blabel="EXB#",Jpos=c(3,15),
-          kfile,cafile,dfile,dlabels)
+X <- read(samplefile,blabel="EXB#",Jpos=c(3,15),
+          kdat=kfile,cadat=cafile,ddat=dfile,MS='ARGUS-VI')
 plotcorr(X)
 
 
 
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("read", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
-cleanEx()
-nameEx("redux2isoplotr")
-### * redux2isoplotr
-
-flush(stderr()); flush(stdout())
-
-base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-### Name: redux2isoplotr
-### Title: Export 'ArArRedux' data to 'IsoplotR'
-### Aliases: redux2isoplotr
-
-### ** Examples
-
-data(Melbourne)
-print(redux2isoplotr(Melbourne$X,Melbourne$irr))
-
-
-
-base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-base::cat("redux2isoplotr", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("subset")
 ### * subset
@@ -661,6 +654,7 @@ base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos =
 base::cat("weightedmean", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 ### * <FOOTER>
 ###
+cleanEx()
 options(digits = 7L)
 base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
 grDevices::dev.off()

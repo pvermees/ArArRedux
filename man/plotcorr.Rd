@@ -14,6 +14,7 @@ Converts the covariance matrix to a correlation matrix and plots
 this is a coloured image for visual inspection.
 }
 \examples{
+graphics.off()
 data(Melbourne)
 plotcorr(Melbourne$X)
 }

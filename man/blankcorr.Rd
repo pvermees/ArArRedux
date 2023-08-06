@@ -5,6 +5,7 @@
 \alias{blankcorr.default}
 \alias{blankcorr.timeresolved}
 \alias{blankcorr.PHdata}
+\alias{blankcorr.WiscAr}
 \title{Apply a blank correction}
 \usage{
 blankcorr(x, ...)
@@ -14,6 +15,8 @@ blankcorr(x, ...)
 \method{blankcorr}{timeresolved}(x, blanklabel = NULL, prefix = "", ...)
 
 \method{blankcorr}{PHdata}(x, blanklabel = NULL, prefix = "", ...)
+
+\method{blankcorr}{WiscAr}(x, blanklabel = NULL, prefix = "", ...)
 }
 \arguments{
 \item{x}{an object of class \code{\link{timeresolved}} or
@@ -33,8 +36,7 @@ Applies a blank correction to some time-resolved mass spectrometer data
 }
 \examples{
 samplefile <- system.file("Samples.csv",package="ArArRedux")
-masses <- c("Ar37","Ar38","Ar39","Ar40","Ar36")
-m <- loaddata(samplefile,masses) # samples and J-standards
+m <- loaddata(samplefile) # samples and J-standards
 blanklabel <- "EXB#"
 l <- fitlogratios(blankcorr(m,blanklabel),"Ar40")
 plotcorr(l)

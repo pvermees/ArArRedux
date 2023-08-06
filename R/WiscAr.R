@@ -25,8 +25,7 @@ loadWiscArData <- function(dname){
                 if (naliquots > 0) sname <- paste(sname,naliquots,sep=' ')
                 labels[i] <- sname
             } else if (identical(line,'""')){ # start of signal
-                out <- addWiscArSignal(out,con,hops,keep,thedate=thedate,
-                                       thelabel=thelabel,theirr=NA,thepos=NA)
+                out <- addWiscArSignal(out,con,hops,keep,thedate=thedate)
                 break
             }
         }

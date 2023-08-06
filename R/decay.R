@@ -3,7 +3,7 @@
 #' Correct for radioactive decay of neutron-induced 37Ar and 39Ar
 #' occurred since irradiation
 #' 
-#' @param X an objects of class \code{redux} or \code{WiscAr}
+#' @param x an objects of class \code{redux} or \code{WiscAr}
 #' @param irr the irradiation schedule
 #' @param isotope a string denoting the isotope that needs correcting
 #' @return an object of class \code{redux}
@@ -14,10 +14,10 @@
 #' D9 <- decaycorrection(A,Melbourne$irr,"Ar39")
 #' plotcorr(D9)
 #' @export
-decaycorrection <- function(x,irr,isotope,...){
+decaycorrection <- function(x,irr,isotope){
     out <- x
-    D <- getDmatrix(x,irr,isotope,...)
-    J <- Jdecay(x,isotope,...)
+    D <- getDmatrix(x,irr,isotope)
+    J <- Jdecay(x,isotope)
     intercepts <- c(x$intercepts,D$intercepts)
     covmat <- mergematrices(x$covmat,D$covmat)
     out$intercepts <- J %*% intercepts

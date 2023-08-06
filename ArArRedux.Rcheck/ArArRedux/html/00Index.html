@@ -3,8 +3,9 @@
 <head><title>R: Rigorous Data Reduction and Error Propagation of Ar40 / Ar39
 Data</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
-</head><body>
+</head><body><div class="container">
 <h1> Rigorous Data Reduction and Error Propagation of Ar40 / Ar39
 Data
 <img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
@@ -13,7 +14,7 @@ Data
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;ArArRedux&rsquo; version 1.0</h2>
+</div><h2>Documentation for package &lsquo;ArArRedux&rsquo; version 2.0</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 </ul>
@@ -34,13 +35,23 @@ Data
 <td>Apply a blank correction</td></tr>
 <tr><td style="width: 25%;"><a href="blankcorr.html">blankcorr.timeresolved</a></td>
 <td>Apply a blank correction</td></tr>
+<tr><td style="width: 25%;"><a href="blankcorr.html">blankcorr.WiscAr</a></td>
+<td>Apply a blank correction</td></tr>
 <tr><td style="width: 25%;"><a href="blankcorrected.html">blankcorrected</a></td>
 <td>The 'blankcorrected' class</td></tr>
 <tr><td style="width: 25%;"><a href="calibration.html">calibration</a></td>
 <td>Detector calibration</td></tr>
+<tr><td style="width: 25%;"><a href="calibration.html">calibration.default</a></td>
+<td>Detector calibration</td></tr>
+<tr><td style="width: 25%;"><a href="calibration.html">calibration.WiscAr</a></td>
+<td>Detector calibration</td></tr>
 <tr><td style="width: 25%;"><a href="clcorrection.html">clcorrection</a></td>
 <td>Cl-interference correction</td></tr>
 <tr><td style="width: 25%;"><a href="concat.html">concat</a></td>
+<td>Merge a list of logratio data</td></tr>
+<tr><td style="width: 25%;"><a href="concat.html">concat.default</a></td>
+<td>Merge a list of logratio data</td></tr>
+<tr><td style="width: 25%;"><a href="concat.html">concat.WiscAr</a></td>
 <td>Merge a list of logratio data</td></tr>
 <tr><td style="width: 25%;"><a href="decaycorrection.html">decaycorrection</a></td>
 <td>Correct for radioactive decay occurred since irradiation</td></tr>
@@ -51,6 +62,8 @@ Data
 <tr><td style="width: 25%;"><a href="fitlogratios.html">fitlogratios.PHdata</a></td>
 <td>Extrapolation to 'time zero'</td></tr>
 <tr><td style="width: 25%;"><a href="fitlogratios.html">fitlogratios.timeresolved</a></td>
+<td>Extrapolation to 'time zero'</td></tr>
+<tr><td style="width: 25%;"><a href="fitlogratios.html">fitlogratios.WiscAr</a></td>
 <td>Extrapolation to 'time zero'</td></tr>
 <tr><td style="width: 25%;"><a href="fractionation.html">fractionation</a></td>
 <td>Compute the mass fractionation correction</td></tr>
@@ -70,8 +83,12 @@ Data
 <td>Select a subset of isotopes from a dataset</td></tr>
 <tr><td style="width: 25%;"><a href="getmasses.html">getmasses.timeresolved</a></td>
 <td>Select a subset of isotopes from a dataset</td></tr>
+<tr><td style="width: 25%;"><a href="getmasses.html">getmasses.WiscAr</a></td>
+<td>Select a subset of isotopes from a dataset</td></tr>
 <tr><td style="width: 25%;"><a href="interference.html">interference</a></td>
 <td>define the interference corrections</td></tr>
+<tr><td style="width: 25%;"><a href="isoratios.html">isoratios</a></td>
+<td>Isochron ratios</td></tr>
 <tr><td style="width: 25%;"><a href="loaddata.html">loaddata</a></td>
 <td>Load mass spectrometer data</td></tr>
 <tr><td style="width: 25%;"><a href="loadirradiations.html">loadirradiations</a></td>
@@ -84,6 +101,10 @@ Data
 <td>An example dataset</td></tr>
 <tr><td style="width: 25%;"><a href="newredux.html">newredux</a></td>
 <td>Create a new 'redux' object</td></tr>
+<tr><td style="width: 25%;"><a href="newredux.html">newredux.default</a></td>
+<td>Create a new 'redux' object</td></tr>
+<tr><td style="width: 25%;"><a href="newredux.html">newredux.WiscAr</a></td>
+<td>Create a new 'redux' object</td></tr>
 <tr><td style="width: 25%;"><a href="param.html">param</a></td>
 <td>Set or get Ar-Ar_Redux parameters</td></tr>
 <tr><td style="width: 25%;"><a href="PHdata.html">PHdata</a></td>
@@ -91,6 +112,8 @@ Data
 <tr><td style="width: 25%;"><a href="plot.html">plot.PHdata</a></td>
 <td>Plot a time resolved mass spectrometry signal</td></tr>
 <tr><td style="width: 25%;"><a href="plot.html">plot.timeresolved</a></td>
+<td>Plot a time resolved mass spectrometry signal</td></tr>
+<tr><td style="width: 25%;"><a href="plot.html">plot.WiscAr</a></td>
 <td>Plot a time resolved mass spectrometry signal</td></tr>
 <tr><td style="width: 25%;"><a href="plotcorr.html">plotcorr</a></td>
 <td>Plot a matrix with correlation coefficients</td></tr>
@@ -100,8 +123,6 @@ Data
 <td>Read mass spectrometer data</td></tr>
 <tr><td style="width: 25%;"><a href="redux.html">redux</a></td>
 <td>The 'redux' class</td></tr>
-<tr><td style="width: 25%;"><a href="redux2isoplotr.html">redux2isoplotr</a></td>
-<td>Export 'ArArRedux' data to 'IsoplotR'</td></tr>
 <tr><td style="width: 25%;"><a href="results.html">results</a></td>
 <td>The 'results' class</td></tr>
 <tr><td style="width: 25%;"><a href="subset.html">subset.logratios</a></td>
@@ -119,4 +140,4 @@ Data
 <tr><td style="width: 25%;"><a href="weightedmean.html">weightedmean</a></td>
 <td>Calculate the weighted mean age</td></tr>
 </table>
-</body></html>
+</div></body></html>

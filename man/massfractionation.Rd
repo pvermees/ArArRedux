@@ -21,8 +21,9 @@ correct it for the mass difference between the numerator and
 denominator isotopes.
 }
 \examples{
+graphics.off()
 data(Melbourne)
 C <- calibration(Melbourne$X,"DCAL")
 A <- massfractionation(C,Melbourne$fract)
-plotcorr(A)
+ plotcorr(A)
 }

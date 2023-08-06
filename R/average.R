@@ -37,8 +37,7 @@ average <- function(x,i=NULL,newlabel=NULL){
 #' @return an object of the same class as x
 #' @examples
 #' dfile <- system.file("Calibration.csv",package="ArArRedux")
-#' dlabels <- c("H1","AX","L1","L2")
-#' md <- loaddata(dfile,dlabels,PH=TRUE)
+#' md <- loaddata(dfile)
 #' ld <- fitlogratios(blankcorr(md))
 #' d <- averagebyday(ld,"DCAL")
 #' plotcorr(d)

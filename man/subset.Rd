@@ -7,14 +7,11 @@
 \alias{subset.results}
 \title{Select a subset of some data}
 \usage{
-\method{subset}{timeresolved}(x, i = NULL, labels = NULL, invert = FALSE,
-  include.J = FALSE, ...)
+\method{subset}{timeresolved}(x, i = NULL, labels = NULL, invert = FALSE, include.J = FALSE, ...)
 
-\method{subset}{logratios}(x, i = NULL, labels = NULL, invert = FALSE,
-  include.J = FALSE, ...)
+\method{subset}{logratios}(x, i = NULL, labels = NULL, invert = FALSE, include.J = FALSE, ...)
 
-\method{subset}{redux}(x, i = NULL, labels = NULL, invert = FALSE,
-  include.J = FALSE, ...)
+\method{subset}{redux}(x, i = NULL, labels = NULL, invert = FALSE, include.J = FALSE, ...)
 
 \method{subset}{results}(x, i = NULL, labels = NULL, invert = FALSE, ...)
 }

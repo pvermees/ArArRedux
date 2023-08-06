@@ -2,20 +2,22 @@
 #'
 #' Apply the detector calibration for multicollector data
 #' 
-#' @param X an object of class \code{redux}
+#' @param x an object of class \code{redux}
 #' @param clabel the label of the detector calibration data
+#' @param ... optional arguments
 #' @return an object of class \code{redux}
 #' @examples
 #' data(Melbourne)
 #' C <- calibration(Melbourne$X,"DCAL")
 #' plotcorr(C)
+#' @rdname calibration
 #' @export
 calibration <- function(x,...){ UseMethod("calibration",x) }
 #' @rdname calibration
 #' @export
 calibration.default <- function(x,clabel,...){
     j <- grep(clabel,x$labels,invert=TRUE)
-    if (length(j)==length(x$labels)) return(X)
+    if (length(j)==length(x$labels)) return(x)
     J <- Jcal(x,clabel,x$detectors)
     out <- subset(x,j)
     out$intercepts <- J %*% x$intercepts
@@ -24,29 +26,27 @@ calibration.default <- function(x,clabel,...){
 }
 #' @rdname calibration
 #' @export
-calibration.WiscAr <- function(x,irradiations,clabel){
-    D <- getDmatrix(x,irradiations,clabel)
-    X <- concat(list(x,D))
-    icalgas <- findrunindices(X,prefixes=clabel)
-    iothers <- findrunindices(X,prefixes=clabel,invert=TRUE)
+calibration.WiscAr <- function(x,clabel,...){
+    icalgas <- findrunindices(x,prefixes=clabel)
+    iothers <- findrunindices(x,prefixes=clabel,invert=TRUE)
     ng <- length(icalgas)/3
     ns <- length(iothers)/3
     icalgas <- icalgas[1:ng]
     iothers <- iothers[1:ns]
-    nc <- length(X$intercepts)
+    nc <- length(x$intercepts)
     J <- matrix(0,4*ns,nc)
     # standard gas indices
-    i09g101 <- getindices(X,prefix=clabel,num='Ar40',den='Ar39',hop='101')
-    i79g101 <- getindices(X,prefix=clabel,num='Ar37',den='Ar39',hop='101')
-    i69g101 <- getindices(X,prefix=clabel,num='Ar36',den='Ar39',hop='101')
-    i89g102 <- getindices(X,prefix=clabel,num='Ar38',den='Ar39',hop='102')
-    i69g102 <- getindices(X,prefix=clabel,num='Ar36',den='Ar39',hop='102')
+    i09g101 <- getindices(x,prefix=clabel,num='Ar40',den='Ar39',hop='101')
+    i79g101 <- getindices(x,prefix=clabel,num='Ar37',den='Ar39',hop='101')
+    i69g101 <- getindices(x,prefix=clabel,num='Ar36',den='Ar39',hop='101')
+    i89g102 <- getindices(x,prefix=clabel,num='Ar38',den='Ar39',hop='102')
+    i69g102 <- getindices(x,prefix=clabel,num='Ar36',den='Ar39',hop='102')
     # all measurement indices
-    i09a101 <- getindices(X,num='Ar40',den='Ar39',hop='101')
-    i79a101 <- getindices(X,num='Ar37',den='Ar39',hop='101')
-    i69a101 <- getindices(X,num='Ar36',den='Ar39',hop='101')
-    i89a102 <- getindices(X,num='Ar38',den='Ar39',hop='102')
-    i69a102 <- getindices(X,num='Ar36',den='Ar39',hop='102')
+    i09a101 <- getindices(x,num='Ar40',den='Ar39',hop='101')
+    i79a101 <- getindices(x,num='Ar37',den='Ar39',hop='101')
+    i69a101 <- getindices(x,num='Ar36',den='Ar39',hop='101')
+    i89a102 <- getindices(x,num='Ar38',den='Ar39',hop='102')
+    i69a102 <- getindices(x,num='Ar36',den='Ar39',hop='102')
     # sample indices are difference between 'g' and 'a'
     i09s101 <- i09a101[!(i09a101 %in% i09g101)]
     i79s101 <- i79a101[!(i79a101 %in% i79g101)]
@@ -54,14 +54,14 @@ calibration.WiscAr <- function(x,irradiations,clabel){
     i89s102 <- i89a102[!(i89a102 %in% i89g102)]
     i69s102 <- i69a102[!(i69a102 %in% i69g102)]
     # sample decay correction indices
-    iD7 <- getindices(X,prefix='DCAL',num='Ar37',den='NA')
-    iD9 <- getindices(X,prefix='DCAL',num='Ar39',den='NA')
+    iD7 <- getindices(x,prefix=clabel,num='Ar37',den='NA')
+    iD9 <- getindices(x,prefix=clabel,num='Ar39',den='NA')
     # true standard gas composition indices
-    i09w <- getindices(X,prefix='DCAL',num='Ar40',den='Ar39')
-    i89w <- getindices(X,prefix='DCAL',num='Ar38',den='Ar39')
-    i69w <- getindices(X,prefix='DCAL',num='Ar36',den='Ar39')
+    i09w <- getindices(x,prefix=clabel,num='Ar40',den='Ar39')
+    i89w <- getindices(x,prefix=clabel,num='Ar38',den='Ar39')
+    i69w <- getindices(x,prefix=clabel,num='Ar36',den='Ar39')
     # match the samples with the nearest standard gas
-    inearestgas <- nearest(X$thedate[iothers],X$thedate[icalgas])
+    inearestgas <- nearest(x$thedate[iothers],x$thedate[icalgas])
     for (i in 1:ns){
         j <- inearestgas[i]
         # s09corr
@@ -91,9 +91,9 @@ calibration.WiscAr <- function(x,irradiations,clabel){
         J[4*i,i69w[j]]    <-  1
     }
     isamp <- findrunindices(x,prefixes=clabel,invert=TRUE)[1:ns]
-    out <- subset(X,i=isamp)
-    out$intercepts <- J %*% X$intercepts
-    out$covmat <- J %*% X$covmat %*% t(J)
+    out <- subset(x,i=isamp)
+    out$intercepts <- J %*% x$intercepts
+    out$covmat <- J %*% x$covmat %*% t(J)
     out$hop <- NULL
     out$num <- rep(c("Ar40","Ar38","Ar37","Ar36"),ns)
     out$den <- rep("Ar39",4*ns)
