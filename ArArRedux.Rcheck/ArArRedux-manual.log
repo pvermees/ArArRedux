@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.6.1)  6 AUG 2023 10:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.6.1)  11 AUG 2023 22:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -272,7 +272,7 @@ File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count277
 \l__pdf_internal_box=\box55
 )
-(/tmp/RtmpIIuThC/Rd2pdf323937944d5a/Rd2.aux)
+(/tmp/Rtmp5mZTNk/Rd2pdf4d8f28168bf/Rd2.aux)
 \openout1 = `Rd2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
@@ -324,8 +324,8 @@ LaTeX Info: Redefining \ref on input line 8.
 LaTeX Info: Redefining \pageref on input line 8.
 LaTeX Info: Redefining \nameref on input line 8.
 
-(/tmp/RtmpIIuThC/Rd2pdf323937944d5a/Rd2.out)
-(/tmp/RtmpIIuThC/Rd2pdf323937944d5a/Rd2.out)
+(/tmp/Rtmp5mZTNk/Rd2pdf4d8f28168bf/Rd2.out)
+(/tmp/Rtmp5mZTNk/Rd2pdf4d8f28168bf/Rd2.out)
 \@outlinefile=\write4
 \openout4 = `Rd2.out'.
 
@@ -349,7 +349,7 @@ LaTeX Font Info:    Trying to load font information for T1+phv on input line 33
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 )
-(/tmp/RtmpIIuThC/Rd2pdf323937944d5a/Rd2.toc
+(/tmp/Rtmp5mZTNk/Rd2pdf4d8f28168bf/Rd2.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -406,7 +406,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1223--1227
 
  []
 
-[23] [24] [25] (/tmp/RtmpIIuThC/Rd2pdf323937944d5a/Rd2.ind [26]
+[23] [24] [25] (/tmp/Rtmp5mZTNk/Rd2pdf4d8f28168bf/Rd2.ind [26]
 
 LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
 (Font)              using `T1/zi4/m/n' instead on input line 71.
@@ -415,7 +415,7 @@ LaTeX Font Info:    Font shape `T1/zi4/m/it' will be
 (Font)              scaled to size 10.0pt on input line 74.
 [27
 
-]) (/tmp/RtmpIIuThC/Rd2pdf323937944d5a/Rd2.aux)
+]) (/tmp/Rtmp5mZTNk/Rd2pdf4d8f28168bf/Rd2.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -424,7 +424,7 @@ Package rerunfilecheck Info: File `Rd2.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  9429 strings out of 478287
- 146379 string characters out of 5849290
+ 146366 string characters out of 5849290
  438813 words of memory out of 5000000
  27208 multiletter control sequences out of 15000+600000
  504400 words of font info for 64 fonts, out of 8000000 for 9000
@@ -439,7 +439,7 @@ pe1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/time
 s/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Rd2.pdf (27 pages, 144047 bytes).
+Output written on Rd2.pdf (27 pages, 144051 bytes).
 PDF statistics:
  722 PDF objects out of 1000 (max. 8388607)
  671 compressed objects within 7 object streams

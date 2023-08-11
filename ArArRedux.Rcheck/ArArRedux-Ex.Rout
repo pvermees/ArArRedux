@@ -839,7 +839,7 @@ $MSWD
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  17.782 44.571 7.561 0 0 
+Time elapsed:  18.74 46.732 7.528 0 0 
 > grDevices::dev.off()
 null device 
           1 

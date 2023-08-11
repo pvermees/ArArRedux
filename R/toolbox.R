@@ -175,7 +175,8 @@ getruns.timeresolved <- function(x,i,...){
 #' plotcorr(MD)
 #' @rdname subset
 #' @export
-subset.timeresolved <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){
+subset.timeresolved <- function(x,i=NULL,labels=NULL,invert=FALSE,
+                                include.J=FALSE,...){
     if (is.null(i))
         i <- findrunindices(x,prefixes=labels,invert=invert,include.J=include.J)
     out <- x
@@ -191,8 +192,10 @@ subset.timeresolved <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALS
 }
 #' @rdname subset
 #' @export
-subset.logratios <- function(x,i=NULL,labels=NULL,invert=FALSE,include.J=FALSE,...){
-    if (is.null(i)) i <- findrunindices(x,prefixes=labels,invert=invert,include.J=include.J)
+subset.logratios <- function(x,i=NULL,labels=NULL,invert=FALSE,
+                             include.J=FALSE,...){
+    if (is.null(i)) i <- findrunindices(x,prefixes=labels,invert=invert,
+                                        include.J=include.J)
     out <- x
     out$irr <- x$irr[i]
     out$pos <- x$pos[i]

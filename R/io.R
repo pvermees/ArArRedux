@@ -187,7 +187,7 @@ read <- function(x,blabel,Jpos,kdat=NULL,cadat=NULL,ddat=NULL,MS="ARGUS-VI"){
         # subset of the relevant isotopes
         mk <- loaddata(kdat,MS)
         lk <- fitlogratios(blankcorr(mk,blabel,"K:"),"Ar39")
-        k <- getmasses(lk,c("Ar40","Ar39"),c("Ar38","Ar39"))
+        k <- getmasses(lk,c("Ar38","Ar40"),c("Ar39","Ar39"))
         x <- concat(list(x,k))
     }
     if (!is.null(cadat)){ # Ca interference data

@@ -46,7 +46,7 @@ isoratios <- function(X,irr,fract=NULL,ca=NULL,k=NULL,inverse=TRUE){
     hasKglass <- "K-glass" %in% Cl$labels
     hasCasalt <- "Ca-salt" %in% Cl$labels
     for (i in 1:ns){
-        j <- (i-1)*7
+        j <- (i-1)*9
         k <- (i-1)*2
         label <- Y$labels[i]
         aa <- Y$intercepts[getindices(Y,label,num='A')]
