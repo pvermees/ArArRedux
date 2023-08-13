@@ -65,36 +65,36 @@ isoratios <- function(X,irr,fract=NULL,ca=NULL,k=NULL,inverse=TRUE){
             bb <- ee <- gg <- ii <- 0
         }
         if (inverse){
-            out$intercepts[k+1] <- (aa-bb-cc+dd-ee)/(1-ff+gg) # 60
-            J[k+1,j+1] <- 1/(1-ff+gg)                         # d60/da
-            J[k+1,j+2] <- -1/(1-ff+gg)                        # d60/db
-            J[k+1,j+3] <- -1/(1-ff+gg)                        # d60/dc
-            J[k+1,j+4] <- 1/(1-ff+gg)                         # d60/dd
-            J[k+1,j+5] <- -1/(1-ff+gg)                        # d60/de
-            J[k+1,j+6] <- (aa-bb-cc+dd-ee)/(1-ff+gg)^2        # d60/df
-            J[k+1,j+7] <- -(aa-bb-cc+dd-ee)/(1-ff+gg)^2       # d60/dg
-            out$intercepts[k+2] <- (hh-ii)/(1-ff+gg)          # 90
-            J[k+2,j+6] <- (hh-ii)/(1-ff+gg)^2                 # d90/df
-            J[k+2,j+7] <- -(hh-ii)/(1-ff+gg)^2                # d90/dg
-            J[k+2,j+8] <- 1/(1-ff+gg)                         # d90/dh
-            J[k+2,j+9] <- -1/(1-ff+gg)                        # d90/di
+            out$intercepts[k+1] <- (hh-ii)/(1-ff+gg)          # 90
+            J[k+1,j+6] <- (hh-ii)/(1-ff+gg)^2                 # d90/df
+            J[k+1,j+7] <- -(hh-ii)/(1-ff+gg)^2                # d90/dg
+            J[k+1,j+8] <- 1/(1-ff+gg)                         # d90/dh
+            J[k+1,j+9] <- -1/(1-ff+gg)                        # d90/di
+            out$intercepts[k+2] <- (aa-bb-cc+dd-ee)/(1-ff+gg) # 60
+            J[k+2,j+1] <- 1/(1-ff+gg)                         # d60/da
+            J[k+2,j+2] <- -1/(1-ff+gg)                        # d60/db
+            J[k+2,j+3] <- -1/(1-ff+gg)                        # d60/dc
+            J[k+2,j+4] <- 1/(1-ff+gg)                         # d60/dd
+            J[k+2,j+5] <- -1/(1-ff+gg)                        # d60/de
+            J[k+2,j+6] <- (aa-bb-cc+dd-ee)/(1-ff+gg)^2        # d60/df
+            J[k+2,j+7] <- -(aa-bb-cc+dd-ee)/(1-ff+gg)^2       # d60/dg
         } else {
-            out$intercepts[(i-1)*2+1] <- (1-ff+gg)/(aa-bb-cc+dd-ee) # 06
-            J[k+1,j+1] <- -(1-ff+gg)/(aa-bb-cc+dd-ee)^2             # d06/da
-            J[k+1,j+2] <- (1-ff+gg)/(aa-bb-cc+dd-ee)^2              # d06/db
-            J[k+1,j+3] <- (1-ff+gg)/(aa-bb-cc+dd-ee)^2              # d06/dc
-            J[k+1,j+4] <- -(1-ff+gg)/(aa-bb-cc+dd-ee)^2             # d06/dd
-            J[k+1,j+5] <- (1-ff+gg)/(aa-bb-cc+dd-ee)^2              # d06/de
-            J[k+1,j+6] <- -1/(aa-bb-cc+dd-ee)                       # d06/df
-            J[k+1,j+7] <- 1/(aa-bb-cc+dd-ee)                        # d06/dg
-            out$intercepts[(i-1)*2+2] <- (hh-ii)/(aa-bb-cc+dd-ee)   # 96
-            J[k+1,j+1] <- -(hh-ii)/(aa-bb-cc+dd-ee)^2               # d96/da
-            J[k+1,j+2] <- (hh-ii)/(aa-bb-cc+dd-ee)^2                # d96/db
-            J[k+1,j+3] <- (hh-ii)/(aa-bb-cc+dd-ee)^2                # d96/dc
-            J[k+1,j+4] <- -(hh-ii)/(aa-bb-cc+dd-ee)^2               # d96/dd
-            J[k+1,j+5] <- (hh-ii)/(aa-bb-cc+dd-ee)^2                # d96/de
-            J[k+1,j+8] <- 1/(aa-bb-cc+dd-ee)                        # d96/dh
-            J[k+1,j+9] <- -1/(aa-bb-cc+dd-ee)                       # d96/di
+            out$intercepts[k+1] <- (hh-ii)/(aa-bb-cc+dd-ee)   # 96
+            J[k+1,j+1] <- -(hh-ii)/(aa-bb-cc+dd-ee)^2         # d96/da
+            J[k+1,j+2] <- (hh-ii)/(aa-bb-cc+dd-ee)^2          # d96/db
+            J[k+1,j+3] <- (hh-ii)/(aa-bb-cc+dd-ee)^2          # d96/dc
+            J[k+1,j+4] <- -(hh-ii)/(aa-bb-cc+dd-ee)^2         # d96/dd
+            J[k+1,j+5] <- (hh-ii)/(aa-bb-cc+dd-ee)^2          # d96/de
+            J[k+1,j+8] <- 1/(aa-bb-cc+dd-ee)                  # d96/dh
+            J[k+1,j+9] <- -1/(aa-bb-cc+dd-ee)                 # d96/di
+            out$intercepts[k+2] <- (1-ff+gg)/(aa-bb-cc+dd-ee) # 06
+            J[k+2,j+1] <- -(1-ff+gg)/(aa-bb-cc+dd-ee)^2       # d06/da
+            J[k+2,j+2] <- (1-ff+gg)/(aa-bb-cc+dd-ee)^2        # d06/db
+            J[k+2,j+3] <- (1-ff+gg)/(aa-bb-cc+dd-ee)^2        # d06/dc
+            J[k+2,j+4] <- -(1-ff+gg)/(aa-bb-cc+dd-ee)^2       # d06/dd
+            J[k+2,j+5] <- (1-ff+gg)/(aa-bb-cc+dd-ee)^2        # d06/de
+            J[k+2,j+6] <- -1/(aa-bb-cc+dd-ee)                 # d06/df
+            J[k+2,j+7] <- 1/(aa-bb-cc+dd-ee)                  # d06/dg
         }
     }
     out$covmat <- J %*% Y$covmat %*% t(J)

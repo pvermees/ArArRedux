@@ -12,14 +12,14 @@ loadWiscArData <- function(dname){
     keep <- list('101'=c(TRUE,TRUE,FALSE,TRUE,TRUE),
                  '102'=c(TRUE,TRUE,FALSE,TRUE,FALSE))
     for (i in 1:nf){
-        con = file(filenames[i], "r")
+        con <- file(filenames[i], "r")
         while (TRUE){
-            line = readLines(con,n=1)
+            line <- readLines(con,n=1)
             if (grepl("Start Of Run",line)){
                 txt <- unlist(strsplit(line,'#'))[2]
                 thedate[i] <- readthedate(txt)
             } else if (grepl(".mdf",line,ignore.case=TRUE)){
-                line = readLines(con,n=1) # the next line contains the sample name
+                line <- readLines(con,n=1) # the next line contains the sample name
                 sname <- unlist(strsplit(line,'"'))[2]
                 naliquots <- length(which(grepl(sname,labels)))
                 if (naliquots > 0) sname <- paste(sname,naliquots,sep=' ')
