@@ -25,8 +25,8 @@
 #' data(Melbourne)
 #' IR <- isoratios(Melbourne$X,irr=Melbourne$irr,fract=Melbourne$fract)
 #' @export
-isoratios <- function(X,irr,fract=NULL,ca=NULL,k=NULL,inverse=TRUE){
-    Cl <- corrections(X=X,irr=irr,fract=fract,ca=ca,k=k)
+isoratios <- function(Cl,irr,fract=NULL,ca=NULL,k=NULL,inverse=TRUE){
+    #Cl <- corrections(X=X,irr=irr,fract=fract,ca=ca,k=k)
     Y <- getABCDEFGHI(Cl)
     ns <- nruns(Y)
     ni <- length(Y$intercepts)

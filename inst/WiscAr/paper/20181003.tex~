@@ -1,0 +1,95 @@
+\documentclass{article}
+\begin{document}
+
+
+If
+
+\[
+X0 = \left[
+  \begin{array}{cccc}
+    l[6/0] & l[7/0] & l[8/0] & l[9/0]
+  \end{array}
+  \right]
+\]
+
+with
+
+\[
+\Sigma_{X0} = \left[
+  \begin{array}{cccc}
+    \sigma^2(l[6/0]) & cov(l[6/0],l[7/0]) & cov(l[6/0],l[8/0]) & cov(l[6/0],l[9/0]) \\
+    cov(l[7/0],l[6/0]) & \sigma^2(l[7/0]) & cov(l[7/0],l[8/0]) & cov(l[7/0],l[9/0]) \\
+    cov(l[8/0],l[6/0]) & cov(l[8/0],l[7/0]) & \sigma^2(l[8/0]) & cov(l[8/0],l[9/0]) \\
+    cov(l[9/0],l[6/0]) & cov(l[9/0],l[7/0]) & cov(l[9/0],l[8/0]) & \sigma^2(l[9/0]) \\
+  \end{array}
+  \right]
+\]
+
+and
+
+\[
+X9 = \left[
+  \begin{array}{cccc}
+    l[6/9] & l[7/9] & l[8/9] & l[0/9]
+  \end{array}
+  \right]
+\]
+
+with
+
+\[
+\Sigma_{X9} = \left[
+  \begin{array}{cccc}
+    \sigma^2(l[6/9]) & cov(l[6/9],l[7/9]) & cov(l[6/9],l[8/9]) & cov(l[6/9],l[0/9]) \\
+    cov(l[7/9],l[6/9]) & \sigma^2(l[7/9]) & cov(l[7/9],l[8/9]) & cov(l[7/9],l[0/9]) \\
+    cov(l[8/9],l[6/9]) & cov(l[8/9],l[7/9]) & \sigma^2(l[8/9]) & cov(l[8/9],l[0/9]) \\
+    cov(l[0/9],l[6/9]) & cov(l[0/9],l[7/9]) & cov(l[0/9],l[8/9]) & \sigma^2(l[0/9]) \\
+  \end{array}
+  \right]
+\]
+
+then
+
+\[
+X0 = X9 ~ J
+\]
+
+and
+
+\[
+\Sigma_{X0} = J ~ \Sigma_{X9} ~ J^T 
+\]
+
+with
+
+\[
+J = \left[
+  \begin{array}{rrrr}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    -1 & -1 & -1 & -1
+  \end{array}
+  \right]
+\]
+
+Conversely,
+
+\[
+X9 = X0 ~ J
+\]
+
+and
+
+\[
+\Sigma_{X9} = J ~ \Sigma_{X0} ~ J^T 
+\]
+
+Which allows us to easily switch between \textsuperscript{40}Ar as the
+normalising isotope to \textsuperscript{39}Ar and back. Note that
+
+\[
+J = J^{-1}
+\]
+
+\end{document}

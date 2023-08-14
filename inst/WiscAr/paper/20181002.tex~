@@ -1,0 +1,55 @@
+\documentclass{article}
+\begin{document}
+
+Thanks for all the background information about \texttt{base64}. Very
+interesting! But in the end I have decided to process the raw
+\texttt{.RUN} files and bypass \texttt{Pychron} for the time being. As
+we discussed in Socorro, I'm not convinced that storing all the raw
+data and processing steps on \texttt{GitHub} is a particularly
+effective use of a free cloud service.\\
+
+I have now also read Allen's detailed description of your processing
+chain, and have a better idea on how I would like to process the
+Noblesse data in \texttt{Ar-Ar\_Redux}.  First of all, I really like
+your usage of a synthetic standard gas mix to calibrate the detectors
+and determine the mass fractionation.  It really does kill two birds
+with one stone! But I do have one question. You do one peak hop
+between:\\
+
+\noindent 101: 40 -- 39 -- 38 -- 37 -- 36, and\\
+102: 39 -- 38 -- 37 -- 36 -- 35\\
+
+It would suit me better if the peak hop went the other way, i.e.:\\
+
+\noindent 101: 40 -- 39 -- 38 -- 37 -- 36 and\\
+102: 41 -- 40 -- 39 -- 38 -- 37\\
+
+This would allow the time zero intercepts to be expressed as logratios
+with \textsuperscript{40}Ar as a denominator. The covariance matrix
+for the logratio intercepts would then become:
+
+  \[
+  \Sigma = \left[
+    \begin{array}{cccc}
+      \sigma^2[6/0] & cov[6/0,7/0] & 0 & cov[6/0,9/0] \\
+      cov[6/0,7/0] & \sigma^2[7/0] & 0 & cov[7/0,9/0] \\
+      0 & 0 & \sigma^2[8/0] & 0 \\
+      cov[6/0,9/0] & cov[9/0,7/0] & cov[9/0,8/0] & \sigma^2[9/0] \\
+    \end{array}
+    \right]
+  \]
+
+  where `6/0' stands for the
+  \textsuperscript{36}Ar/\textsuperscript{40}Ar (log)ratio intercept,
+  `7/0' for the \textsuperscript{37}Ar/\textsuperscript{40}Ar
+  (log)ratio intercept, etc. From then on data processing could
+  proceed exactly as for the Argus-VI.\\
+
+  Using your current routine, I wouldn't be able to use
+  \textsuperscript{40}Ar as a normalising isotope, but would need to
+  use \textsuperscript{39}Ar instead. That's not an insurmountable
+  problem. But it would be more elegant to use a uniform approach,
+  using the largest signal. This would result in smaller error
+  correlations.
+
+\end{document}

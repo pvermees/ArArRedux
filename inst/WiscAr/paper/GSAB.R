@@ -1,0 +1,181 @@
+library(IsoplotR)
+library(MASS)
+graphics.off()
+
+par(mfrow=c(3,2))
+
+nn <- 10
+random.effects=FALSE
+old <- FALSE
+
+if (old){
+    d <- c(99.37336,97.07454,101.75070,101.43449,97.02336,
+           102.97518,101.93286,102.31634,99.57383,101.81529)
+} else {
+    d <- rnorm(nn,mean=100,sd=2)
+}
+
+xM <- 50
+yM <- 20
+if (old){
+    xt <- c(11.48585,19.17610,23.34549,29.68034,27.78340,
+            10.07384,16.27280,15.49206,37.29292,39.67138)
+    yt <- c(15.405659,12.329559,10.661806,8.127866,8.886640,
+            15.970464,13.490881,13.803178,5.082832,4.131446)
+} else {
+    xt <- 10+runif(nn)*(xM-20)
+    yt <- yM - yM*xt/xM
+}
+sx <- .2
+sy <- .5
+covmat <- IsoplotR:::cor2cov2(sX=sx,sY=sy,rXY=-0.1)
+if (old){
+    err1 <- matrix(c(-0.56242673,-1.110851896,0.69782004,1.043701158,
+                     0.05390855,-0.547175994,-0.05372590,0.386686814,
+                     0.05715134,0.202666779,0.07417347,0.464816684,
+                     0.52512670,0.825813590,0.55875982,0.435518840,
+                     0.15562061,-0.009022633,0.11558623,-0.427999736),
+                   ncol=2,byrow=T)
+} else {
+    err1 <- mvrnorm(n=nn,rep(0,2),Sigma=covmat)
+}
+x1 <- xt + err1[,1]
+y1 <- yt + err1[,2]
+xe <- rep(sx,nn)
+ye <- rep(sy,nn)
+rho <- rep(-0.1,nn)
+
+# 1. MSWD = 1
+
+d1m <- cbind(d,2)
+weightedmean(d1m,random.effects=random.effects,detect.outliers=FALSE)
+
+d1i <- cbind(x1,xe,y1,ye,rho)
+colnames(d1i) <- c('Ar39Ar40','errAr39Ar40','Ar36Ar40','errAr36Ar40','rho')
+Ar1i    <- list(x=d1i,J=c(0.7,0.007),format=2)
+class(Ar1i) <- 'ArAr'
+isochron(Ar1i,model=1+2*random.effects)
+
+# 2. MSWD < 1
+
+d2m <- cbind(d,10)
+weightedmean(d2m,random.effects=random.effects,detect.outliers=FALSE)
+
+d2i <- cbind(x1,xe*3,y1,ye*3,rho)
+colnames(d2i) <- c('Ar39Ar40','errAr39Ar40','Ar36Ar40','errAr36Ar40','rho')
+Ar2i    <- list(x=d2i,J=c(0.7,0.007),format=2)
+class(Ar2i) <- 'ArAr'
+isochron(Ar2i,model=1+2*random.effects)
+
+# 3. MSWD > 1
+
+if (old){
+    de <- c(8.46319657,1.86649249,-0.07321272,12.75171960,-12.72951972,
+            -21.69428369,1.09848605,8.01051989,4.08519189,3.64344448)
+} else {
+    de <- rnorm(nn,mean=0,sd=10)
+}
+dd <- d + de
+d3 <- cbind(dd,2)
+weightedmean(d3,random.effects=random.effects,detect.outliers=FALSE)
+
+disp <- IsoplotR:::cor2cov2(sX=0,sY=2,rXY=0)
+if (old){
+    err3 <- matrix(c(-0.56242673,-0.6378894,0.69782004,2.6977414,
+                     0.05390855,-2.6777319,-0.05372590,-0.2111531,
+                     0.05715134,-1.4056639,0.07417347,0.6791580,
+                     0.52512670,1.1428297,0.55875982,-0.2324690,
+                     0.15562061,0.9260353,0.11558623,-2.3434204),
+                   ncol=2,byrow=T)
+} else {
+    err3 <- err1 + mvrnorm(n=nn,rep(0,2),Sigma=disp)
+}
+x3 <- xt + err3[,1]
+y3 <- yt + err3[,2]
+
+d3i <- cbind(x3,xe,y3,ye,rho)
+colnames(d3i) <- c('Ar39Ar40','errAr39Ar40','Ar36Ar40','errAr36Ar40','rho')
+Ar3i    <- list(x=d3i,J=c(0.7,0.007),format=2)
+class(Ar3i) <- 'ArAr'
+isochron(Ar3i,model=1+2*random.effects)
+
+dev.copy2pdf(file='/home/pvermees/Dropbox/Programming/R/WiscAr/paper/MSWD3.pdf')
+
+dev.new()
+
+par(mfrow=c(2,1))
+
+nn <- 10
+d4 <- rnorm(nn,mean=100,sd=2)
+e4 <- rnorm(nn,mean=0,sd=1)
+d4m <- cbind(d4+e4,2)
+weightedmean(d4m,random.effects=FALSE,detect.outliers=FALSE)
+
+nn <- 100
+d5 <- rnorm(nn,mean=100,sd=2)
+e5 <- rnorm(nn,mean=0,sd=1)
+d5m <- cbind(d5+e5,2)
+weightedmean(d5m,random.effects=FALSE,detect.outliers=FALSE)
+
+
+#weightedmean(d4m,random.effects=TRUE,detect.outliers=FALSE)
+#weightedmean(d5m,random.effects=TRUE,detect.outliers=FALSE)
+
+
+dat <- read.csv('/home/pvermees/Dropbox/Programming/R/WiscAr/paper/culler.txt')
+kde(dat[,1])
+
+randsamp <- function(nn,pars){
+    i <- runif(nn)
+    i1 <- i[i<pars$p1]/pars$p1
+    i2 <- (i[i>pars$p1]-pars$p1)/pars$p2
+    out <- qnorm(i1,mean=pars$t1,sd=pars$s1)
+    out <- c(out,qnorm(i2,mean=pars$t2,sd=pars$s2))
+    out
+}
+
+dens <- function(pars,xlim=c(pars$t1-2*pars$s1,pars$t2+2*pars$s2)){
+    x <- seq(from=xlim[1],to=xlim[2],length.out=200)
+    y <- pars$p1*dnorm(x,mean=pars$t1,sd=pars$s1) +
+        pars$p2*dnorm(x,mean=pars$t2,sd=pars$s2)
+    plot(x,y,type='l')
+}
+
+pdp <- function(tt,sig,xlim=range(tt)){
+    x <- seq(from=xlim[1],to=xlim[2],length.out=200)
+    y <- 0*x
+    ns <- length(tt)
+    for (i in 1:ns){
+        y <- y + dnorm(x,mean=tt[i],sd=tt[i]*sig/100)/ns
+    }
+    plot(x[2:200],y[2:200],type='l')
+}
+
+if (FALSE){
+    graphics.off()
+    pars <- list(t1=50,t2=200,p1=1/4,p2=3/4,s1=10,s2=50)
+    rs <- randsamp(117,pars)
+    par(mfrow=c(3,2))
+    dens(pars,xlim=c(0,350))
+    kde(rs,pch=NA)
+    pdp(rs,sig=0.25)
+    rs <- randsamp(10000,pars)
+    kde(rs,pch=NA)
+    pdp(rs,sig=25)
+}
+
+if (TRUE){
+    df <- c(1,2,5,10,20,50)
+    nn <- 100
+    x <- seq(from=0,to=2.5,length.out=nn)
+    pp <- matrix(0,nrow=length(df),ncol=nn)
+    mswd <- matrix(0,nrow=length(df),ncol=nn)
+    for (i in 1:length(df)){
+        mswd[i,] <- x
+        chi2 <- x*df[i]
+        pp[i,] <- dchisq(chi2,df[i])*df[i]
+    }
+    matplot(t(mswd),t(pp),type='l',lty=1,col='black')
+}
+
+#dev.copy2pdf(file='/home/pvermees/Dropbox/Programming/R/WiscAr/paper/PDPvsKDE.pdf')

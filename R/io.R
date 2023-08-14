@@ -22,20 +22,20 @@ newredux.default <- function(x,Jpos,
     out <- x
     out$Jpos <- Jpos
     out$detectors <- detectors
-    out$param$l0 = 5.5492e-4 # 40K decay constant [Ma-1]
-    out$param$sl0 = 0.0047e-4 # Renne et al. (2010)
-    out$param$l7 = 365.25*log(2)/34.95 # 37Ar decay constant [yr-1]
-    out$param$sl7 = out$param$l7*0.04/34.95 # Renne and Norman (2001)
-    out$param$l9 = log(2)/269 # 39Ar decay constant [yr-1]
-    out$param$sl9 = out$param$l9*1.5/269 # Stoenner et al. (1965)
-    out$param$l6 = log(2)/301200 # 36Cl decay constant [yr-1]
-    out$param$sl6 = out$param$l6*1000/301200 # uncertainty
-    out$param$pcl = 252.7 # P(36Cl/38Cl) for OSTR reactor
-    out$param$spcl = 1.8 # Renne et al. (2008)
-    out$param$ts = 28.201 # age of the Fish Canyon Tuff
-    out$param$sts = 0.023 # 1-sigma age uncertainty
-    out$param$air = 298.56 # atmospheric 40/36-ratio
-    out$param$sair = 0.155 # Lee et al. (2006)
+    out$param$l0 <- 5.5492e-4 # 40K decay constant [Ma-1]
+    out$param$sl0 <- 0.0047e-4 # Renne et al. (2010)
+    out$param$l7 <- 365.25*log(2)/34.95 # 37Ar decay constant [yr-1]
+    out$param$sl7 <- out$param$l7*0.04/34.95 # Renne and Norman (2001)
+    out$param$l9 <- log(2)/269 # 39Ar decay constant [yr-1]
+    out$param$sl9 <- out$param$l9*1.5/269 # Stoenner et al. (1965)
+    out$param$l6 <- log(2)/301200 # 36Cl decay constant [yr-1]
+    out$param$sl6 <- out$param$l6*1000/301200 # uncertainty
+    out$param$pcl <- 252.7 # P(36Cl/38Cl) for OSTR reactor
+    out$param$spcl <- 1.8 # Renne et al. (2008)
+    out$param$ts <- 28.201 # age of the Fish Canyon Tuff
+    out$param$sts <- 0.023 # 1-sigma age uncertainty
+    out$param$air <- 298.56 # atmospheric 40/36-ratio
+    out$param$sair <- 0.155 # Lee et al. (2006)
     class(out) <- "redux"
     return(out)
 }

@@ -1,0 +1,85 @@
+\begin{thebibliography}{12}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Jicha et~al.(2016)Jicha, Singer, and Sobol]{jicha2016}
+Jicha, B.~R., Singer, B.~S., and Sobol, P.
+\newblock {Re-evaluation of the ages of $^{40}$Ar/$^{39}$Ar sanidine standards
+  and supereruptions in the western US using a Noblesse multi-collector mass
+  spectrometer}.
+\newblock \emph{Chemical Geology}, 431:\penalty0 54--66, 2016.
+
+\bibitem[Lee et~al.(2006)Lee, Marti, Severinghaus, Kawamura, Yoo, Lee, and
+  Kim]{lee2006}
+Lee, J.-Y., Marti, K., Severinghaus, J.~P., Kawamura, K., Yoo, H.-S., Lee,
+  J.~B., and Kim, J.~S.
+\newblock {A redetermination of the isotopic abundances of atmospheric Ar}.
+\newblock \emph{Geochimica et Cosmochimica Acta}, 70\penalty0 (17):\penalty0
+  4507--4512, 2006.
+
+\bibitem[{McIntyre} et~al.(1966){McIntyre}, {Brooks}, {Compston}, and
+  {Turek}]{mcintyre1966}
+{McIntyre}, G.~A., {Brooks}, C., {Compston}, W., and {Turek}, A.
+\newblock {The Statistical Assessment of Rb-Sr Isochrons}.
+\newblock \emph{Journal of Geophysical Research}, 71:\penalty0 5459--5468,
+  1966.
+
+\bibitem[Min et~al.(2000)Min, Mundil, Renne, and Ludwig]{min2000}
+Min, K., Mundil, R., Renne, P.~R., and Ludwig, K.~R.
+\newblock {A test for systematic errors in $^{40}$Ar/$^{39}Ar$ geochronology
+  through comparison with U/Pb analysis of a 1.1-Ga rhyolite}.
+\newblock \emph{Geochimica et Cosmochimica Acta}, 64\penalty0 (1):\penalty0
+  73--98, 2000.
+
+\bibitem[Phillips and Matchan(2013)]{phillips2013}
+Phillips, D. and Matchan, E.
+\newblock {Ultra-high precision $^{40}$Ar/$^{39}$Ar ages for Fish Canyon Tuff
+  and Alder Creek Rhyolite sanidine: new dating standards required?}
+\newblock \emph{Geochimica et Cosmochimica Acta}, 121:\penalty0 229--239, 2013.
+
+\bibitem[Renne and Norman(2001)]{renne2001}
+Renne, P.~R. and Norman, E.~B.
+\newblock {Determination of the half-life of $^{37}$Ar by mass spectrometry}.
+\newblock \emph{Physical Review C}, 63\penalty0 (4):\penalty0 047302, 2001.
+
+\bibitem[Renne et~al.(1998)Renne, Swisher, Deino, Karner, Owens, and
+  DePaolo]{renne1998}
+Renne, P.~R., Swisher, C.~C., Deino, A.~L., Karner, D.~B., Owens, T.~L., and
+  DePaolo, D.~J.
+\newblock {Intercalibration of standards, absolute ages and uncertainties in
+  $^{40}$Ar/$^{39}$Ar dating}.
+\newblock \emph{Chemical Geology}, 145\penalty0 (1):\penalty0 117--152, 1998.
+
+\bibitem[Stoenner et~al.(1965)Stoenner, Schaeffer, and Katcoff]{stoenner1965}
+Stoenner, R., Schaeffer, O., and Katcoff, S.
+\newblock Half-lives of argon-37, argon-39, and argon-42.
+\newblock \emph{Science}, 148\penalty0 (3675):\penalty0 1325--1328, 1965.
+
+\bibitem[Tukey(1991)]{tukey1991}
+Tukey, J.~W.
+\newblock The philosophy of multiple comparisons.
+\newblock \emph{Statistical science}, pages 100--116, 1991.
+
+\bibitem[Vermeesch(2015)]{vermeesch2015b}
+Vermeesch, P.
+\newblock {Revised error propagation of $^{40}$Ar/$^{39}$Ar data, including
+  covariances}.
+\newblock \emph{Geochimica et Cosmochimica Acta}, 171:\penalty0 325--337, 2015.
+
+\bibitem[Vermeesch(2018)]{vermeesch2018c}
+Vermeesch, P.
+\newblock {\texttt{IsoplotR}: a free and open toolbox for geochronology}.
+\newblock \emph{Geoscience Frontiers}, 9:\penalty0 1479--1493, 2018.
+
+\bibitem[Wijbrans and McDougall(1986)]{wijbrans1986}
+Wijbrans, J.~R. and McDougall, I.
+\newblock {$^{40}$Ar/$^{39}$Ar dating of white micas from an Alpine
+  high-pressure metamorphic belt on Naxos (Greece): the resetting of the argon
+  isotopic system}.
+\newblock \emph{Contributions to Mineralogy and Petrology}, 93\penalty0
+  (2):\penalty0 187--194, 1986.
+
+\end{thebibliography}

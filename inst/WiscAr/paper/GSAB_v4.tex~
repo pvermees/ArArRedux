@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage{natbib,graphicx,fullpage}
+\begin{document}
+
+\setcounter{section}{3}
+\setcounter{subsection}{1}
+\subsection{Reporting \textsuperscript{40}Ar/\textsuperscript{39}Ar uncertainties}
+\label{sec:reportinguncertainties}
+
+\subsubsection{Assessing goodness of fit: pitfalls and opportunities}
+\label{sec:MSWD}
+
+The random scatter of the data around an isochron or weighted mean fit
+can be assessed using the Mean Square of the Weighted Deviates
+\citep[MSWD,][]{mcintyre1966}. This statistic is more generally known
+as the `reduced Chi-square statistic' outside geology. The MSWD is
+defined as the sum of the squared differences between the observed and
+the expected values, normalised by the analytical uncertainties and
+divided by the degrees of freedom of the fit.  In the context of the
+weighted mean age, the MSWD of $n$ values is given by:
+
+\begin{equation}
+  \mathrm{MSWD} = \frac{1}{df} \sum\limits_{i=1}^{n} \frac{\left(x_i
+    - \bar{x}\right)^2}{\sigma_i^2}
+  \label{eq:MSWD}
+\end{equation}
+
+\noindent where $x_i$ is the $i$\textsuperscript{th} (out of $n$)
+dates, $\sigma_i$ is the corresponding analytical uncertainty, $df = n
+- 1$ is the number of degrees of freedom, and $\bar{x}$ is the
+weighted mean of all $n$ dates. The definition for the MSWD of an
+isochron is similar but has one fewer degree of freedom (i.e., $df = n
+- 1$) and involves a few more terms to account for correlated
+uncertainties between the x- and y-variable.
+
+\begin{enumerate}
+\item If the analytical uncertainties $\sigma_i$ are the only source
+  of scatter between the $n$ aliquots, and $df$ is reasonably large
+  (for $n > 20$, say) then MSWD$\approx$1 (Fig.~5A,B).  For smaller
+  sample sizes, the expected MSWD is less than one. See
+  \citet{wendt1991} and Figure~1 of the Supplementary Information for
+  further details.
+
+\item MSWD values that approach zero indicate that analytical
+  uncertainties have been overestimated or have not been propagated
+  correctly (Fig.~5B,C). Assigning ages to samples based on such
+  \emph{underdispersed} data should be done with caution.
+  
+\item MSWD-values considerably greater than one indicate that there is
+  some excess scatter in the data, which cannot be explained by the
+  analytical uncertainties alone. This usually reflects the presence
+  of some geological \emph{(over)dispersion}. Possible causes of such
+  dispersion may be the protracted crystallisation history of a
+  sample, variable degrees of inheritance, or partial loss of
+  radiogenic \textsuperscript{40}Ar by thermally activated volume
+  diffusion (Figure~\ref{fig:MSWD}b).
+\end{enumerate}
+
+It would be wrong to believe that only datasets with MSWD$\approx$1
+are suitable for publication.  It is tempting to trim an overdispersed
+dataset by selectively rejecting `outliers' until p$>$0.05. However by
+doing so one risks losing geologically valuable information and
+biasing the results.  In fact, there is nothing wrong with MSWD values
+greater than one.  On the contrary, high MSWD values should be
+considered a good thing if they reflect the high analytical precision
+of the data.  Underdispersed datasets are likely to become even more
+prevalent in the future, as a result of the ever increasing resolution
+of mass spectrometers \citep{phillips2013}. The degree of dispersion
+can be formally assessed with a Chi-square test for homogeneity. The
+overdispersion is `statistically significant' if the p-value of said
+test falls below a pre-defined cutoff value (typically 0.05).\\
+
+
+\bibliographystyle{/home/pvermees/Dropbox/abbrvplainnat}
+\bibliography{/home/pvermees/Dropbox/biblio}
+
+\end{document}
